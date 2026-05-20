@@ -1,5 +1,6 @@
 package model;
 
+import enums.Role;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import java.time.LocalDateTime;
@@ -11,7 +12,7 @@ public class User {
     private String name;
     private String password;
     private String email;
-    private String rol;
+    private Role role;
     private Boolean verified;
     private Double rating;
     private LocalDateTime createdAt;
@@ -19,12 +20,12 @@ public class User {
     public User() {
     }
 
-    public User(String id, String name, String password, String email, String rol, Boolean verified, Double rating, LocalDateTime createdAt) {
+    public User(String id, String name, String password, String email, Role role, Boolean verified, Double rating, LocalDateTime createdAt) {
         this.id = id;
         this.name = name;
         this.password = password;
         this.email = email;
-        this.rol = rol;
+        this.role = role;
         this.verified = verified;
         this.rating = rating;
         this.createdAt = createdAt;
@@ -62,12 +63,12 @@ public class User {
         this.email = email;
     }
 
-    public String getRol() {
-        return rol;
+    public Role getRol() {
+        return role;
     }
 
-    public void setRol(String rol) {
-        this.rol = rol;
+    public void setRole(Role role) {
+        this.role = role;
     }
 
     public Boolean getVerified() {
@@ -96,15 +97,15 @@ public class User {
 
     @Override
     public String toString() {
-        return "User{" +
+        return "Usuario{" +
                 "id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                ", password='" + password + '\'' +
+                ", nombre ='" + name + '\'' +
+                ", contrasenia='" + password + '\'' +
                 ", email='" + email + '\'' +
-                ", rol='" + rol + '\'' +
-                ", verified=" + verified +
-                ", rating=" + rating +
-                ", createdAt=" + createdAt +
+                ", rol='" + role + '\'' +
+                ", verificado=" + verified +
+                ", calificacion=" + rating +
+                ", Fecha de creación=" + createdAt +
                 '}';
     }
 }

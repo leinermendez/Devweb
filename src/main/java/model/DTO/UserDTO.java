@@ -1,22 +1,24 @@
 package model.DTO;
 
+import enums.Role;
+
 public class UserDTO {
 
     private String id;
     private String name;
     private String email;
-    private String rol;
+    private Role role;
     private Boolean verified;
     private Double rating;
 
     public UserDTO() {
     }
 
-    public UserDTO(String id, String name, String email, String rol, Boolean verified, Double rating) {
+    public UserDTO(String id, String name, String email, Role role, Boolean verified, Double rating) {
         this.id = id;
         this.name = name;
         this.email = email;
-        this.rol = rol;
+        this.role = role;
         this.verified = verified;
         this.rating = rating;
     }
@@ -46,12 +48,12 @@ public class UserDTO {
         this.email = email;
     }
 
-    public String getRol() {
-        return rol;
+    public Role getRole() {
+        return role;
     }
 
-    public void setRol(String rol) {
-        this.rol = rol;
+    public void setRole(Role role) {
+        this.role = role;
     }
 
     public Boolean getVerified() {
