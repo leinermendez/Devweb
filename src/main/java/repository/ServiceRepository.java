@@ -1,4 +1,9 @@
 package repository;
 
-public class ServiceRepository {
+import model.Service;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface ServiceRepository extends JpaRepository<Service, Integer> {
 }
