@@ -1,4 +1,4 @@
-package model.DTO;
+package ucr.ac.cr.Devweb.model.DTO;
 
 public class LoginDTO {
     private String email;

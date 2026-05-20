@@ -1,4 +1,4 @@
-package enums;
+package ucr.ac.cr.Devweb.enums;
 
 public enum Role {
     CLIENT,

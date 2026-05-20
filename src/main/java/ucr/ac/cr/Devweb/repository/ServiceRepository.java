@@ -1,6 +1,6 @@
-package repository;
+package ucr.ac.cr.Devweb.repository;
 
-import model.Service;
+import ucr.ac.cr.Devweb.model.Service;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

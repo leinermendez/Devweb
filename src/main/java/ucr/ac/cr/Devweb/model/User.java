@@ -1,41 +1,55 @@
-package model;
+package ucr.ac.cr.Devweb.model;
 
-import enums.Role;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import ucr.ac.cr.Devweb.enums.Role;
+import jakarta.persistence.*;
+
 import java.time.LocalDateTime;
 
 @Entity
 public class User {
+
     @Id
-    private String id;
+    //generar el Id automaticamente
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     private String name;
     private String password;
     private String email;
     private Role role;
     private Boolean verified;
     private Double rating;
+
+
     private LocalDateTime createdAt;
+
 
     public User() {
     }
 
-    public User(String id, String name, String password, String email, Role role, Boolean verified, Double rating, LocalDateTime createdAt) {
-        this.id = id;
+
+    //Prepersist le dice a Spring que antes de guardar este objeto en la base de datos, ejecute este código
+    @PrePersist
+    public void prePersist() {
+        this.createdAt = LocalDateTime.now();
+    }
+
+
+    //Contructor, no incluye el Id ni la fecha de creacion porque eso se hara automaticamente y no es un dato que se deba introducir al crearlo
+    public User(String name, String password, String email, Role role, Boolean verified, Double rating) {
         this.name = name;
         this.password = password;
         this.email = email;
         this.role = role;
         this.verified = verified;
         this.rating = rating;
-        this.createdAt = createdAt;
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

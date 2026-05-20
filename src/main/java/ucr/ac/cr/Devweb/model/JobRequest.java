@@ -1,6 +1,6 @@
-package model;
+package ucr.ac.cr.Devweb.model;
 
-import enums.RequestStatus;
+import ucr.ac.cr.Devweb.enums.RequestStatus;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 

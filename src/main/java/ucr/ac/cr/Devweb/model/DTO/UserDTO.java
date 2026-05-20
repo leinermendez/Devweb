@@ -1,10 +1,10 @@
-package model.DTO;
+package ucr.ac.cr.Devweb.model.DTO;
 
-import enums.Role;
+import ucr.ac.cr.Devweb.enums.Role;
 
 public class UserDTO {
 
-    private String id;
+    private Long id;
     private String name;
     private String email;
     private Role role;
@@ -14,7 +14,7 @@ public class UserDTO {
     public UserDTO() {
     }
 
-    public UserDTO(String id, String name, String email, Role role, Boolean verified, Double rating) {
+    public UserDTO(Long id, String name, String email, Role role, Boolean verified, Double rating) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -24,11 +24,11 @@ public class UserDTO {
     }
 
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
