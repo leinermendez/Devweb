@@ -9,7 +9,8 @@ public class User {
     @Id
     private String id;
     private String name;
-    private String passwod;
+    private String password;
+    private String email;
     private String rol;
     private Boolean verified;
     private Double rating;
@@ -18,10 +19,11 @@ public class User {
     public User() {
     }
 
-    public User(String id, String name, String passwod, String rol, Boolean verified, Double rating, LocalDateTime createdAt) {
+    public User(String id, String name, String password, String email, String rol, Boolean verified, Double rating, LocalDateTime createdAt) {
         this.id = id;
         this.name = name;
-        this.passwod = passwod;
+        this.password = password;
+        this.email = email;
         this.rol = rol;
         this.verified = verified;
         this.rating = rating;
@@ -44,12 +46,20 @@ public class User {
         this.name = name;
     }
 
-    public String getPasswod() {
-        return passwod;
+    public String getPassword() {
+        return password;
     }
 
-    public void setPasswod(String passwod) {
-        this.passwod = passwod;
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getRol() {
@@ -89,7 +99,8 @@ public class User {
         return "User{" +
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
-                ", passwod='" + passwod + '\'' +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
                 ", rol='" + rol + '\'' +
                 ", verified=" + verified +
                 ", rating=" + rating +
