@@ -55,13 +55,13 @@ public class UserService {
             existing.setRating(user.getRating());
             return convertirUserDTO(userRepository.save(existing));
         }
-        throw new RuntimeException("Usuario no encontrado con id: " + id);
+        throw new RuntimeException("Usuario no encontrado con id: " + id); //Tira error si el id del usuario no se encuentra
     }
 
     //ELIMINAR USUARIO
     public void deleteUser(Long id) {
         if(!userRepository.existsById(id)){
-            throw new RuntimeException("Usuario no encontrado con id: " + id);
+            throw new RuntimeException("Usuario no encontrado con id: " + id); //Tira error si el id del usuario no se encuentra
         }
         userRepository.deleteById(id);
     }
