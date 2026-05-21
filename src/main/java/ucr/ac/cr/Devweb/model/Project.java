@@ -1,39 +1,46 @@
 package ucr.ac.cr.Devweb.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 
 @Entity
 public class Project {
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String title;
     private String description;
     private String category;
     private String imageUrl;
     private LocalDateTime date;
-    private User freelacer;
+
+    @ManyToOne //muchos proyectos pueden pertenecer a un solo usuario
+    @JoinColumn(name = "freelancer_id")  // en la tabla projects creá una columna llamada freelancer_id que guarde el ID del usuario
+    private User freelancer;
 
     public Project() {
     }
 
-    public Project(String id, String title, String description, String category, String imageUrl, LocalDateTime date, User freelacer) {
-        this.id = id;
+    //Prepersist le dice a Spring que antes de guardar este objeto en la base de datos, ejecute este código
+    @PrePersist
+    public void prePersist() {
+        this.date = LocalDateTime.now();
+    }
+
+    public Project(String title, String description, String category, String imageUrl, LocalDateTime date, User freelacer) {
         this.title = title;
         this.description = description;
         this.category = category;
         this.imageUrl = imageUrl;
-        this.date = date;
-        this.freelacer = freelacer;
+        this.freelancer = freelacer;
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -78,11 +85,11 @@ public class Project {
     }
 
     public User getFreelacer() {
-        return freelacer;
+        return freelancer;
     }
 
     public void setFreelacer(User freelacer) {
-        this.freelacer = freelacer;
+        this.freelancer = freelacer;
     }
 
     @Override
@@ -94,7 +101,7 @@ public class Project {
                 ", category='" + category + '\'' +
                 ", imageUrl='" + imageUrl + '\'' +
                 ", date=" + date +
-                ", freelacer=" + freelacer +
+                ", freelacer=" + freelancer +
                 '}';
     }
 }
