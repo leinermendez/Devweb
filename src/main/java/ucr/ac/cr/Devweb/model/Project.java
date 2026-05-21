@@ -42,12 +42,12 @@ public class Project {
         this.date = LocalDateTime.now();
     }
 
-    public Project(String title, String description, String category, String imageUrl, LocalDateTime date, User freelacer) {
+    public Project(String title, String description, String category, String imageUrl, LocalDateTime date, User freelancer) {
         this.title = title;
         this.description = description;
         this.category = category;
         this.imageUrl = imageUrl;
-        this.freelancer = freelacer;
+        this.freelancer = freelancer;
     }
 
     public Long getId() {
@@ -98,12 +98,12 @@ public class Project {
         this.date = date;
     }
 
-    public User getFreelacer() {
+    public User getFreelancer() {
         return freelancer;
     }
 
-    public void setFreelacer(User freelacer) {
-        this.freelancer = freelacer;
+    public void setFreelancer(User freelancer) {
+        this.freelancer = freelancer;
     }
 
     @Override
@@ -115,7 +115,7 @@ public class Project {
                 ", category='" + category + '\'' +
                 ", imageUrl='" + imageUrl + '\'' +
                 ", date=" + date +
-                ", freelacer=" + freelancer +
+                ", freelancer=" + freelancer +
                 '}';
     }
 }

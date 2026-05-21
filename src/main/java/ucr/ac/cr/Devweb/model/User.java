@@ -18,6 +18,7 @@ public class User {
     @NotBlank(message = "El nombre es obligatorio") //verifica que el campo no esté vacío ni sea solo espacios.
     private String name;
 
+
     @NotBlank(message = "La contraseña es obligatoria")
     private String password;
 
