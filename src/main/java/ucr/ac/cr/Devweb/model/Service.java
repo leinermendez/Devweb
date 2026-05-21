@@ -2,6 +2,8 @@ package ucr.ac.cr.Devweb.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Service {
@@ -11,6 +13,9 @@ public class Service {
     private String description;
     private Double price;
     private String category;
+
+    @ManyToOne
+    @JoinColumn(name = "freelancer_id")
     private User freelancer;
 
     public Service() {

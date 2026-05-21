@@ -14,7 +14,7 @@ public class Project {
     private String category;
     private String imageUrl;
     private LocalDateTime date;
-    private User freelancer;
+    private User freelacer;
 
     public Project() {
     }
@@ -26,7 +26,7 @@ public class Project {
         this.category = category;
         this.imageUrl = imageUrl;
         this.date = date;
-        this.freelancer = freelacer;
+        this.freelacer = freelacer;
     }
 
     public String getId() {
@@ -78,11 +78,11 @@ public class Project {
     }
 
     public User getFreelacer() {
-        return freelancer;
+        return freelacer;
     }
 
     public void setFreelacer(User freelacer) {
-        this.freelancer = freelacer;
+        this.freelacer = freelacer;
     }
 
     @Override
@@ -94,7 +94,7 @@ public class Project {
                 ", category='" + category + '\'' +
                 ", imageUrl='" + imageUrl + '\'' +
                 ", date=" + date +
-                ", freelacer=" + freelancer +
+                ", freelacer=" + freelacer +
                 '}';
     }
 }
