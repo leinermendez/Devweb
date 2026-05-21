@@ -1,13 +1,13 @@
 package ucr.ac.cr.Devweb.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 
 @Entity
 public class Review {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String comment;
     private Integer rating;
@@ -18,11 +18,14 @@ public class Review {
     public Review() {
     }
 
-    public Review(Long id, String comment, Integer rating, LocalDateTime date, User client, User freelancer) {
-        this.id = id;
+    @PrePersist
+    public void prePersist() {
+        this.date = LocalDateTime.now();
+    }
+
+    public Review(String comment, Integer rating, User client, User freelancer) {
         this.comment = comment;
         this.rating = rating;
-        this.date = date;
         this.client = client;
         this.freelancer = freelancer;
     }
