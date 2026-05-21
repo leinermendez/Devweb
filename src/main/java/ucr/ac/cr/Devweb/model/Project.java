@@ -1,39 +1,60 @@
 package ucr.ac.cr.Devweb.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import org.hibernate.validator.constraints.URL;
 
 import java.time.LocalDateTime;
 
 @Entity
 public class Project {
+
     @Id
-    private String id;
+    //generar el Id automaticamente
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @NotBlank(message = "El titulo es obligatorio") //verifica que el campo no esté vacío ni sea solo espacios.
     private String title;
+
+    @NotBlank(message = "La descripcion es obligatoria")
     private String description;
+
+    @NotBlank(message = "La categoria es obligatoria")
     private String category;
+
+    @URL(message = "url inválida") // verifica que el texto tenga formato de url válido.
+    @NotBlank(message = "El url es obligatorio")
     private String imageUrl;
+
     private LocalDateTime date;
+
+    @ManyToOne
+    @JoinColumn(name = "freelancer_id")
     private User freelancer;
 
     public Project() {
     }
 
-    public Project(String id, String title, String description, String category, String imageUrl, LocalDateTime date, User freelacer) {
-        this.id = id;
+    //Prepersist le dice a Spring que antes de guardar este objeto en la base de datos, ejecute este código
+    @PrePersist
+    public void prePersist() {
+        this.date = LocalDateTime.now();
+    }
+
+    public Project(String title, String description, String category, String imageUrl, LocalDateTime date, User freelacer) {
         this.title = title;
         this.description = description;
         this.category = category;
         this.imageUrl = imageUrl;
-        this.date = date;
         this.freelancer = freelacer;
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
