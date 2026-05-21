@@ -15,11 +15,16 @@ public class User {
 
     private String name;
     private String password;
+
+    @Column(unique = true, nullable = false)
     private String email;
-    private Role role;
+
     private Boolean verified;
     private Double rating;
 
+
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
     private LocalDateTime createdAt;
 
@@ -77,7 +82,7 @@ public class User {
         this.email = email;
     }
 
-    public Role getRol() {
+    public Role getRole() {
         return role;
     }
 

@@ -1,46 +1,39 @@
 package ucr.ac.cr.Devweb.model;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 
 import java.time.LocalDateTime;
 
 @Entity
 public class Project {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id;
     private String title;
     private String description;
     private String category;
     private String imageUrl;
     private LocalDateTime date;
-
-    @ManyToOne //muchos proyectos pueden pertenecer a un solo usuario
-    @JoinColumn(name = "freelancer_id")  // en la tabla projects creá una columna llamada freelancer_id que guarde el ID del usuario
     private User freelancer;
 
     public Project() {
     }
 
-    //Prepersist le dice a Spring que antes de guardar este objeto en la base de datos, ejecute este código
-    @PrePersist
-    public void prePersist() {
-        this.date = LocalDateTime.now();
-    }
-
-    public Project(String title, String description, String category, String imageUrl, LocalDateTime date, User freelacer) {
+    public Project(String id, String title, String description, String category, String imageUrl, LocalDateTime date, User freelacer) {
+        this.id = id;
         this.title = title;
         this.description = description;
         this.category = category;
         this.imageUrl = imageUrl;
+        this.date = date;
         this.freelancer = freelacer;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
