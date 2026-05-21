@@ -22,13 +22,13 @@ public class ProjectService {
 
 
     //OBTENER TODOS LOS PROYECTOS
-    public List<ProjectDTO> getAllUsers() {
+    public List<ProjectDTO> getAllProjects() {
         return convertList(projectRepository.findAll());
     }
 
 
     //CREAR UN NUEVO PROYECTO
-    public ProjectDTO createUser(Project project) {
+    public ProjectDTO createProject(Project project) {
         Project saved = projectRepository.save(project);
         return convertirProjectDTO(saved);
     }
@@ -47,7 +47,7 @@ public class ProjectService {
 
 
     //ACTUALIZAR Proyecto
-    public ProjectDTO updateUser(Long id, Project project) {
+    public ProjectDTO updateProject(Long id, Project project) {
         Optional<Project> optional = this.projectRepository.findById(id);
         if(optional.isPresent()){
           Project existing = optional.get();
