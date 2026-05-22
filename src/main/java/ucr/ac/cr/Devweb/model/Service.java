@@ -1,27 +1,60 @@
 package ucr.ac.cr.Devweb.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Positive;
+import org.hibernate.validator.constraints.URL;
+import ucr.ac.cr.Devweb.enums.Category;
+
+import java.time.LocalDateTime;
 
 @Entity
 public class Service {
+
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @NotBlank(message = "El titulo es obligatorio")
     private String title;
+
+    @NotBlank(message = "La descripcion es obligatoria")
     private String description;
+
+    @NotBlank(message = "El precio es obligatorio")
+    @Positive(message = "El precio debe ser mayor a 0")
     private Double price;
-    private String category;
+
+    @Enumerated(EnumType.STRING)
+    private Category category;
+
+    @URL(message = "Url inválida")
+    @NotBlank(message = "El url de la imagen es obligatorio")
+    private String imageUrl;
+
+    private LocalDateTime date;
+
+    @ManyToOne
+    @JoinColumn(name = "freelancer_id")
     private User freelancer;
+
 
     public Service() {
     }
 
-    public Service(Long id, String title, String description, Double price, String category, User freelancer) {
+    @PrePersist
+    public void prePersist() {
+        this.date = LocalDateTime.now();
+    }
+
+    public Service(Long id, String title, String description, Double price, Category category, String imageUrl, User freelancer) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.price = price;
         this.category = category;
+        this.imageUrl = imageUrl;
+
         this.freelancer = freelancer;
     }
 
@@ -57,12 +90,28 @@ public class Service {
         this.price = price;
     }
 
-    public String getCategory() {
+    public Category getCategory() {
         return category;
     }
 
-    public void setCategory(String category) {
+    public void setCategory(Category category) {
         this.category = category;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public LocalDateTime getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDateTime date) {
+        this.date = date;
     }
 
     public User getFreelancer() {
@@ -81,6 +130,8 @@ public class Service {
                 ", description='" + description + '\'' +
                 ", price=" + price +
                 ", category='" + category + '\'' +
+                ", imageUrl='" + imageUrl + '\'' +
+                ", date=" + date +
                 ", freelancer=" + freelancer +
                 '}';
     }

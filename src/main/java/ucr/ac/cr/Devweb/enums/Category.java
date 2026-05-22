@@ -1,0 +1,17 @@
+package ucr.ac.cr.Devweb.enums;
+
+public enum Category {
+    PROGRAMMING,
+    WEB_DEVELOPMENT,
+    MOBILE_DEVELOPMENT,
+    GAME_DEVELOPMENT,
+
+    GRAPHIC_DESIGN,
+    UI_UX_DESIGN,
+    ILLUSTRATION,
+    ANIMATION,
+
+    VIDEO_EDITING,
+    PHOTOGRAPHY,
+    MUSIC_PRODUCTION
+}
