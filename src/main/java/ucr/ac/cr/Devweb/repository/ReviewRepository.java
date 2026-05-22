@@ -8,7 +8,7 @@ import ucr.ac.cr.Devweb.model.User;
 import java.util.List;
 
 @Repository
-public interface ReviewRepository extends JpaRepository<Review, Integer> {
+public interface ReviewRepository extends JpaRepository<Review, Long> {
     List<Review> findByFreelancerID(Long freelancerId);
 }
 
