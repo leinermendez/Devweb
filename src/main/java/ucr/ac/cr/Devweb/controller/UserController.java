@@ -13,6 +13,7 @@ import ucr.ac.cr.Devweb.service.UserService;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/users")
@@ -66,6 +67,7 @@ public class UserController {
         this.userService.deleteUser(id);
         return ResponseEntity.ok("Usuario eliminado correctamente");
     }
+
 
 
 

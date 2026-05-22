@@ -7,3 +7,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface JobRequestRepository extends JpaRepository<JobRequest, Integer> {
 }
+
+
