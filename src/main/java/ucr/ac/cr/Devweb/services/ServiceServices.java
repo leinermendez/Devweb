@@ -1,4 +1,4 @@
 package ucr.ac.cr.Devweb.services;
 
-public class ServicesServices {
+public class ServiceServices {
 }
