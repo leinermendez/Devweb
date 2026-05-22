@@ -24,18 +24,18 @@ public class ReviewService {
 
     //OPTENER LAS REVIEWS DEPENDIENDO DEL ID DEL FREELANCER
     public List<ReviewDTO> findReviewFre(Long id) {
-        List<Review> results = this.reviewRepository.findByFreelancerID(id);
+        List<Review> results = this.reviewRepository.findByFreelancerId(id);
         return converterListDTO(results);
     }
 
     //OPTENEMOS EL PROMEDIO DEL RATING
     public Double average(Long freelancerId){
-        return reviewRepository.findByFreelancerID(freelancerId).stream().mapToInt(Review::getRating).average().orElse(0.0);
+        return reviewRepository.findByFreelancerId(freelancerId).stream().mapToInt(Review::getRating).average().orElse(0.0);
     }
 
     //ELIMINACION DE UNA REVIEW POR MEDIO DE SU ID
     public void deleteReview(Long id){
-        this.deleteReview(id);
+        this.reviewRepository.deleteById(id);
     }
 
     //CONVERTIR EN DTO

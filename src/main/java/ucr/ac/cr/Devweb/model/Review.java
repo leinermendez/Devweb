@@ -15,7 +15,13 @@ public class Review {
     private String comment;
     private Integer rating;
     private LocalDateTime date;
+
+    @ManyToOne
+    @JoinColumn(name = "client_id")
     private User client;
+
+    @ManyToOne
+    @JoinColumn(name = "freelancer_id")
     private User freelancer;
 
     public Review() {
@@ -81,15 +87,4 @@ public class Review {
         this.freelancer = freelancer;
     }
 
-    @Override
-    public String toString() {
-        return "Review{" +
-                "id=" + id +
-                ", comment='" + comment + '\'' +
-                ", rating=" + rating +
-                ", date=" + date +
-                ", client=" + client +
-                ", freelancer=" + freelancer +
-                '}';
-    }
 }

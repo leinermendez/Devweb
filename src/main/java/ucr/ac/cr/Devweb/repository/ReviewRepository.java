@@ -9,6 +9,6 @@ import java.util.List;
 
 @Repository
 public interface ReviewRepository extends JpaRepository<Review, Long> {
-    List<Review> findByFreelancerID(Long freelancerId);
+    List<Review> findByFreelancerId(Long freelancerId);
 }
 
