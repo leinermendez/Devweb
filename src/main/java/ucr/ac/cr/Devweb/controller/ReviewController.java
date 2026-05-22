@@ -7,6 +7,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import ucr.ac.cr.Devweb.model.DTO.ReviewDTO;
 import ucr.ac.cr.Devweb.model.Review;
 import ucr.ac.cr.Devweb.service.ReviewService;
 
@@ -22,12 +23,15 @@ public class ReviewController {
 
     @GetMapping("/{id}")
     public ResponseEntity<?> findReviewByFreelancerID(@PathVariable Long id){
-        List<Review> reviews= this.reviewService.findReviewFre(id);
-
+        List<ReviewDTO> reviews= this.reviewService.findReviewFre(id);
         if(reviews.isEmpty()) {
             return ResponseEntity.ok("Freelancer " + id + " has no reviews");
         }
-        return ResponseEntity.ok(reviews);
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("Average", this.reviewService.average(id));
+        response.put("Reviews",reviews);
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping
