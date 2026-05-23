@@ -2,21 +2,21 @@ package ucr.ac.cr.Devweb.model.DTO;
 
 import ucr.ac.cr.Devweb.enums.Category;
 
-public class ServiceDTO {
+public class ServicesDTO {
 
     private String title;
     private Long id;
-    private  Category category;
+    private Category category;
     private String freelancerName;
     private Double price;
 
-    public ServiceDTO() {
+    public ServicesDTO() {
     }
 
-    public ServiceDTO(String title, Long id,Category category, String freelancerName, Double price) {
+    public ServicesDTO(String title, Long id, Category category, String freelancerName, Double price) {
         this.title = title;
         this.id = id;
-        this.category =  category;
+        this.category = category;
         this.freelancerName = freelancerName;
         this.price = price;
     }

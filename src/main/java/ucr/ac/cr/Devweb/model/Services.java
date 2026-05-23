@@ -2,6 +2,7 @@ package ucr.ac.cr.Devweb.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import org.hibernate.validator.constraints.URL;
 import ucr.ac.cr.Devweb.enums.Category;
@@ -9,7 +10,7 @@ import ucr.ac.cr.Devweb.enums.Category;
 import java.time.LocalDateTime;
 
 @Entity
-public class Service {
+public class Services {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,7 +22,7 @@ public class Service {
     @NotBlank(message = "La descripcion es obligatoria")
     private String description;
 
-    @NotBlank(message = "El precio es obligatorio")
+    @NotNull(message = "El precio es obligatorio")
     @Positive(message = "El precio debe ser mayor a 0")
     private Double price;
 
@@ -39,7 +40,7 @@ public class Service {
     private User freelancer;
 
 
-    public Service() {
+    public Services() {
     }
 
     @PrePersist
@@ -47,7 +48,7 @@ public class Service {
         this.date = LocalDateTime.now();
     }
 
-    public Service(Long id, String title, String description, Double price, Category category, String imageUrl, User freelancer) {
+    public Services(Long id, String title, String description, Double price, Category category, String imageUrl, User freelancer) {
         this.id = id;
         this.title = title;
         this.description = description;
