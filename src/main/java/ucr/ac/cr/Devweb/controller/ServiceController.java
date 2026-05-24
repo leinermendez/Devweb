@@ -106,5 +106,4 @@ public class ServiceController {
     public ResponseEntity<?> findAllByOrderByPriceDesc() {
         return ResponseEntity.ok(this.servicesService.findAllByOrderByPriceDesc());
     }
-
 }
