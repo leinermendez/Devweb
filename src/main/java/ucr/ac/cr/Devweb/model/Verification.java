@@ -1,4 +1,4 @@
-package ucr.ac.cr.Devweb.model;
+/*package ucr.ac.cr.Devweb.model;
 
 import ucr.ac.cr.Devweb.enums.VerificationStatus;
 import jakarta.persistence.Entity;
@@ -77,3 +77,5 @@ public class Verification {
                 '}';
     }
 }
+
+ */

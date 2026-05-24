@@ -1,4 +1,4 @@
-package ucr.ac.cr.Devweb.services;
+package ucr.ac.cr.Devweb.service;
 
 
 import org.springframework.beans.factory.annotation.Autowired;

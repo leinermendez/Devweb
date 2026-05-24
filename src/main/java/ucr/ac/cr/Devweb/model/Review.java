@@ -1,4 +1,4 @@
-package ucr.ac.cr.Devweb.model;
+/* package ucr.ac.cr.Devweb.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -87,3 +87,6 @@ public class Review {
                 '}';
     }
 }
+
+
+ */

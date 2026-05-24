@@ -2,6 +2,7 @@ package ucr.ac.cr.Devweb.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 
 import java.time.LocalDateTime;
 
@@ -15,6 +16,8 @@ public class Project {
     private String category;
     private String imageUrl;
     private LocalDateTime date;
+
+    @ManyToOne
     private User freelancer;
 
     public Project() {

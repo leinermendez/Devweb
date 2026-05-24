@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import ucr.ac.cr.Devweb.enums.Category;
 import ucr.ac.cr.Devweb.model.DTO.ServicesDTO;
 import ucr.ac.cr.Devweb.model.Services;
-import ucr.ac.cr.Devweb.services.ServicesService;
+import ucr.ac.cr.Devweb.service.ServicesService;
 
 import java.util.HashMap;
 import java.util.List;

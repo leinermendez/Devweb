@@ -1,4 +1,4 @@
-package ucr.ac.cr.Devweb.repository;
+/* package ucr.ac.cr.Devweb.repository;
 
 import ucr.ac.cr.Devweb.model.JobRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -9,3 +9,5 @@ public interface JobRequestRepository extends JpaRepository<JobRequest, Integer>
 }
 
 
+
+ */
