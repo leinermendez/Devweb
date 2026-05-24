@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 
 @Entity
 public class Project {
+
     @Id
     private String id;
     private String title;
