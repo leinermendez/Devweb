@@ -1,6 +1,7 @@
 package ucr.ac.cr.Devweb.enums;
 
 public enum Category {
+
     PROGRAMMING,
     WEB_DEVELOPMENT,
     MOBILE_DEVELOPMENT,
