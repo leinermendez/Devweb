@@ -34,6 +34,17 @@ public class VerificationService {
         return this.verificationRepository.findById(id);
     }
 
+    public VerificationDTO changeStatus(Long id, VerificationStatus newStatus){
+        Verification verification = this.verificationRepository.findById(id).orElseThrow();
+        verification.setStatus(newStatus);
+        if (newStatus==VerificationStatus.APPROVED){
+            verification.getUser().setVerified(true);
+        }else {
+            verification.getUser().setVerified(false);
+        }
+        return converterToDTO(this.verificationRepository.save(verification));
+    }
+
     public List<VerificationDTO> findAllRequistPending(){//retorna la lista de las solicitudes que estan en estado PENDING
         return convertListDTO(this.verificationRepository.findByStatus(PENDING));
     }

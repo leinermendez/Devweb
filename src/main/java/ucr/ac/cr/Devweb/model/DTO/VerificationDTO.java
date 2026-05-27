@@ -5,11 +5,11 @@ import ucr.ac.cr.Devweb.enums.VerificationStatus;
 import java.time.LocalDateTime;
 
 public class VerificationDTO {
-    private Long id; // necesario para que el admin pueda aprobar/rechazar
+    private Long id; // como solo lo ve el admin mostramos la mayoria de datos
     private String evidenceUrl;
     private VerificationStatus status;
     private LocalDateTime requestDate;
-    private String userName; // solo el nombre, no todo el objeto User
+    private String userName; // solo el nombre, aqui es donde filtra la informacion el dto
 
     public VerificationDTO() {
     }

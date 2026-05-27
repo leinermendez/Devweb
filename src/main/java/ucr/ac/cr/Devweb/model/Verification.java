@@ -17,7 +17,7 @@ public class Verification {
     private String evidenceUrl;
 
     private LocalDateTime requestDate;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.MERGE)// De esta forma actualizamos el boolean del usuario
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 

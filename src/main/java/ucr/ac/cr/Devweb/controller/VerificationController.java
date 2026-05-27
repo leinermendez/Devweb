@@ -2,12 +2,12 @@ package ucr.ac.cr.Devweb.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import ucr.ac.cr.Devweb.enums.VerificationStatus;
 import ucr.ac.cr.Devweb.model.DTO.VerificationDTO;
 import ucr.ac.cr.Devweb.model.Verification;
 import ucr.ac.cr.Devweb.service.VerificationService;
@@ -52,6 +52,11 @@ public class VerificationController {
         return ResponseEntity.status(HttpStatus.CREATED).body(veriDTO);
     }
 
-
+    @PutMapping("/{id}")
+    //@PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<?> updateVerification(@PathVariable Long id, @RequestBody Map<String, String> body){
+        VerificationStatus newStatus=VerificationStatus.valueOf(body.get("status"));
+        return ResponseEntity.ok(this.verificationService.changeStatus(id,newStatus));
+    }
 
 }
