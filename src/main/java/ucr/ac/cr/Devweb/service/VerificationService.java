@@ -20,6 +20,17 @@ public class VerificationService {
     @Autowired
     private VerificationRepository verificationRepository;
 
+    public VerificationDTO saveVerification(Verification verification) {
+        //comprueba si la solicitud del usuario esta pendiente o no
+        Boolean requistPending = this.verificationRepository.existsByUserAndStatus(verification.getUser(), PENDING);
+        if (requistPending){
+            return null;
+        }
+        return this.converterToDTO(this.verificationRepository.save(verification));
+    }
+
+
+
     public List<VerificationDTO> findAllRequistPending(){//retorna la lista de las solicitudes que estan en estado PENDING
         return convertListDTO(this.verificationRepository.findByStatus(PENDING));
     }
