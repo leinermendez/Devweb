@@ -11,6 +11,7 @@ import ucr.ac.cr.Devweb.repository.VerificationRepository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static ucr.ac.cr.Devweb.enums.VerificationStatus.PENDING;//importo unicamente este estado
 
@@ -29,7 +30,9 @@ public class VerificationService {
         return this.converterToDTO(this.verificationRepository.save(verification));
     }
 
-
+    public Optional<Verification> findById(Long id){
+        return this.verificationRepository.findById(id);
+    }
 
     public List<VerificationDTO> findAllRequistPending(){//retorna la lista de las solicitudes que estan en estado PENDING
         return convertListDTO(this.verificationRepository.findByStatus(PENDING));

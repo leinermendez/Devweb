@@ -28,6 +28,11 @@ public class VerificationController {
         return ResponseEntity.ok(this.verificationService.findAllRequistPending());
     }
 
+    @GetMapping("/{id}")
+    //@PreAuthorize("hasRole('ADMIN')") -  se necesita una nueva dependencia para filtrar usuarios
+    public ResponseEntity<?> showVerification(@PathVariable Long id){
+        return ResponseEntity.ok(this.verificationService.findById(id));
+    }
 
     @PostMapping
     public ResponseEntity<?> saveVerification(@Validated @RequestBody Verification verification, BindingResult result){

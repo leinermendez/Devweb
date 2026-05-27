@@ -12,7 +12,7 @@ import java.util.Optional;
 @Repository
 public interface VerificationRepository extends JpaRepository<Verification, Long> {
         List<Verification> findByStatus(VerificationStatus status);//filtra las verificaciones por el estado
-
+        Optional<Verification> findById(Long id);
         boolean existsByUserAndStatus(User user, VerificationStatus status);
 
 }
