@@ -1,4 +1,4 @@
-/* package ucr.ac.cr.Devweb.model;
+ package ucr.ac.cr.Devweb.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -17,11 +17,11 @@ public class Review {
     private LocalDateTime date;
 
     @ManyToOne
-    @JoinColumn(name = "client_id")
+    @JoinColumn(name = "client_id",nullable = false)
     private User client;
 
     @ManyToOne
-    @JoinColumn(name = "freelancer_id")
+    @JoinColumn(name = "frelancer_id",nullable = false)
     private User freelancer;
 
     public Review() {
@@ -90,4 +90,3 @@ public class Review {
 }
 
 
- */

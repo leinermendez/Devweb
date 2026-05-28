@@ -19,7 +19,8 @@ public class ReviewService {
     //CREAR UNA NUEVA REVIEW OPTENIENDO LOS DATOS DEL FRONTEND
     public Review createReview(Review review) {
         review.setDate(LocalDateTime.now());
-        return this.reviewRepository.save(review);
+        Review change = this.reviewRepository.save(review);
+        return this.reviewRepository.findById(change.getId()).orElseThrow();
     }
 
     //OPTENER LAS REVIEWS DEPENDIENDO DEL ID DEL FREELANCER
