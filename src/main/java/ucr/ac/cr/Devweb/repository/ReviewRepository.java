@@ -1,4 +1,4 @@
-package ucr.ac.cr.Devweb.repository;
+/* package ucr.ac.cr.Devweb.repository;
 
 import ucr.ac.cr.Devweb.model.Review;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -12,3 +12,5 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
     List<Review> findByFreelancerId(Long freelancerId);
 }
 
+
+ */

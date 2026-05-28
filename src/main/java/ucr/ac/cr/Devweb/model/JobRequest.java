@@ -1,4 +1,4 @@
-package ucr.ac.cr.Devweb.model;
+/*package ucr.ac.cr.Devweb.model;
 
 import ucr.ac.cr.Devweb.enums.RequestStatus;
 import jakarta.persistence.Entity;
@@ -15,20 +15,20 @@ public class JobRequest {
     private LocalDateTime createdAt;
     private User client;
     private User freelancer;
-    private Service service;
+    private Services services;
 
     public JobRequest(){
 
     }
 
-    public JobRequest(Long id, String description, RequestStatus status, LocalDateTime createdAt, User client, User freelancer, Service service) {
+    public JobRequest(Long id, String description, RequestStatus status, LocalDateTime createdAt, User client, User freelancer, Services services) {
         this.id = id;
         this.description = description;
         this.status = status;
         this.createdAt = createdAt;
         this.client = client;
         this.freelancer = freelancer;
-        this.service = service;
+        this.services = services;
     }
 
     public Long getId() {
@@ -79,12 +79,12 @@ public class JobRequest {
         this.freelancer = freelancer;
     }
 
-    public Service getService() {
-        return service;
+    public Services getService() {
+        return services;
     }
 
-    public void setService(Service service) {
-        this.service = service;
+    public void setService(Services services) {
+        this.services = services;
     }
 
     @Override
@@ -96,7 +96,10 @@ public class JobRequest {
                 ", createdAt=" + createdAt +
                 ", client=" + client +
                 ", freelancer=" + freelancer +
-                ", service=" + service +
+                ", service=" + services +
                 '}';
     }
 }
+
+
+ */

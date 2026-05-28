@@ -1,4 +1,4 @@
-package ucr.ac.cr.Devweb.model;
+/* package ucr.ac.cr.Devweb.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -88,3 +88,6 @@ public class Review {
     }
 
 }
+
+
+ */
