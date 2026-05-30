@@ -45,17 +45,15 @@ public class JobRequestService {
         return convertListDTO(requests);
     }
 
+    //por si el cliente desea actualizar la descripción de su solicitud
     public JobRequestDTO editJobRequest(Long id, JobRequest jobRequestEdit) {
         Optional<JobRequest> requestOp = this.jobRequestRepository.findById(id);
         if (requestOp.isPresent()) {
-            JobRequest request = requestOp.get();
+            JobRequest jobRequest = requestOp.get();
 
-            request.setDescription(jobRequestEdit.getDescription());
-            request.setClient(jobRequestEdit.getClient());
-            request.setFreelancer(jobRequestEdit.getFreelancer());
-            request.setService(jobRequestEdit.getService());
+            jobRequest.setDescription(jobRequestEdit.getDescription());
 
-            return convertJobRequestDTO(this.jobRequestRepository.save(request));
+            return convertJobRequestDTO(this.jobRequestRepository.save(jobRequest));
         }
         return null;
     }
