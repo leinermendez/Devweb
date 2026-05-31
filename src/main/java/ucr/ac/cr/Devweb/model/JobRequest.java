@@ -1,24 +1,54 @@
-/*package ucr.ac.cr.Devweb.model;
+package ucr.ac.cr.Devweb.model;
 
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import ucr.ac.cr.Devweb.enums.RequestStatus;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
 
 import java.time.LocalDateTime;
 
 @Entity
 public class JobRequest {
+
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @NotBlank(message = "La descripción es obligatoria")
     private String description;
-    private RequestStatus status;
+
     private LocalDateTime createdAt;
+
+    @Enumerated(EnumType.STRING)
+    private RequestStatus status;
+
+    @NotNull(message = "El id del cliente es obligatorio")//no puede quedar null
+    @ManyToOne
+    @JoinColumn(name = "client_id", nullable = false)// nullable = false es una validacion para que no quedé como null
     private User client;
+
+    @NotNull(message = "El id del freelancer es obligatorio")
+    @ManyToOne
+    @JoinColumn(name = "freelancer_id", nullable = false)
     private User freelancer;
+
+    @NotNull(message = "El servicio es obligatorio")
+    @ManyToOne
+    @JoinColumn(name = "service_id", nullable = false)
     private Services services;
 
     public JobRequest(){
 
+    }
+
+    @PrePersist
+    public void prePersist() {
+        this.createdAt = LocalDateTime.now();
+
+        //pone el status inicial de las peticiones en pendiente
+        if(this.status == null){
+            this.status = RequestStatus.PENDING;
+        }
     }
 
     public JobRequest(Long id, String description, RequestStatus status, LocalDateTime createdAt, User client, User freelancer, Services services) {
@@ -94,12 +124,8 @@ public class JobRequest {
                 ", description='" + description + '\'' +
                 ", status=" + status +
                 ", createdAt=" + createdAt +
-                ", client=" + client +
-                ", freelancer=" + freelancer +
-                ", service=" + services +
                 '}';
     }
 }
 
 
- */
