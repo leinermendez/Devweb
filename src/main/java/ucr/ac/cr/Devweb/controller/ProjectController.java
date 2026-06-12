@@ -77,7 +77,6 @@ public class ProjectController {
     }
 
 
-
     //eliminar
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteProjectById(@PathVariable Long id) {
