@@ -4,7 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ucr.ac.cr.Devweb.model.DTO.ReviewDTO;
 import ucr.ac.cr.Devweb.model.Review;
+import ucr.ac.cr.Devweb.model.User;
 import ucr.ac.cr.Devweb.repository.ReviewRepository;
+import ucr.ac.cr.Devweb.repository.UserRepository;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -15,12 +17,22 @@ public class ReviewService {
 
     @Autowired
     private ReviewRepository reviewRepository;
+    @Autowired
+    private UserRepository userRepository;
 
     //CREAR UNA NUEVA REVIEW OPTENIENDO LOS DATOS DEL FRONTEND
     public Review createReview(Review review) {
+        User client = userRepository
+                .findById(review.getClient().getId())
+                .orElseThrow(() -> new RuntimeException("Client no encontrado"));
+        User freelancer = userRepository
+                .findById(review.getFreelancer().getId())
+                .orElseThrow(() -> new RuntimeException("Freelancer no encontrado"));
+        review.setClient(client);
+        review.setFreelancer(freelancer);
         review.setDate(LocalDateTime.now());
-        Review change = this.reviewRepository.save(review);
-        return this.reviewRepository.findById(change.getId()).orElseThrow();
+
+        return this.reviewRepository.save(review);
     }
 
     //OPTENER LAS REVIEWS DEPENDIENDO DEL ID DEL FREELANCER
