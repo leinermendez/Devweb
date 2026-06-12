@@ -73,7 +73,6 @@ public class ServiceController {
         if(dto == null){
             return ResponseEntity.notFound().build();
         }
-
         return ResponseEntity.ok(dto);
     }
 
