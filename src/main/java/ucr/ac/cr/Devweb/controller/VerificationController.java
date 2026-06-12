@@ -16,7 +16,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/verification")
+@RequestMapping("/verification")
 public class VerificationController {
 
     @Autowired
