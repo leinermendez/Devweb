@@ -73,7 +73,6 @@ public class ServiceController {
         if(dto == null){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("El servicio digitado esta vacio");
         }
-
         return ResponseEntity.ok(dto);
     }
 
@@ -106,5 +105,4 @@ public class ServiceController {
     public ResponseEntity<?> findAllByOrderByPriceDesc() {
         return ResponseEntity.ok(this.servicesService.findAllByOrderByPriceDesc());
     }
-
 }
