@@ -4,7 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ucr.ac.cr.Devweb.model.DTO.ProjectDTO;
 import ucr.ac.cr.Devweb.model.Project;
+import ucr.ac.cr.Devweb.model.User;
 import ucr.ac.cr.Devweb.repository.ProjectRepository;
+import ucr.ac.cr.Devweb.repository.UserRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,10 +18,13 @@ public class ProjectService {
     @Autowired
     private ProjectRepository projectRepository;
 
-    public ProjectService(ProjectRepository projectRepository) {
-        this.projectRepository = projectRepository;
-    }
+    @Autowired
+    private UserRepository userRepository;
 
+    public ProjectService(ProjectRepository projectRepository, UserRepository userRepository) {
+        this.projectRepository = projectRepository;
+        this.userRepository = userRepository;
+    }
 
     //OBTENER TODOS LOS PROYECTOS
     public List<ProjectDTO> getAllProjects() {
@@ -29,10 +34,13 @@ public class ProjectService {
 
     //CREAR UN NUEVO PROYECTO
     public ProjectDTO createProject(Project project) {
+        // Cargar el usuario completo antes de guardar
+        User freelancer = userRepository.findById(project.getFreelancer().getId()).orElseThrow();
+        project.setFreelancer(freelancer);
         Project saved = projectRepository.save(project);
-        Project full = projectRepository.findById(saved.getId()).orElseThrow();
-        return convertirProjectDTO(full);
+        return convertirProjectDTO(saved);
     }
+
     //OBETENER TODOS LOS PROYECTOS DE UN FREELANCER
     public List<ProjectDTO> getByFreelancerId(Long id){
         List<Project> projects = projectRepository.findByFreelancerId(id);
@@ -50,15 +58,18 @@ public class ProjectService {
     public ProjectDTO updateProject(Long id, Project project) {
         Optional<Project> optional = this.projectRepository.findById(id);
         if(optional.isPresent()){
-          Project existing = optional.get();
-            existing.setImageUrl(project.getTitle());
+            Project existing = optional.get();
+            existing.setTitle(project.getTitle());
             existing.setDescription(project.getDescription());
             existing.setCategory(project.getCategory());
             existing.setImageUrl(project.getImageUrl());
-            existing.setFreelancer(project.getFreelancer());
+
+            // Cargar el usuario completo
+            User freelancer = userRepository.findById(project.getFreelancer().getId()).orElseThrow();
+            existing.setFreelancer(freelancer);
             return convertirProjectDTO(projectRepository.save(existing));
         }
-        throw new RuntimeException("Proyecto no encontrado con id: " + id); //Tira error si el id del proyecto no se encuentra
+        throw new RuntimeException("Proyecto no encontrado con id: " + id);
     }
 
     //ELIMINAR PROYECTO
@@ -70,6 +81,7 @@ public class ProjectService {
     }
 
     public ProjectDTO convertirProjectDTO(Project project){
+        System.out.println("Freelancer: " + project.getFreelancer());
         ProjectDTO dto= new ProjectDTO();
         dto.setId(project.getId());
         dto.setTitle(project.getTitle());
