@@ -30,7 +30,8 @@ public class ProjectService {
     //CREAR UN NUEVO PROYECTO
     public ProjectDTO createProject(Project project) {
         Project saved = projectRepository.save(project);
-        return convertirProjectDTO(saved);
+        Project full = projectRepository.findById(saved.getId()).orElseThrow();
+        return convertirProjectDTO(full);
     }
 
     //OBETENER TODOS LOS PROYECTOS DE UN FREELANCER
