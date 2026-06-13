@@ -1,4 +1,4 @@
-package ucr.ac.cr.Devweb.services;
+package ucr.ac.cr.Devweb.service;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,9 +24,17 @@ public class ServicesService {
 
     public ServicesDTO saveService(Services services) {
 
-        User freelancer = userRepository
-                .findById(services.getFreelancer().getId())
-                .orElseThrow(() -> new RuntimeException("Freelancer no encontrado"));
+        User freelancer = userRepository.findById(services.getFreelancer().getId()).orElseThrow(() -> new RuntimeException("Freelancer no encontrado"));
+
+        if (!"FREELANCER".equalsIgnoreCase(freelancer.getRole().name())) {
+            throw new RuntimeException("El usuario no tiene rol FREELANCER");
+        }
+
+        boolean exists = servicesRepository.existsByTitleAndFreelancerId(services.getTitle(), freelancer.getId());
+
+        if (exists) {
+            throw new RuntimeException("Ya existe un servicio con este título para este freelancer");
+        }
 
         services.setFreelancer(freelancer);
 

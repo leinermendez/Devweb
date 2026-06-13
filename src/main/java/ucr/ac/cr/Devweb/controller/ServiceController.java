@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import ucr.ac.cr.Devweb.enums.Category;
 import ucr.ac.cr.Devweb.model.DTO.ServicesDTO;
 import ucr.ac.cr.Devweb.model.Services;
-import ucr.ac.cr.Devweb.services.ServicesService;
+import ucr.ac.cr.Devweb.service.ServicesService;
 
 import java.util.HashMap;
 import java.util.List;
@@ -25,22 +25,14 @@ public class ServiceController {
     private ServicesService servicesService;
 
     @PostMapping("/save")
-    public ResponseEntity<?> saveService(@Validated @RequestBody Services services, BindingResult result) {
-        if (result.hasErrors()){
-            Map<String, String> errors = new HashMap<>();
-            for(FieldError error : result.getFieldErrors()){
-                errors.put(error.getField(), error.getDefaultMessage());
-            }
-            return ResponseEntity.badRequest().body(errors);
+    public ResponseEntity<?> saveService(@RequestBody Services services) {
+        try {
+            ServicesDTO dto = servicesService.saveService(services);
+            return ResponseEntity.status(HttpStatus.CREATED).body(dto);
+
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
-
-        ServicesDTO dto=this.servicesService.saveService(services);
-
-        if(dto == null){
-            return ResponseEntity.status(HttpStatus.CONFLICT).body("El servicio con id " + services.getId() + " ya se encuentra registrado");
-        }
-
-        return ResponseEntity.status(HttpStatus.CREATED).body(dto);
     }
 
     @GetMapping("/findAll")
