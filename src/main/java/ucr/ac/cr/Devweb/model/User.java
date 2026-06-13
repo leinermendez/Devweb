@@ -1,5 +1,7 @@
 package ucr.ac.cr.Devweb.model;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import ucr.ac.cr.Devweb.enums.Role;
 import jakarta.persistence.*;
 
@@ -13,9 +15,15 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank(message = "El nombre es obligatorio") //verifica que el campo no esté vacío ni sea solo espacios.
     private String name;
+
+
+    @NotBlank(message = "La contraseña es obligatoria")
     private String password;
 
+    @Email(message = "Email inválido") // verifica que el texto tenga formato de email válido.
+    @NotBlank(message = "El email es obligatorio")
     @Column(unique = true, nullable = false)
     private String email;
 

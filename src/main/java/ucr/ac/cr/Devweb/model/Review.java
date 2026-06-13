@@ -1,28 +1,40 @@
-package ucr.ac.cr.Devweb.model;
+ package ucr.ac.cr.Devweb.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 
 import java.time.LocalDateTime;
 
 @Entity
 public class Review {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @NotBlank(message = "El comentario es obligatorio")
     private String comment;
     private Integer rating;
     private LocalDateTime date;
+
+    @ManyToOne
+    @JoinColumn(name = "client_id",nullable = false)
     private User client;
+
+    @ManyToOne
+    @JoinColumn(name = "frelancer_id",nullable = false)
     private User freelancer;
 
     public Review() {
     }
 
-    public Review(Long id, String comment, Integer rating, LocalDateTime date, User client, User freelancer) {
-        this.id = id;
+    @PrePersist
+    public void prePersist() {
+        this.date = LocalDateTime.now();
+    }
+
+    public Review(String comment, Integer rating, User client, User freelancer) {
         this.comment = comment;
         this.rating = rating;
-        this.date = date;
         this.client = client;
         this.freelancer = freelancer;
     }
@@ -75,15 +87,6 @@ public class Review {
         this.freelancer = freelancer;
     }
 
-    @Override
-    public String toString() {
-        return "Review{" +
-                "id=" + id +
-                ", comment='" + comment + '\'' +
-                ", rating=" + rating +
-                ", date=" + date +
-                ", client=" + client +
-                ", freelancer=" + freelancer +
-                '}';
-    }
 }
+
+

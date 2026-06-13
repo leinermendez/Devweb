@@ -1,0 +1,910 @@
+{
+  "info": {
+    "_postman_id": "1607ca2c-70d1-4dee-a2a3-ef94f3f631b6",
+    "name": "Devweb",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "44971448",
+    "_collection_link": "https://go.postman.co/collection/44971448-1607ca2c-70d1-4dee-a2a3-ef94f3f631b6?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Users",
+      "item": [
+        {
+          "name": "Guardar Usuario",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\": \"Aaron Méndez\",\r\n    \"email\": \"Aaron@gmail.com\",\r\n    \"password\": \"1234\",\r\n    \"role\": \"ADMIN\",\r\n    \"verified\": false,\r\n    \"rating\": 0.0\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/users",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "users"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Listar todos",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/users",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "users"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Busqueda por id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/users/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "users",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Editar Usuario",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\": \"Brandon Viquez\",\r\n    \"email\": \"Brandon@gmail.com\",\r\n    \"password\": \"1234\",\r\n    \"role\": \"ADMIN\",\r\n    \"verified\": false,\r\n    \"rating\": 0.0\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/users/6",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "users",
+                "6"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Eliminar usuario",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/users/7",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "users",
+                "7"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Autentificacion",
+      "item": [
+        {
+          "name": "inicio de sesion",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\": \"leiner@gmail.com\",\r\n    \"password\": \"1234\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/auth/login",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "auth",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Proyectos",
+      "item": [
+        {
+          "name": "Guardar un proyecto",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"title\": \"Mi  cuarto proyecto\",\r\n    \"description\": \"Proyecto Forum\",\r\n    \"category\": \"WEB_DEVELOPMENT\",\r\n    \"imageUrl\": \"https://example.com/image.jpg\",\r\n    \"freelancer\": {\r\n        \"id\": 8\r\n    }\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080 /projects",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080 ",
+              "path": [
+                "projects"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Listar todos",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"title\": \"Mi primer proyecto\",\r\n    \"description\": \"Descripción del proyecto\",\r\n    \"category\": \"WEB_DEVELOPMENT\",\r\n    \"imageUrl\": \"https://example.com/image.jpg\",\r\n    \"freelancer\": {\r\n        \"id\": 2\r\n    }\r\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080 /projects",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080 ",
+              "path": [
+                "projects"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Busqueda por Freelancer",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"title\": \"Mi primer proyecto\",\r\n    \"description\": \"Descripción del proyecto\",\r\n    \"category\": \"WEB_DEVELOPMENT\",\r\n    \"imageUrl\": \"https://example.com/image.jpg\",\r\n    \"freelancer\": {\r\n        \"id\": 2\r\n    }\r\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080 /projects/freelancer/8",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080 ",
+              "path": [
+                "projects",
+                "freelancer",
+                "8"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Buscar por categoría",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/projects/category/WEB_DEVELOPMENT",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "projects",
+                "category",
+                "WEB_DEVELOPMENT"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Editar proyecto",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"title\": \"Proyecto Editado\",\r\n    \"description\": \"Descripción editada\",\r\n    \"category\": \"WEB_DEVELOPMENT\",\r\n    \"imageUrl\": \"https://example.com/img.jpg\",\r\n    \"freelancer\": {\"id\": 8}\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/projects/7 ",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "projects",
+                "7 "
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Eliminar proyecto",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/projects/4",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "projects",
+                "4"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Servicios",
+      "item": [
+        {
+          "name": "Guardar Servicio",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"title\": \"Desarrollo de tienda virtual\",\r\n    \"description\": \"Creación de una tienda en línea con carrito de compras\",\r\n    \"price\": 500.0,\r\n    \"category\": \"WEB_DEVELOPMENT\",\r\n    \"imageUrl\": \"https://example.com/tienda.jpg\",\r\n    \"freelancer\": {\r\n        \"id\": 8\r\n    }\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/services/save",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "services",
+                "save"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Listar todos",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"title\": \"Diseño UX/UI\",\r\n  \"description\": \"Interfaces modernas y responsivas\",\r\n  \"price\": 25000000,\r\n  \"category\": \"GRAPHIC_DESIGN\",\r\n  \"imageUrl\": \"https://cdn-icons-png.flaticon.com/512/5968/5968705.png\",\r\n  \"freelancer\": {\r\n    \"id\": 1\r\n  }\r\n}\r\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/services/findAll",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "services",
+                "findAll"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Buscar servicios de un freelancer",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/services/findByFreelancer/8",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "services",
+                "findByFreelancer",
+                "8"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Filtrar por categoría",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/services/findByCategory/WEB_DEVELOPMENT",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "services",
+                "findByCategory",
+                "WEB_DEVELOPMENT"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Ordenar por precio ascendente",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/services/sortPrice/Asc",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "services",
+                "sortPrice",
+                "Asc"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Ordenar por precio descendente",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/services/sortPrice/Desc",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "services",
+                "sortPrice",
+                "Desc"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Editar Servicio",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"title\": \"Desarrollo de banco virtual\",\r\n    \"description\": \"Creación de un banco en línea\",\r\n    \"price\": 50.0,\r\n    \"category\": \"WEB_DEVELOPMENT\",\r\n    \"imageUrl\": \"https://example.com/tienda.jpg\",\r\n    \"freelancer\": {\r\n        \"id\": 8\r\n    }\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/services/edit/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "services",
+                "edit",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Eliminar Servicio",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/services/delete/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "services",
+                "delete",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Solicitud de trabajo",
+      "item": [
+        {
+          "name": "Crear Solicitud",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"description\": \"Necesito una página web hiperrealista\",\r\n  \"client\": {\r\n    \"id\": 2\r\n  },\r\n  \"freelancer\": {\r\n    \"id\": 8\r\n  },\r\n  \"services\": {\r\n    \"id\": 2\r\n  }\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/jobrequest/save",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "jobrequest",
+                "save"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Ver todas las solicitudes",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/jobrequest/findAll",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "jobrequest",
+                "findAll"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Buscar solicitud por ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/jobrequest/findById/5",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "jobrequest",
+                "findById",
+                "5"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Buscar solicitudes enviadas por cliente",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/jobrequest/findByClient/2",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "jobrequest",
+                "findByClient",
+                "2"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Buscar solicitudes recibidas por freelancer",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/jobrequest/findByFreelancer/8",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "jobrequest",
+                "findByFreelancer",
+                "8"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Editar solicitud",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"description\": \"Necesito una página web bonita\",\r\n  \"client\": {\r\n    \"id\": 2\r\n  },\r\n  \"freelancer\": {\r\n    \"id\": 8\r\n  },\r\n  \"services\": {\r\n    \"id\": 2\r\n  }\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/jobrequest/edit/5",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "jobrequest",
+                "edit",
+                "5"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Aceptar solicitud",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/jobrequest/accept/5",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "jobrequest",
+                "accept",
+                "5"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Rechazar solicitud",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/jobrequest/reject/6",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "jobrequest",
+                "reject",
+                "6"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Completar solicitud",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/jobrequest/complete/6",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "jobrequest",
+                "complete",
+                "6"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Eliminar solicitud",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/jobrequest/delete/6",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "jobrequest",
+                "delete",
+                "6"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Reviews",
+      "item": [
+        {
+          "name": "Crear resena",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"comment\": \"Excelente trabajo\",\r\n  \"rating\": 5,\r\n  \"client\": {\r\n    \"id\": 2\r\n  },\r\n  \"freelancer\": {\r\n    \"id\": 8\r\n  }\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/review",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "review"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Buscar por freelancer",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/review",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "review"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Eliminar resena",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/review/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "review",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Verificacion",
+      "item": [
+        {
+          "name": "Crear solicitud",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"evidenceUrl\": \"https://example.com/certificado.pdf\",\r\n    \"user\": {\"id\": 2}\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/verification",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "verification"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Ver todas",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": []
+        },
+        {
+          "name": "Buscar por id",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": []
+        },
+        {
+          "name": "Aprobar verificacion",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": []
+        },
+        {
+          "name": "Rechazar solicitud",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
