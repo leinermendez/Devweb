@@ -24,21 +24,17 @@ public class JobRequestController {
     private JobRequestService jobRequestService;
 
     @PostMapping("/save")
-    public ResponseEntity<?> saveJobRequest(@Validated @RequestBody JobRequest jobRequest, BindingResult result) {
-        if (result.hasErrors()) {
-            Map<String, String> errors = new HashMap<>();
-            for (FieldError error : result.getFieldErrors()) {
-                errors.put(error.getField(), error.getDefaultMessage());
+    public ResponseEntity<?> saveJobRequest(@RequestBody JobRequest jobRequest) {
+        try {
+            JobRequestDTO dto = this.jobRequestService.saveJobRequest(jobRequest);
+            if(dto == null){
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("No se pudo crear la solicitud");
             }
-            return ResponseEntity.badRequest().body(errors);
-        }
+            return ResponseEntity.status(HttpStatus.CREATED).body(dto);
 
-        JobRequestDTO dto = this.jobRequestService.saveJobRequest(jobRequest);
-
-        if (dto == null) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body("La solicitud de servicio con id " + jobRequest.getId() + " ya se encuentra registrada");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
-        return ResponseEntity.status(HttpStatus.CREATED).body(dto);
     }
 
     @GetMapping("/findAll")
