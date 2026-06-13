@@ -27,9 +27,6 @@ public class JobRequestController {
     public ResponseEntity<?> saveJobRequest(@RequestBody JobRequest jobRequest) {
         try {
             JobRequestDTO dto = this.jobRequestService.saveJobRequest(jobRequest);
-            if(dto == null){
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("No se pudo crear la solicitud");
-            }
             return ResponseEntity.status(HttpStatus.CREATED).body(dto);
 
         } catch (Exception e) {

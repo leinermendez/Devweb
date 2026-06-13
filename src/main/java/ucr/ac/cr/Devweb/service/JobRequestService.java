@@ -29,40 +29,36 @@ public class JobRequestService {
 
     public JobRequestDTO saveJobRequest(JobRequest jobRequest) {
 
-        // si no hay uno devuelve null
         if (jobRequest.getClient() == null || jobRequest.getFreelancer() == null || jobRequest.getService() == null) {
-            return null;
+            throw new RuntimeException("Cliente, freelancer y servicio son obligatorios");
         }
 
-        //el cliente debe existir
         if(!userRepository.existsById(jobRequest.getClient().getId())){
-            return null;
+            throw new RuntimeException("El cliente no existe");
         }
 
-        //el freelancer debe existir
         if(!userRepository.existsById(jobRequest.getFreelancer().getId())){
-            return null;
+            throw new RuntimeException("El freelancer no existe");
         }
 
-        // El cliente no puede ser el mismo que el freelancer
         if(jobRequest.getClient().getId().equals(jobRequest.getFreelancer().getId())){
-            return null;
+            throw new RuntimeException("El cliente no puede ser el mismo que el freelancer");
         }
 
         Services service = servicesRepository.findById(jobRequest.getService().getId()).orElse(null);
 
-        // validar que el servicio exista y que el freelancer ofrezca el servicio solicitado
-        if (service == null || !service.getFreelancer().getId().equals(jobRequest.getFreelancer().getId())) {
-            return null;
+        if (service == null ){
+            throw new RuntimeException("El servicio no existe");
         }
 
-        //define si es verdadero o falso que el jobrequest que se esta haciendo posee todas
-        //las caracteriscas que algún otro, y si es cierto que existe entonces no lo dejará porque
-        //se trataría de una solicitud duplicada
+        if (!service.getFreelancer().getId().equals(jobRequest.getFreelancer().getId())) {
+            throw new RuntimeException("El freelancer no ofrecer el servicio solicitado");
+        }
+
         boolean duplicated = jobRequestRepository.existsByClientIdAndFreelancerIdAndServicesIdAndStatus(jobRequest.getClient().getId(), jobRequest.getFreelancer().getId(), jobRequest.getService().getId(), RequestStatus.PENDING);
 
         if(duplicated){
-            return null;
+            throw new RuntimeException("Ya existe una solicitud pendiente para este servic");
         }
 
         return this.convertJobRequestDTO(this.jobRequestRepository.save(jobRequest));
