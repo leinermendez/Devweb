@@ -17,8 +17,8 @@ public class Review {
     private String comment;
 
     //Definiendo el minimo y maximo del rating
-    @Min(value = 1, message = "El rating es de 1")
-    @Max(value = 5, message = "El rating es de 5")
+    @Min(value = 1, message = "El rating es de minimo 1")
+    @Max(value = 5, message = "El rating es de maximo 5")
     private Integer rating;
 
 

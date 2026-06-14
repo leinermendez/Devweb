@@ -66,7 +66,7 @@ public class ReviewController {
             }
             return ResponseEntity.badRequest().body(errors);
         }
-        Review newReview = this.reviewService.createReview(review);
+        ReviewDTO newReview = this.reviewService.createReview(review);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(newReview);
     }

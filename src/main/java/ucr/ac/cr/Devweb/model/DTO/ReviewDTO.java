@@ -10,13 +10,15 @@ public class ReviewDTO {
     private Integer rating;
     private LocalDateTime date;
     private String clientName;
+    private String freelancerName;
 
 
-    public ReviewDTO(String comment, Integer rating, LocalDateTime date, String clientName) {
+    public ReviewDTO(String comment, Integer rating, LocalDateTime date, String clientName,String freelancerName) {
         this.comment = comment;
         this.rating = rating;
         this.date = date;
         this.clientName = clientName;
+        this.freelancerName=freelancerName;
     }
 
     public String getComment() {
@@ -33,5 +35,9 @@ public class ReviewDTO {
 
     public String getClientName() {
         return clientName;
+    }
+
+    public String getFreelancerName() {
+        return freelancerName;
     }
 }
