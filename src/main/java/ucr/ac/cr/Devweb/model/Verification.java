@@ -1,28 +1,38 @@
-/*package ucr.ac.cr.Devweb.model;
+package ucr.ac.cr.Devweb.model;
 
+import jakarta.persistence.*;
 import ucr.ac.cr.Devweb.enums.VerificationStatus;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
 
 import java.time.LocalDateTime;
 
 @Entity
 public class Verification {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Enumerated(EnumType.STRING)
     private VerificationStatus status;
+
     private String evidenceUrl;
+
     private LocalDateTime requestDate;
+    @ManyToOne(cascade = CascadeType.MERGE)// De esta forma actualizamos el boolean del usuario
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
     public Verification(){
     }
 
-    public Verification(Long id, VerificationStatus status, String evidenceUrl, LocalDateTime requestDate, User user) {
-        this.id = id;
+    @PrePersist
+    public void prePersist(){
+        this.requestDate=LocalDateTime.now();
+        this.status=VerificationStatus.PENDING;
+    }
+
+    public Verification(VerificationStatus status, String evidenceUrl, User user) {
         this.status = status;
         this.evidenceUrl = evidenceUrl;
-        this.requestDate = requestDate;
         this.user = user;
     }
 
@@ -65,17 +75,4 @@ public class Verification {
     public void setUser(User user) {
         this.user = user;
     }
-
-    @Override
-    public String toString() {
-        return "Verification{" +
-                "id=" + id +
-                ", status=" + status +
-                ", evidenceUrl='" + evidenceUrl + '\'' +
-                ", requestDate=" + requestDate +
-                ", user=" + user +
-                '}';
-    }
 }
-
- */

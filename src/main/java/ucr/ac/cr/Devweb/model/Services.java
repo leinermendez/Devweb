@@ -35,8 +35,9 @@ public class Services {
 
     private LocalDateTime date;
 
+    @NotNull(message = "El id del freelancer es obligatorio")
     @ManyToOne
-    @JoinColumn(name = "freelancer_id")
+    @JoinColumn(name = "freelancer_id", nullable = false)
     private User freelancer;
 
 

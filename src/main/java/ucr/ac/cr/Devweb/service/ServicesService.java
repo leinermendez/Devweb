@@ -6,7 +6,9 @@ import org.springframework.stereotype.Service;
 import ucr.ac.cr.Devweb.enums.Category;
 import ucr.ac.cr.Devweb.model.DTO.ServicesDTO;
 import ucr.ac.cr.Devweb.model.Services;
+import ucr.ac.cr.Devweb.model.User;
 import ucr.ac.cr.Devweb.repository.ServicesRepository;
+import ucr.ac.cr.Devweb.repository.UserRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,8 +19,17 @@ public class ServicesService {
 
     @Autowired
     private ServicesRepository servicesRepository;
+    @Autowired
+    private UserRepository userRepository;
 
     public ServicesDTO saveService(Services services) {
+
+        User freelancer = userRepository
+                .findById(services.getFreelancer().getId())
+                .orElseThrow(() -> new RuntimeException("Freelancer no encontrado"));
+
+        services.setFreelancer(freelancer);
+
         return this.convertServicesDTO(this.servicesRepository.save(services));
     }
 
@@ -33,17 +44,25 @@ public class ServicesService {
 
     public ServicesDTO editServices(Long id, Services servicesEdit) {
         Optional<Services> servicesOp = this.servicesRepository.findById(id);
+
         if (servicesOp.isPresent()) {
             Services services = servicesOp.get();
 
             services.setTitle(servicesEdit.getTitle());
             services.setCategory(servicesEdit.getCategory());
-            services.setFreelancer(servicesEdit.getFreelancer());
+
+            User freelancer = userRepository
+                    .findById(servicesEdit.getFreelancer().getId())
+                    .orElseThrow(() -> new RuntimeException("Freelancer no encontrado"));
+
+            services.setFreelancer(freelancer);
+
             services.setPrice(servicesEdit.getPrice());
             services.setDescription(servicesEdit.getDescription());
 
             return this.convertServicesDTO(this.servicesRepository.save(services));
         }
+
         return null;
     }
 

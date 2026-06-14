@@ -71,9 +71,8 @@ public class ServiceController {
         ServicesDTO dto=this.servicesService.editServices(id, servicesEdit);
 
         if(dto == null){
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("El servicio digitado esta vacio");
         }
-
         return ResponseEntity.ok(dto);
     }
 
@@ -106,5 +105,4 @@ public class ServiceController {
     public ResponseEntity<?> findAllByOrderByPriceDesc() {
         return ResponseEntity.ok(this.servicesService.findAllByOrderByPriceDesc());
     }
-
 }

@@ -7,6 +7,7 @@ import org.hibernate.validator.constraints.URL;
 import java.time.LocalDateTime;
 
 @Entity
+
 public class Project {
 
     @Id
@@ -29,10 +30,9 @@ public class Project {
 
     private LocalDateTime date;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "freelancer_id")
     private User freelancer;
-
     public Project() {
     }
 
