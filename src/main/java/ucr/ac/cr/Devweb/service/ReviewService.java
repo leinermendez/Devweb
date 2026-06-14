@@ -1,7 +1,11 @@
 package ucr.ac.cr.Devweb.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
+import ucr.ac.cr.Devweb.enums.Role;
 import ucr.ac.cr.Devweb.model.DTO.ReviewDTO;
 import ucr.ac.cr.Devweb.model.Review;
 import ucr.ac.cr.Devweb.model.User;
@@ -28,6 +32,14 @@ public class ReviewService {
         User freelancer = userRepository
                 .findById(review.getFreelancer().getId())
                 .orElseThrow(() -> new RuntimeException("Freelancer no encontrado"));
+
+        if (client.getId().equals(freelancer.getId())){//valida si los dos usuarios tienen el mismo id
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"No se puede hacer una receña a tu propia cuenta");
+        }
+
+        if (freelancer.getRole()== Role.ADMIN){//valida el rol del destinario de la reseña
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Un administrador no puede resivir reseñas");
+        }
         review.setClient(client);
         review.setFreelancer(freelancer);
         review.setDate(LocalDateTime.now());
