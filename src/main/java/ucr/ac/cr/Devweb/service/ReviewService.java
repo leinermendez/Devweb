@@ -53,10 +53,11 @@ public class ReviewService {
 
     //CONVERTIR EN DTO
     public ReviewDTO converDTO(Review review){
-        ReviewDTO reviewDTO= new ReviewDTO(review.getComment(),review.getRating(),review.getDate(),review.getClient());
+        ReviewDTO reviewDTO= new ReviewDTO(review.getComment(),review.getRating(),review.getDate(),review.getClient().getName());
         return reviewDTO;
     }
 
+    //Creamos la lista de reviews segun el DTO
     public List<ReviewDTO> converterListDTO(List<Review> listReview) {
         List<ReviewDTO> listDTO = new ArrayList<>();
         for (Review review : listReview) {

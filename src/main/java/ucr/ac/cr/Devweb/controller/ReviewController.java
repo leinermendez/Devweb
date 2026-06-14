@@ -21,6 +21,7 @@ public class ReviewController {
     @Autowired
     private ReviewService reviewService;
 
+    //Se muestran las reviews segun el id del Freelancer
     @GetMapping("/{id}")
     public ResponseEntity<?> findReviewByFreelancerID(@PathVariable Long id){
         List<ReviewDTO> reviews= this.reviewService.findReviewFre(id);
@@ -34,6 +35,7 @@ public class ReviewController {
         return ResponseEntity.ok(response);
     }
 
+    //Crea nuevas reviews
     @PostMapping
     public ResponseEntity<?> saveReview(@Validated @RequestBody Review review, BindingResult result){
         if (result.hasErrors()){
@@ -48,6 +50,7 @@ public class ReviewController {
         return ResponseEntity.status(HttpStatus.CREATED).body(newReview);
     }
 
+    //Elimina Reviews
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteReviewById(@PathVariable Long id){
         this.reviewService.deleteReview(id);
