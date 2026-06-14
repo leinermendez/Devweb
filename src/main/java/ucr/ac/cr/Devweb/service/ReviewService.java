@@ -35,9 +35,20 @@ public class ReviewService {
         return this.reviewRepository.save(review);
     }
 
+    //OPTIENE TODAS LAS REVIEWS
+    public List<ReviewDTO> findAll() {
+        List<Review> results = this.reviewRepository.findAll();
+        return converterListDTO(results);
+    }
+
     //OPTENER LAS REVIEWS DEPENDIENDO DEL ID DEL FREELANCER
     public List<ReviewDTO> findReviewFre(Long id) {
         List<Review> results = this.reviewRepository.findByFreelancerId(id);
+        return converterListDTO(results);
+    }
+    //OPTENER LAS REVIEWS DEPENDIENDO DEL ID DEL USUARIO
+    public List<ReviewDTO> findReviewUser(Long id) {
+        List<Review> results = this.reviewRepository.findByUserId(id);
         return converterListDTO(results);
     }
 

@@ -9,7 +9,8 @@ import java.util.List;
 
 @Repository
 public interface ReviewRepository extends JpaRepository<Review, Long> {
-    List<Review> findByFreelancerId(Long freelancerId);
+    List<Review> findByFreelancerId(Long freelancerId);//Filtra las reviews por el id del Freelancer
+    List<Review> findByUserId(Long UserId);//Filtra las reviews por el id del User
 }
 
 

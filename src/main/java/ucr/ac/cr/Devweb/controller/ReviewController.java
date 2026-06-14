@@ -21,12 +21,33 @@ public class ReviewController {
     @Autowired
     private ReviewService reviewService;
 
+    //Muestra todas las reviews de la pagina
+    @GetMapping
+    public ResponseEntity<?> findAllReviews(){
+        List<ReviewDTO> review=this.reviewService.findAll();
+        return ResponseEntity.ok(review);
+    }
+
     //Se muestran las reviews segun el id del Freelancer
-    @GetMapping("/{id}")
+    @GetMapping("/freelancer/{id}")
     public ResponseEntity<?> findReviewByFreelancerID(@PathVariable Long id){
         List<ReviewDTO> reviews= this.reviewService.findReviewFre(id);
         if(reviews.isEmpty()) {
             return ResponseEntity.ok("Freelancer " + id + " has no reviews");
+        }
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("Average", this.reviewService.average(id));
+        response.put("Reviews",reviews);
+        return ResponseEntity.ok(response);
+    }
+
+    //Muestra las reviews creadas por el usuario
+    @GetMapping("/user/{id}")
+    public ResponseEntity<?> findReviewByUserID(@PathVariable Long id){
+        List<ReviewDTO> reviews= this.reviewService.findReviewUser(id);
+        if(reviews.isEmpty()) {
+            return ResponseEntity.ok("User " + id + " has no reviews");
         }
 
         Map<String, Object> response = new HashMap<>();
