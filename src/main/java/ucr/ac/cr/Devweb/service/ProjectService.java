@@ -2,6 +2,7 @@ package ucr.ac.cr.Devweb.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ucr.ac.cr.Devweb.enums.Role;
 import ucr.ac.cr.Devweb.model.DTO.ProjectDTO;
 import ucr.ac.cr.Devweb.model.Project;
 import ucr.ac.cr.Devweb.model.User;
@@ -34,9 +35,17 @@ public class ProjectService {
 
     //CREAR UN NUEVO PROYECTO
     public ProjectDTO createProject(Project project) {
-        // Cargar el usuario completo antes de guardar
         User freelancer = userRepository.findById(project.getFreelancer().getId()).orElseThrow();
         project.setFreelancer(freelancer);
+
+        if (freelancer.getRole() != Role.FREELANCER) {
+            throw new RuntimeException("El usuario no tiene rol de freelancer");
+        }
+
+        if (projectRepository.existsByTitleAndFreelancerId(project.getTitle(), freelancer.getId())) {
+            throw new RuntimeException("Ya existe un proyecto con ese título para este freelancer");
+        }
+
         Project saved = projectRepository.save(project);
         Project full = projectRepository.findById(saved.getId()).orElseThrow();
         return convertirProjectDTO(full);

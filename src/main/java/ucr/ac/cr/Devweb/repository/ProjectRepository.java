@@ -11,8 +11,8 @@ import java.util.Optional;
 @Repository
 public interface ProjectRepository extends JpaRepository<Project, Long> {
     List<Project> findByFreelancerId(Long id); //busca proyectos por Id de Freelancer
-
     List<Project> findByCategory(String category);//Busca proyectos por categoria
+    boolean existsByTitleAndFreelancerId(String title, Long freelancerId);
 
 }
 
