@@ -1,10 +1,10 @@
 {
   "info": {
-    "_postman_id": "1607ca2c-70d1-4dee-a2a3-ef94f3f631b6",
+    "_postman_id": "b396130f-ee15-43c9-ae68-9f140e0dcbee",
     "name": "Devweb",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "_exporter_id": "44971448",
-    "_collection_link": "https://go.postman.co/collection/44971448-1607ca2c-70d1-4dee-a2a3-ef94f3f631b6?source=collection_link"
+    "_exporter_id": "54944187",
+    "_collection_link": "https://go.postman.co/collection/54944187-b396130f-ee15-43c9-ae68-9f140e0dcbee?source=collection_link"
   },
   "item": [
     {
@@ -773,19 +773,52 @@
       "name": "Reviews",
       "item": [
         {
-          "name": "Crear resena",
+          "name": "Buscar por usuario",
           "request": {
-            "method": "POST",
+            "method": "GET",
             "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "{\r\n  \"comment\": \"Excelente trabajo\",\r\n  \"rating\": 5,\r\n  \"client\": {\r\n    \"id\": 2\r\n  },\r\n  \"freelancer\": {\r\n    \"id\": 8\r\n  }\r\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
+            "url": {
+              "raw": "http://localhost:8080/review/client/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "review",
+                "client",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Buscar por freelancer",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/review/freelancer/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "review",
+                "freelancer",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Listar todas",
+          "request": {
+            "method": "GET",
+            "header": [],
             "url": {
               "raw": "http://localhost:8080/review",
               "protocol": "http",
@@ -801,10 +834,19 @@
           "response": []
         },
         {
-          "name": "Buscar por freelancer",
+          "name": "Crear resena",
           "request": {
-            "method": "GET",
+            "method": "POST",
             "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"comment\": \"Excelente trabajo\",\r\n  \"rating\": 5,\r\n  \"client\": {\r\n    \"id\": 2\r\n  },\r\n  \"freelancer\": {\r\n    \"id\": 8\r\n  }\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
             "url": {
               "raw": "http://localhost:8080/review",
               "protocol": "http",
@@ -876,7 +918,10 @@
           "name": "Ver todas",
           "request": {
             "method": "GET",
-            "header": []
+            "header": [],
+            "url": {
+              "raw": ""
+            }
           },
           "response": []
         },
@@ -884,7 +929,10 @@
           "name": "Buscar por id",
           "request": {
             "method": "GET",
-            "header": []
+            "header": [],
+            "url": {
+              "raw": ""
+            }
           },
           "response": []
         },
@@ -892,7 +940,10 @@
           "name": "Aprobar verificacion",
           "request": {
             "method": "GET",
-            "header": []
+            "header": [],
+            "url": {
+              "raw": ""
+            }
           },
           "response": []
         },
@@ -900,7 +951,10 @@
           "name": "Rechazar solicitud",
           "request": {
             "method": "GET",
-            "header": []
+            "header": [],
+            "url": {
+              "raw": ""
+            }
           },
           "response": []
         }
