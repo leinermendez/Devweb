@@ -43,17 +43,17 @@ public class ReviewController {
     }
 
     //Muestra las reviews creadas por el usuario
-    @GetMapping("/user/{id}")
+    @GetMapping("/client/{id}")
     public ResponseEntity<?> findReviewByUserID(@PathVariable Long id){
         List<ReviewDTO> reviews= this.reviewService.findReviewUser(id);
         if(reviews.isEmpty()) {
             return ResponseEntity.ok("User " + id + " has no reviews");
         }
 
-        Map<String, Object> response = new HashMap<>();
-        response.put("Average", this.reviewService.average(id));
-        response.put("Reviews",reviews);
-        return ResponseEntity.ok(response);
+        Map<String, Object> responses = new HashMap<>();
+        responses.put("You created", reviews.size());
+        responses.put("Reviews",reviews);
+        return ResponseEntity.ok(responses);
     }
 
     //Crea nuevas reviews
@@ -66,7 +66,7 @@ public class ReviewController {
             }
             return ResponseEntity.badRequest().body(errors);
         }
-        ReviewDTO newReview = this.reviewService.createReview(review);
+        ReviewDTO newReview     = this.reviewService.createReview(review);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(newReview);
     }
