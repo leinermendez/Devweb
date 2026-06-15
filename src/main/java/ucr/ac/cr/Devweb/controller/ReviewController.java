@@ -21,7 +21,15 @@ public class ReviewController {
     @Autowired
     private ReviewService reviewService;
 
-    @GetMapping("/{id}")
+    //Muestra todas las reviews de la pagina
+    @GetMapping
+    public ResponseEntity<?> findAllReviews(){
+        List<ReviewDTO> review=this.reviewService.findAll();
+        return ResponseEntity.ok(review);
+    }
+
+    //Se muestran las reviews segun el id del Freelancer
+    @GetMapping("/freelancer/{id}")
     public ResponseEntity<?> findReviewByFreelancerID(@PathVariable Long id){
         List<ReviewDTO> reviews= this.reviewService.findReviewFre(id);
         if(reviews.isEmpty()) {
@@ -34,6 +42,21 @@ public class ReviewController {
         return ResponseEntity.ok(response);
     }
 
+    //Muestra las reviews creadas por el usuario
+    @GetMapping("/user/{id}")
+    public ResponseEntity<?> findReviewByUserID(@PathVariable Long id){
+        List<ReviewDTO> reviews= this.reviewService.findReviewUser(id);
+        if(reviews.isEmpty()) {
+            return ResponseEntity.ok("User " + id + " has no reviews");
+        }
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("Average", this.reviewService.average(id));
+        response.put("Reviews",reviews);
+        return ResponseEntity.ok(response);
+    }
+
+    //Crea nuevas reviews
     @PostMapping
     public ResponseEntity<?> saveReview(@Validated @RequestBody Review review, BindingResult result){
         if (result.hasErrors()){
@@ -43,11 +66,12 @@ public class ReviewController {
             }
             return ResponseEntity.badRequest().body(errors);
         }
-        Review newReview = this.reviewService.createReview(review);
+        ReviewDTO newReview = this.reviewService.createReview(review);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(newReview);
     }
 
+    //Elimina Reviews
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteReviewById(@PathVariable Long id){
         this.reviewService.deleteReview(id);
