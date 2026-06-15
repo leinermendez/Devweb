@@ -10,6 +10,7 @@ import ucr.ac.cr.Devweb.enums.Category;
 import java.time.LocalDateTime;
 
 @Entity
+@Table(name = "services")
 public class Services {
 
     @Id
@@ -31,8 +32,10 @@ public class Services {
 
     @URL(message = "Url inválida")
     @NotBlank(message = "El url de la imagen es obligatorio")
+    @Column(name = "image_url")
     private String imageUrl;
 
+    @Column(name = "created_at")
     private LocalDateTime date;
 
     @NotNull(message = "El id del freelancer es obligatorio")

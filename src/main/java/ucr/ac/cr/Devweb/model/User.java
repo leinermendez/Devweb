@@ -10,6 +10,7 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
+@Table(name = "users")
 public class User {
 
     @Id
@@ -39,6 +40,7 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Role role;
 
+    @Column(name = "created_at")
     private LocalDateTime createdAt;
 
 

@@ -8,6 +8,7 @@ import ucr.ac.cr.Devweb.enums.RequestStatus;
 import java.time.LocalDateTime;
 
 @Entity
+@Table(name = "job_requests")
 public class JobRequest {
 
     @Id
@@ -17,6 +18,7 @@ public class JobRequest {
     @NotBlank(message = "La descripción es obligatoria")
     private String description;
 
+    @Column(name = "created_at")
     private LocalDateTime createdAt;
 
     @Enumerated(EnumType.STRING)

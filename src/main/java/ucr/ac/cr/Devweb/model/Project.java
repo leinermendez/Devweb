@@ -7,7 +7,7 @@ import org.hibernate.validator.constraints.URL;
 import java.time.LocalDateTime;
 
 @Entity
-
+@Table(name = "projects")
 public class Project {
 
     @Id
@@ -26,8 +26,10 @@ public class Project {
 
     @URL(message = "url inválida") // verifica que el texto tenga formato de url válido.
     @NotBlank(message = "El url es obligatorio")
+    @Column(name = "image_url")
     private String imageUrl;
 
+    @Column(name = "created_at")
     private LocalDateTime date;
 
     @ManyToOne(fetch = FetchType.EAGER)

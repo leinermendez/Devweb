@@ -8,6 +8,7 @@ import jakarta.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 
 @Entity
+@Table(name = "reviews")
 public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)//genera automaticamente el id
@@ -22,6 +23,7 @@ public class Review {
     private Integer rating;
 
 
+    @Column(name = "created_at")
     private LocalDateTime date;
 
     @ManyToOne
