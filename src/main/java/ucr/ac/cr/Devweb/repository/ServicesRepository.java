@@ -14,4 +14,6 @@ public interface ServicesRepository extends JpaRepository<Services, Long> {
 
     List<Services> findAllByOrderByPriceAsc(); //Buscar todos los servicios con orden ascendente
     List<Services> findAllByOrderByPriceDesc(); //Lo mismo, pero descedente
+
+    boolean existsByTitleAndFreelancerId(String title, Long freelancerId);
 }
