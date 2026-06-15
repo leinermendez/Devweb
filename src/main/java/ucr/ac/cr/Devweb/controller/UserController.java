@@ -68,6 +68,13 @@ public class UserController {
         return ResponseEntity.ok("Usuario eliminado correctamente");
     }
 
+    @PutMapping("/{id}/become-freelancer")
+    public ResponseEntity<?> becomeFreelancer(@PathVariable Long id) {
+
+        UserDTO user = userService.becomeFreelancer(id);
+
+        return ResponseEntity.ok(user);
+    }
 
 
 

@@ -2,6 +2,8 @@ package ucr.ac.cr.Devweb.model;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import ucr.ac.cr.Devweb.enums.Role;
 import jakarta.persistence.*;
 
@@ -20,6 +22,9 @@ public class User {
 
 
     @NotBlank(message = "La contraseña es obligatoria")
+    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$",
+            message = "La contraseña debe tener al menos 8 caracteres, una mayúscula, una minúscula, un número y un carácter especial"
+    )
     private String password;
 
     @Email(message = "Email inválido") // verifica que el texto tenga formato de email válido.
@@ -30,7 +35,7 @@ public class User {
     private Boolean verified;
     private Double rating;
 
-
+    @NotNull
     @Enumerated(EnumType.STRING)
     private Role role;
 
@@ -40,22 +45,23 @@ public class User {
     public User() {
     }
 
-
     //Prepersist le dice a Spring que antes de guardar este objeto en la base de datos, ejecute este código
     @PrePersist
     public void prePersist() {
+        this.verified = false;
+        this.rating = 0.0;
         this.createdAt = LocalDateTime.now();
     }
 
 
-    //Contructor, no incluye el Id ni la fecha de creacion porque eso se hara automaticamente y no es un dato que se deba introducir al crearlo
-    public User(String name, String password, String email, Role role, Boolean verified, Double rating) {
+
+    //Contructor, no incluye el Id ni fecha de creacion porque eso se hara automaticamente
+    // Tampoco recibe rating porque al crearse un usuario no deberia tener una calificacion y de mismo caso no deberia estar verificado
+    public User(String name, String password, String email, Role role) {
         this.name = name;
         this.password = password;
         this.email = email;
         this.role = role;
-        this.verified = verified;
-        this.rating = rating;
     }
 
     public Long getId() {
