@@ -8,6 +8,20 @@
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
+    <nav class="navbar">
+    <div class="logo">DevWeb</div>
+    <input type="text" class="search-input" placeholder="Buscar freelancers...">
+    <div class="user-menu">
+        <span id="userName"></span>
+        <button onclick="logout()">Salir</button>
+    </div>
+</nav>
+
+<div class="feed-container" id="feedContainer">
+    <!-- Aquí se cargan los proyectos dinámicamente -->
+</div>
+
+
     <script src="js/api.js"></script>
 <script>
     const user = JSON.parse(localStorage.getItem("user"));
