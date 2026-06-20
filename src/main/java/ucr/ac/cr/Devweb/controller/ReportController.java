@@ -7,6 +7,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import ucr.ac.cr.Devweb.enums.ReportStatus;
 import ucr.ac.cr.Devweb.model.DTO.ReportDTO;
 import ucr.ac.cr.Devweb.model.Report;
 import ucr.ac.cr.Devweb.service.ReportService;
@@ -26,7 +27,7 @@ public class ReportController {
     public ResponseEntity<?> listVerificationsPending(){return ResponseEntity.ok(this.reportService.findAllReportsPending());}
 
     @PostMapping
-    public ResponseEntity saveReports(@Validated @RequestBody Report report, BindingResult result){
+    public ResponseEntity<?> saveReports(@Validated @RequestBody Report report, BindingResult result){
         if (result.hasErrors()){
             Map<String, String> errors=new HashMap<>();
             for (FieldError error: result.getFieldErrors()){
@@ -41,4 +42,18 @@ public class ReportController {
         return ResponseEntity.status(HttpStatus.CREATED).body(repoDTO);
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<?> changeStatus(@PathVariable long id, @RequestBody Map<String, String>body){
+        ReportStatus newStatus=ReportStatus.valueOf(body.get("status"));
+        return ResponseEntity.ok(this.reportService.changeStatus(id, newStatus));
+    }
+
+    // endPoints de pueba y filtracion de reports por estado de cada uno
+
+    @GetMapping("/Under")           // filtra los reportes en revicion
+    public ResponseEntity<?> listVerificationsUnder(){return ResponseEntity.ok(this.reportService.findAllReportsUnder_Review());}
+    @GetMapping("/Rejected")        //filtra los reportes rechazados
+    public ResponseEntity<?> listVerificationsRejected(){return ResponseEntity.ok(this.reportService.findAllReportsRejected());}
+    @GetMapping("/Resolved")        // filtra los reportes resueltos
+    public ResponseEntity<?> listVerificationsResolved(){return ResponseEntity.ok(this.reportService.findAllReportsResolved());}
 }

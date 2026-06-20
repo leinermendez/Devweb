@@ -43,6 +43,11 @@ public class ReportService {
         return converListDTO(this.reportRepository.findByStatus(ReportStatus.PENDING));
     }
 
+    public ReportDTO changeStatus(Long id, ReportStatus status){
+        Report report = this.reportRepository.findById(id).orElseThrow();
+        report.setStatus(status);
+        return converToDTO(this.reportRepository.save(report));
+    }
 
 
     //converciones a DTO
