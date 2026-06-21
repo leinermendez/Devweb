@@ -797,3 +797,73 @@ css/* ===== PROFILE PAGE ===== */
         font-size: 1.2rem;
     }
 }
+.public-freelancer-page .service-image {
+    width: 100%;
+    height: 240px;
+    object-fit: cover;
+    display: block;
+}
+
+
+/* Botones dentro de cards */
+.card-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+    flex-wrap: wrap;
+}
+
+.card-actions button {
+    border: none;
+    color: #fff;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+/* Editar */
+.btn-edit {
+    background: linear-gradient(135deg, #6c63ff, #3b5bdb);
+}
+
+.btn-edit:hover {
+    transform: translateY(-2px);
+}
+
+/* Eliminar */
+.btn-delete {
+    background: linear-gradient(135deg, #dc3545, #b02a37);
+}
+
+.btn-delete:hover {
+    transform: translateY(-2px);
+}
+
+/* Aceptar */
+.btn-accept {
+    background: linear-gradient(135deg, #198754, #157347);
+}
+
+.btn-accept:hover {
+    transform: translateY(-2px);
+}
+
+/* Rechazar */
+.btn-reject {
+    background: linear-gradient(135deg, #dc3545, #b02a37);
+}
+
+.btn-reject:hover {
+    transform: translateY(-2px);
+}
+
+/* Completar */
+.btn-complete {
+    background: linear-gradient(135deg, #0d6efd, #0a58ca);
+}
+
+.btn-complete:hover {
+    transform: translateY(-2px);
+}

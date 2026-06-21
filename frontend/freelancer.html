@@ -144,7 +144,7 @@
         document.getElementById("userName").href = "users/login.html";
     }
 
-    window.addEventListener("DOMContentLoaded", function() {
+    window.addEventListener("DOMContentLoaded", function () {
         loadFreelancer();
         loadServices();
         loadProjects();
@@ -173,7 +173,7 @@
 
     async function loadServices() {
         const container = document.getElementById("servicesContainer");
-        container.innerHTML = "<p class='profile-muted'>Cargando servicios.</p>";
+        container.innerHTML = "<p class='profile-muted'>Cargando servicios...</p>";
 
         const response = await fetch(API_URL + "/api/services/findByFreelancer/" + freelancerId);
 
@@ -185,17 +185,20 @@
         const services = await response.json();
         container.innerHTML = "";
 
-        services.forEach(function(service) {
+        services.forEach(function (service) {
+            const serviceImage = service.imageUrl
+                ? `<img src="${service.imageUrl}" class="service-image" alt="${service.title}">`
+                : `<div class="service-slot-category">${service.category}</div>`;
+
             container.innerHTML += `
                 <article class="service-slot-card">
-                    <div class="service-slot-category">
-                        ${service.category}
-                    </div>
+                    ${serviceImage}
 
                     <div class="service-slot-info">
                         <h3>${service.title}</h3>
+                        <p>Categoría: ${service.category}</p>
                         <p>Freelancer: ${service.freelancerName}</p>
-                        <p class="service-slot-price">₡${service.price}</p>
+                        <p class="service-slot-price">₡${Number(service.price).toLocaleString()}</p>
 
                         <button onclick="openRequestModal(${service.id}, '${service.title.replace(/'/g, "\\'")}')">
                             Solicitar servicio
@@ -208,7 +211,7 @@
 
     async function loadProjects() {
         const container = document.getElementById("projectsContainer");
-        container.innerHTML = "<p class='profile-muted'>Cargando proyectos.</p>";
+        container.innerHTML = "<p class='profile-muted'>Cargando proyectos...</p>";
 
         const response = await fetch(API_URL + "/projects/freelancer/" + freelancerId);
 
@@ -220,7 +223,7 @@
         const projects = await response.json();
         container.innerHTML = "";
 
-        projects.forEach(function(project) {
+        projects.forEach(function (project) {
             container.innerHTML += `
                 <article class="project-public-card">
                     <img src="${project.imageUrl}" alt="${project.title}">
@@ -251,7 +254,7 @@
         average.textContent = "Promedio: ⭐ " + data.Average;
         container.innerHTML = "";
 
-        data.Reviews.forEach(function(review) {
+        data.Reviews.forEach(function (review) {
             container.innerHTML += `
                 <article class="review-slot-card">
                     <div class="review-row">
