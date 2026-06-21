@@ -1,22 +1,24 @@
 package ucr.ac.cr.Devweb.model.DTO;
 
-import ucr.ac.cr.Devweb.model.User;
-
 public class ProjectDTO {
 
     private String title;
     private Long id;
     private String freelancerName;
+    private String imageUrl;
 
     public ProjectDTO() {
     }
-
-    public ProjectDTO(Long id, String title, String freelancerName) {
+    public ProjectDTO(Long id, String title, String freelancerName, String imageUrl) {
         this.id = id;
         this.title = title;
         this.freelancerName = freelancerName;
+        this.imageUrl = imageUrl;
     }
 
+    public String getImageUrl() { return imageUrl; }
+
+    public void setImageUrl(String imageUrl) { this.imageUrl = imageUrl; }
     public Long getId() {
         return id;
     }

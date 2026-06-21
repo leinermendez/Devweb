@@ -71,11 +71,79 @@
 
     <script src="js/api.js"></script>
 <script>
-    const user = JSON.parse(localStorage.getItem("user"));
+   const user = JSON.parse(localStorage.getItem("user"));
 
-    if (!user) {
-        window.location.href = "users/login.html";
+if (!user) {
+    window.location.href = "users/login.html";
+}
+
+async function cargarProyectos() {
+    const response = await fetch(API_URL + "/projects");
+    const proyectos = await response.json();
+    
+    const contenedor = document.getElementById("feedContainer");
+    contenedor.innerHTML = "";
+
+   proyectos.forEach(proyecto => {
+    contenedor.innerHTML += `
+        <div class="project-card">
+            <img src="${proyecto.imageUrl}" class="project-image" alt="${proyecto.title}">
+            <div class="project-info">
+                <h3>${proyecto.title}</h3>
+                <p>Por: ${proyecto.freelancerName}</p>
+            </div>
+        </div>
+    `;
+});
+}
+
+if (user.role === "FREELANCER") {
+    document.getElementById("freelancerBanner").style.display = "flex";
+} else if (user.role === "CLIENT") {
+    document.getElementById("clientBanner").style.display = "flex";
+}
+
+document.getElementById("formProyecto").addEventListener("submit", async function(e) {
+    e.preventDefault();
+
+    const proyecto = {
+        title: document.getElementById("projTitle").value,
+        description: document.getElementById("projDescription").value,
+        category: document.getElementById("projCategory").value,
+        imageUrl: document.getElementById("projImage").value,
+        freelancer: { id: user.id }
+    };
+
+    const response = await fetch(API_URL + "/projects", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(proyecto)
+    });
+
+    if (response.ok) {
+        cerrarModal("modalProyecto");
+        cargarProyectos();
+    } else {
+        alert("Error al publicar el proyecto");
     }
+});
+
+async function confirmarFreelancer() {
+    const response = await fetch(API_URL + "/users/" + user.id + "/become-freelancer", {
+        method: "PUT"
+    });
+
+    if (response.ok) {
+        const updatedUser = await response.json();
+        localStorage.setItem("user", JSON.stringify(updatedUser));
+        alert("¡Ahora eres freelancer!");
+        window.location.reload();
+    } else {
+        alert("Error al cambiar de rol");
+    }
+}
+
+cargarProyectos();
 </script>
 </body>
 </html>
