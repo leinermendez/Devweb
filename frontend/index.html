@@ -17,6 +17,53 @@
     </div>
 </nav>
 
+<!-- Banner para FREELANCER -->
+<div class="post-banner" id="freelancerBanner" style="display:none;">
+    <p>¿Qué estás trabajando?</p>
+    <button onclick="abrirModal('modalProyecto')">Subir proyecto</button>
+</div>
+
+<!-- Banner para CLIENT -->
+<div class="post-banner" id="clientBanner" style="display:none;">
+    <p>¿Eres freelancer? Únite a DevWeb</p>
+    <button onclick="abrirModal('modalFreelancer')">Convertirme en freelancer</button>
+</div>
+
+<!-- Modal: Crear proyecto -->
+<div class="modal-overlay" id="modalProyecto" style="display:none;">
+    <div class="modal-box">
+        <h3>Subir nuevo proyecto</h3>
+        <form id="formProyecto">
+            <input type="text" id="projTitle" placeholder="Título" required>
+            <textarea id="projDescription" placeholder="Descripción" required></textarea>
+            <select id="projCategory" required>
+                <option value="">Categoría</option>
+                <option value="WEB_DEVELOPMENT">Desarrollo Web</option>
+                <option value="MOBILE_DEVELOPMENT">Desarrollo Móvil</option>
+                <option value="GRAPHIC_DESIGN">Diseño Gráfico</option>
+                <option value="UI_UX_DESIGN">UI/UX</option>
+            </select>
+            <input type="url" id="projImage" placeholder="URL de imagen" required>
+            <div class="modal-buttons">
+                <button type="button" onclick="cerrarModal('modalProyecto')">Cancelar</button>
+                <button type="submit">Publicar</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Modal: Convertirse en freelancer -->
+<div class="modal-overlay" id="modalFreelancer" style="display:none;">
+    <div class="modal-box">
+        <h3>Convertirte en freelancer</h3>
+        <p>Al confirmar, tu cuenta podrá publicar servicios y proyectos.</p>
+        <div class="modal-buttons">
+            <button type="button" onclick="cerrarModal('modalFreelancer')">Cancelar</button>
+            <button onclick="confirmarFreelancer()">Confirmar</button>
+        </div>
+    </div>
+</div>
+
 <div class="feed-container" id="feedContainer">
     <!-- Aquí se cargan los proyectos dinámicamente -->
 </div>
