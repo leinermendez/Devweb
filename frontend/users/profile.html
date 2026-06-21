@@ -10,191 +10,225 @@
 </head>
 
 <body class="feed-page">
-<nav class="navbar">
-    <a href="../index.html" class="logo">DevWeb</a>
-    <input type="text" class="search-input" placeholder="Buscar freelancers...">
-    <div class="user-menu">
-        <a href="profile.html" id="userName" class="user-link"></a>
-        <button onclick="logout()">Cerrar sesión</button>
-    </div>
-</nav>
-
-<div class="profile-container">
-    <div class="profile-header">
-        <h2 id="profileName"></h2>
-        <p id="profileRole"></p>
-        <p id="profileEmail"></p>
-        <p id="profileRating"></p>
-
-        <button onclick="abrirModal('modalEditar')">Editar perfil</button>
-
-        <a id="btnPerfilPublico" style="display:none;">
-            <button type="button">Ver perfil público</button>
-        </a>
-    </div>
-
-    <div id="projectsSection" style="display:none;">
-        <div class="section-header">
-            <h3>Mis proyectos</h3>
-            <button id="btnAgregarProyecto" style="display:none;" onclick="abrirModal('modalProyecto')">
-                Añadir proyecto
-            </button>
+    <nav class="navbar">
+        <a href="../index.html" class="logo">DevWeb</a>
+        <input type="text" class="search-input" placeholder="Buscar freelancers...">
+        <div class="user-menu">
+            <a href="profile.html" id="userName" class="user-link"></a>
+            <button onclick="logout()">Cerrar sesión</button>
         </div>
-        <div id="projectsContainer"></div>
-    </div>
+    </nav>
 
-    <div id="servicesSection" style="display:none;">
-        <div class="section-header">
-            <h3>Mis servicios</h3>
-            <button id="btnAgregarServicio" style="display:none;" onclick="abrirModal('modalServicio')">
-                Añadir servicio
-            </button>
+    <div class="profile-container">
+        <div class="profile-header">
+
+            <h2 id="profileName"></h2>
+            <p id="profileRole"></p>
+            <p id="profileEmail"></p>
+            <p id="profileRating"></p>
+
+            <button onclick="abrirModal('modalEditar')">Editar perfil</button>
+
+            <a id="btnPerfilPublico" style="display:none;">
+                <button type="button">Ver perfil público</button>
+            </a>
         </div>
-        <div id="servicesContainer"></div>
-    </div>
 
-    <div id="clientSection" style="display:none;">
-        <h3 id="solicitudesTitulo">Mis solicitudes</h3>
-        <div id="solicitudesContainer"></div>
-    </div>
-</div>
+        <div id="profileTabs" class="freelancer-tabs" style="display:none;">
+            <button id="tabServices" class="tab-active" onclick="showProfileSection('services')">Servicios</button>
+            <button id="tabProjects" onclick="showProfileSection('projects')">Proyectos</button>
+            <button id="tabRequests" onclick="showProfileSection('requests')">Solicitudes</button>
+        </div>
 
-<div class="modal-overlay" id="modalEditar" style="display:none;">
-    <div class="modal-box">
-        <h3>Editar perfil</h3>
-
-        <form id="formEditar">
-            <input type="text" id="editName" placeholder="Nombre" required>
-
-            <div class="modal-buttons">
-                <button type="button" onclick="cerrarModal('modalEditar')">Cancelar</button>
-                <button type="submit">Guardar</button>
+        <div id="projectsSection" style="display:none;">
+            <div class="section-header">
+                <h3>Mis proyectos</h3>
+                <button id="btnAgregarProyecto" style="display:none;" onclick="abrirModal('modalProyecto')">
+                    Añadir proyecto
+                </button>
             </div>
-        </form>
-    </div>
-</div>
+            <div id="projectsContainer"></div>
+        </div>
 
-<div class="modal-overlay" id="modalProyecto" style="display:none;">
-    <div class="modal-box">
-        <h3>Subir nuevo proyecto</h3>
-
-        <form id="formProyecto">
-            <input type="text" id="projTitle" placeholder="Título" required>
-            <textarea id="projDescription" placeholder="Descripción" required></textarea>
-
-            <select id="projCategory" required>
-                <option value="">Categoría</option>
-                <option value="PROGRAMMING">PROGRAMMING</option>
-                <option value="WEB_DEVELOPMENT">WEB_DEVELOPMENT</option>
-                <option value="MOBILE_DEVELOPMENT">MOBILE_DEVELOPMENT</option>
-                <option value="GAME_DEVELOPMENT">GAME_DEVELOPMENT</option>
-                <option value="GRAPHIC_DESIGN">GRAPHIC_DESIGN</option>
-                <option value="UI_UX_DESIGN">UI_UX_DESIGN</option>
-                <option value="ILLUSTRATION">ILLUSTRATION</option>
-                <option value="ANIMATION">ANIMATION</option>
-                <option value="VIDEO_EDITING">VIDEO_EDITING</option>
-                <option value="PHOTOGRAPHY">PHOTOGRAPHY</option>
-                <option value="MUSIC_PRODUCTION">MUSIC_PRODUCTION</option>
-            </select>
-
-            <input type="url" id="projImage" placeholder="URL de imagen" required>
-
-            <div class="modal-buttons">
-                <button type="button" onclick="cerrarModal('modalProyecto')">Cancelar</button>
-                <button type="submit">Publicar</button>
+        <div id="servicesSection" style="display:none;">
+            <div class="section-header">
+                <h3>Mis servicios</h3>
+                <button id="btnAgregarServicio" style="display:none;" onclick="abrirModal('modalServicio')">
+                    Añadir servicio
+                </button>
             </div>
-        </form>
+            <div id="servicesContainer"></div>
+        </div>
+
+        <div id="clientSection" style="display:none;">
+            <h3 id="solicitudesTitulo">Mis solicitudes</h3>
+            <div id="solicitudesContainer"></div>
+        </div>
     </div>
-</div>
 
-<div class="modal-overlay" id="modalServicio" style="display:none;">
-    <div class="modal-box">
-        <h3>Publicar servicio</h3>
+    <div class="modal-overlay" id="modalEditar" style="display:none;">
+        <div class="modal-box">
+            <h3>Editar perfil</h3>
 
-        <form id="formServicio">
-            <input type="text" id="serviceTitle" placeholder="Título" required>
-            <textarea id="serviceDescription" placeholder="Descripción" required></textarea>
+            <form id="formEditar">
+                <input type="text" id="editName" placeholder="Nombre" required>
 
-            <select id="serviceCategory" required>
-                <option value="">Categoría</option>
-                <option value="PROGRAMMING">PROGRAMMING</option>
-                <option value="WEB_DEVELOPMENT">WEB_DEVELOPMENT</option>
-                <option value="MOBILE_DEVELOPMENT">MOBILE_DEVELOPMENT</option>
-                <option value="GAME_DEVELOPMENT">GAME_DEVELOPMENT</option>
-                <option value="GRAPHIC_DESIGN">GRAPHIC_DESIGN</option>
-                <option value="UI_UX_DESIGN">UI_UX_DESIGN</option>
-                <option value="ILLUSTRATION">ILLUSTRATION</option>
-                <option value="ANIMATION">ANIMATION</option>
-                <option value="VIDEO_EDITING">VIDEO_EDITING</option>
-                <option value="PHOTOGRAPHY">PHOTOGRAPHY</option>
-                <option value="MUSIC_PRODUCTION">MUSIC_PRODUCTION</option>
-            </select>
-
-            <input type="number" id="servicePrice" placeholder="Precio" required min="1">
-            <input type="url" id="serviceImage" placeholder="URL de imagen" required>
-
-            <div class="modal-buttons">
-                <button type="button" onclick="cerrarModal('modalServicio')">Cancelar</button>
-                <button type="submit">Publicar</button>
-            </div>
-        </form>
+                <div class="modal-buttons">
+                    <button type="button" onclick="cerrarModal('modalEditar')">Cancelar</button>
+                    <button type="submit">Guardar</button>
+                </div>
+            </form>
+        </div>
     </div>
-</div>
 
-<script src="../js/api.js"></script>
+    <div class="modal-overlay" id="modalProyecto" style="display:none;">
+        <div class="modal-box">
+            <h3>Subir nuevo proyecto</h3>
 
-<script>
-    const user = JSON.parse(localStorage.getItem("user"));
+            <form id="formProyecto">
+                <input type="text" id="projTitle" placeholder="Título" required>
+                <textarea id="projDescription" placeholder="Descripción" required></textarea>
 
-    if (!user) {
-        window.location.href = "login.html";
-    }
+                <select id="projCategory" required>
+                    <option value="">Categoría</option>
+                    <option value="PROGRAMMING">PROGRAMMING</option>
+                    <option value="WEB_DEVELOPMENT">WEB_DEVELOPMENT</option>
+                    <option value="MOBILE_DEVELOPMENT">MOBILE_DEVELOPMENT</option>
+                    <option value="GAME_DEVELOPMENT">GAME_DEVELOPMENT</option>
+                    <option value="GRAPHIC_DESIGN">GRAPHIC_DESIGN</option>
+                    <option value="UI_UX_DESIGN">UI_UX_DESIGN</option>
+                    <option value="ILLUSTRATION">ILLUSTRATION</option>
+                    <option value="ANIMATION">ANIMATION</option>
+                    <option value="VIDEO_EDITING">VIDEO_EDITING</option>
+                    <option value="PHOTOGRAPHY">PHOTOGRAPHY</option>
+                    <option value="MUSIC_PRODUCTION">MUSIC_PRODUCTION</option>
+                </select>
 
-    document.getElementById("userName").textContent = "Hola, " + user.name;
-    document.getElementById("profileName").textContent = user.name;
-    document.getElementById("profileRole").textContent = "Rol: " + user.role;
-    document.getElementById("profileEmail").textContent = "Email: " + user.email;
-    document.getElementById("profileRating").textContent = "Calificación: " + user.rating;
-    document.getElementById("editName").value = user.name;
+                <input type="url" id="projImage" placeholder="URL de imagen" required>
 
-    if (user.role === "FREELANCER") {
-        document.getElementById("projectsSection").style.display = "block";
-        document.getElementById("servicesSection").style.display = "block";
-        document.getElementById("clientSection").style.display = "block";
+                <div class="modal-buttons">
+                    <button type="button" onclick="cerrarModal('modalProyecto')">Cancelar</button>
+                    <button type="submit">Publicar</button>
+                </div>
+            </form>
+        </div>
+    </div>
 
-        document.getElementById("btnPerfilPublico").style.display = "inline-block";
-        document.getElementById("btnPerfilPublico").href = "../freelancer.html?id=" + user.id;
+    <div class="modal-overlay" id="modalServicio" style="display:none;">
+        <div class="modal-box">
+            <h3>Publicar servicio</h3>
 
-        document.getElementById("btnAgregarProyecto").style.display = "inline-block";
-        document.getElementById("btnAgregarServicio").style.display = "inline-block";
+            <form id="formServicio">
+                <input type="text" id="serviceTitle" placeholder="Título" required>
+                <textarea id="serviceDescription" placeholder="Descripción" required></textarea>
 
-        document.getElementById("solicitudesTitulo").textContent = "Mis solicitudes";
+                <select id="serviceCategory" required>
+                    <option value="">Categoría</option>
+                    <option value="PROGRAMMING">PROGRAMMING</option>
+                    <option value="WEB_DEVELOPMENT">WEB_DEVELOPMENT</option>
+                    <option value="MOBILE_DEVELOPMENT">MOBILE_DEVELOPMENT</option>
+                    <option value="GAME_DEVELOPMENT">GAME_DEVELOPMENT</option>
+                    <option value="GRAPHIC_DESIGN">GRAPHIC_DESIGN</option>
+                    <option value="UI_UX_DESIGN">UI_UX_DESIGN</option>
+                    <option value="ILLUSTRATION">ILLUSTRATION</option>
+                    <option value="ANIMATION">ANIMATION</option>
+                    <option value="VIDEO_EDITING">VIDEO_EDITING</option>
+                    <option value="PHOTOGRAPHY">PHOTOGRAPHY</option>
+                    <option value="MUSIC_PRODUCTION">MUSIC_PRODUCTION</option>
+                </select>
 
-        cargarMisProyectos();
-        cargarMisServicios();
-        cargarSolicitudesFreelancer();
+                <input type="number" id="servicePrice" placeholder="Precio" required min="1">
+                <input type="url" id="serviceImage" placeholder="URL de imagen" required>
 
-    } else if (user.role === "CLIENT") {
-        document.getElementById("clientSection").style.display = "block";
-        document.getElementById("solicitudesTitulo").textContent = "Mis solicitudes enviadas";
+                <div class="modal-buttons">
+                    <button type="button" onclick="cerrarModal('modalServicio')">Cancelar</button>
+                    <button type="submit">Publicar</button>
+                </div>
+            </form>
+        </div>
+    </div>
 
-        cargarSolicitudesCliente();
-    }
+    <script src="../js/api.js"></script>
 
-    async function cargarMisProyectos() {
-        const response = await fetch(API_URL + "/projects/freelancer/" + user.id);
-        const contenedor = document.getElementById("projectsContainer");
+    <script>
+        const user = JSON.parse(localStorage.getItem("user"));
 
-        if (!response.ok) {
-            contenedor.innerHTML = "<p>No tenés proyectos publicados.</p>";
-            return;
+        if (!user) {
+            window.location.href = "login.html";
         }
 
-        const proyectos = await response.json();
-        contenedor.innerHTML = "";
+        document.getElementById("userName").textContent = "Hola, " + user.name;
+        document.getElementById("profileName").textContent = user.name;
+        document.getElementById("profileRole").textContent = "Rol: " + user.role;
+        document.getElementById("profileEmail").textContent = "Email: " + user.email;
+        document.getElementById("profileRating").textContent = "Calificación: " + user.rating;
+        document.getElementById("editName").value = user.name;
 
-        proyectos.forEach(proyecto => {
-            contenedor.innerHTML += `
+        if (user.role === "FREELANCER") {
+            document.getElementById("profileTabs").style.display = "flex";
+
+            document.getElementById("servicesSection").style.display = "block";
+            document.getElementById("projectsSection").style.display = "none";
+            document.getElementById("clientSection").style.display = "none";
+
+            document.getElementById("btnPerfilPublico").style.display = "inline-block";
+            document.getElementById("btnPerfilPublico").href = "../freelancer.html?id=" + user.id;
+
+            document.getElementById("btnAgregarProyecto").style.display = "inline-block";
+            document.getElementById("btnAgregarServicio").style.display = "inline-block";
+
+            document.getElementById("solicitudesTitulo").textContent = "Mis solicitudes";
+
+            cargarMisProyectos();
+            cargarMisServicios();
+            cargarSolicitudesFreelancer();
+
+        } else if (user.role === "CLIENT") {
+            document.getElementById("clientSection").style.display = "block";
+            document.getElementById("solicitudesTitulo").textContent = "Mis solicitudes enviadas";
+
+            cargarSolicitudesCliente();
+        }
+
+        function showProfileSection(section) {
+            document.getElementById("servicesSection").style.display = "none";
+            document.getElementById("projectsSection").style.display = "none";
+            document.getElementById("clientSection").style.display = "none";
+
+            document.getElementById("tabServices").classList.remove("tab-active");
+            document.getElementById("tabProjects").classList.remove("tab-active");
+            document.getElementById("tabRequests").classList.remove("tab-active");
+
+            if (section === "services") {
+                document.getElementById("servicesSection").style.display = "block";
+                document.getElementById("tabServices").classList.add("tab-active");
+            }
+
+            if (section === "projects") {
+                document.getElementById("projectsSection").style.display = "block";
+                document.getElementById("tabProjects").classList.add("tab-active");
+            }
+
+            if (section === "requests") {
+                document.getElementById("clientSection").style.display = "block";
+                document.getElementById("tabRequests").classList.add("tab-active");
+            }
+        }
+
+        async function cargarMisProyectos() {
+            const response = await fetch(API_URL + "/projects/freelancer/" + user.id);
+            const contenedor = document.getElementById("projectsContainer");
+
+            if (!response.ok) {
+                contenedor.innerHTML = "<p>No tenés proyectos publicados.</p>";
+                return;
+            }
+
+            const proyectos = await response.json();
+            contenedor.innerHTML = "";
+
+            proyectos.forEach(proyecto => {
+                contenedor.innerHTML += `
                 <div class="project-card">
                     <img src="${proyecto.imageUrl}" class="project-image" alt="${proyecto.title}">
                     <div class="project-info">
@@ -202,23 +236,23 @@
                     </div>
                 </div>
             `;
-        });
-    }
-
-    async function cargarMisServicios() {
-        const response = await fetch(API_URL + "/api/services/findByFreelancer/" + user.id);
-        const contenedor = document.getElementById("servicesContainer");
-
-        if (!response.ok) {
-            contenedor.innerHTML = "<p>No tenés servicios publicados.</p>";
-            return;
+            });
         }
 
-        const servicios = await response.json();
-        contenedor.innerHTML = "";
+        async function cargarMisServicios() {
+            const response = await fetch(API_URL + "/api/services/findByFreelancer/" + user.id);
+            const contenedor = document.getElementById("servicesContainer");
 
-        servicios.forEach(service => {
-            contenedor.innerHTML += `
+            if (!response.ok) {
+                contenedor.innerHTML = "<p>No tenés servicios publicados.</p>";
+                return;
+            }
+
+            const servicios = await response.json();
+            contenedor.innerHTML = "";
+
+            servicios.forEach(service => {
+                contenedor.innerHTML += `
                 <div class="project-card">
                     <img src="${service.imageUrl}" class="project-image" alt="${service.title}">
 
@@ -226,36 +260,26 @@
                         <h3>${service.title}</h3>
                         <p>Categoría: ${service.category}</p>
                         <p>Precio: ₡${Number(service.price).toLocaleString()}</p>
-
-                        <div class="card-actions">
-                            <button class="btn-edit" onclick="editarServicio(${service.id})">
-                                Editar
-                            </button>
-
-                            <button class="btn-delete" onclick="eliminarServicio(${service.id})">
-                                Eliminar
-                            </button>
-                        </div>
                     </div>
                 </div>
             `;
-        });
-    }
-
-    async function cargarSolicitudesCliente() {
-        const response = await fetch(API_URL + "/api/jobrequest/findByClient/" + user.id);
-        const contenedor = document.getElementById("solicitudesContainer");
-
-        if (!response.ok) {
-            contenedor.innerHTML = "<p>No tenés solicitudes enviadas.</p>";
-            return;
+            });
         }
 
-        const solicitudes = await response.json();
-        contenedor.innerHTML = "";
+        async function cargarSolicitudesCliente() {
+            const response = await fetch(API_URL + "/api/jobrequest/findByClient/" + user.id);
+            const contenedor = document.getElementById("solicitudesContainer");
 
-        solicitudes.forEach(solicitud => {
-            contenedor.innerHTML += `
+            if (!response.ok) {
+                contenedor.innerHTML = "<p>No tenés solicitudes enviadas.</p>";
+                return;
+            }
+
+            const solicitudes = await response.json();
+            contenedor.innerHTML = "";
+
+            solicitudes.forEach(solicitud => {
+                contenedor.innerHTML += `
                 <div class="project-card">
                     <div class="project-info">
                         <h3>Solicitud #${solicitud.id}</h3>
@@ -265,26 +289,26 @@
                     </div>
                 </div>
             `;
-        });
-    }
-
-    async function cargarSolicitudesFreelancer() {
-        const response = await fetch(API_URL + "/api/jobrequest/findByFreelancer/" + user.id);
-        const contenedor = document.getElementById("solicitudesContainer");
-
-        if (!response.ok) {
-            contenedor.innerHTML = "<p>No tenés solicitudes recibidas.</p>";
-            return;
+            });
         }
 
-        const solicitudes = await response.json();
-        contenedor.innerHTML = "";
+        async function cargarSolicitudesFreelancer() {
+            const response = await fetch(API_URL + "/api/jobrequest/findByFreelancer/" + user.id);
+            const contenedor = document.getElementById("solicitudesContainer");
 
-        solicitudes.forEach(solicitud => {
-            let botones = "";
+            if (!response.ok) {
+                contenedor.innerHTML = "<p>No tenés solicitudes recibidas.</p>";
+                return;
+            }
 
-            if (solicitud.status === "PENDING") {
-                botones = `
+            const solicitudes = await response.json();
+            contenedor.innerHTML = "";
+
+            solicitudes.forEach(solicitud => {
+                let botones = "";
+
+                if (solicitud.status === "PENDING") {
+                    botones = `
                     <div class="card-actions">
                         <button class="btn-accept" onclick="aceptarSolicitud(${solicitud.id})">
                             Aceptar
@@ -295,19 +319,19 @@
                         </button>
                     </div>
                 `;
-            }
+                }
 
-            if (solicitud.status === "ACCEPTED") {
-                botones = `
+                if (solicitud.status === "ACCEPTED") {
+                    botones = `
                     <div class="card-actions">
                         <button class="btn-complete" onclick="completarSolicitud(${solicitud.id})">
                             Completar
                         </button>
                     </div>
                 `;
-            }
+                }
 
-            contenedor.innerHTML += `
+                contenedor.innerHTML += `
                 <div class="project-card">
                     <div class="project-info">
                         <h3>Solicitud #${solicitud.id}</h3>
@@ -319,151 +343,144 @@
                     </div>
                 </div>
             `;
-        });
-    }
-
-    async function aceptarSolicitud(id) {
-        await fetch(API_URL + "/api/jobrequest/accept/" + id, {
-            method: "PUT"
-        });
-
-        cargarSolicitudesFreelancer();
-    }
-
-    async function rechazarSolicitud(id) {
-        await fetch(API_URL + "/api/jobrequest/reject/" + id, {
-            method: "PUT"
-        });
-
-        cargarSolicitudesFreelancer();
-    }
-
-    async function completarSolicitud(id) {
-        await fetch(API_URL + "/api/jobrequest/complete/" + id, {
-            method: "PUT"
-        });
-
-        cargarSolicitudesFreelancer();
-    }
-
-    async function eliminarServicio(id) {
-        if (!confirm("¿Eliminar este servicio?")) {
-            return;
+            });
         }
 
-        const response = await fetch(API_URL + "/api/services/delete/" + id, {
-            method: "DELETE"
-        });
+        async function aceptarSolicitud(id) {
+            await fetch(API_URL + "/api/jobrequest/accept/" + id, {
+                method: "PUT"
+            });
 
-        if (response.ok) {
-            alert("Servicio eliminado");
-            cargarMisServicios();
-        } else {
-            alert("Error al eliminar servicio");
+            cargarSolicitudesFreelancer();
         }
-    }
 
-    function editarServicio(id) {
-        alert("Editar servicio pendiente. ID: " + id);
-    }
+        async function rechazarSolicitud(id) {
+            await fetch(API_URL + "/api/jobrequest/reject/" + id, {
+                method: "PUT"
+            });
 
-    document.getElementById("formEditar").addEventListener("submit", async function (e) {
-        e.preventDefault();
-
-        const datosActualizados = {
-            name: document.getElementById("editName").value,
-            email: user.email,
-            password: user.password,
-            role: user.role,
-            verified: user.verified,
-            rating: user.rating
-        };
-
-        const response = await fetch(API_URL + "/users/" + user.id, {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(datosActualizados)
-        });
-
-        if (response.ok) {
-            const updatedUser = await response.json();
-            localStorage.setItem("user", JSON.stringify(updatedUser));
-            alert("Perfil actualizado");
-            window.location.reload();
-        } else {
-            alert("Error al actualizar el perfil");
+            cargarSolicitudesFreelancer();
         }
-    });
 
-    document.getElementById("formProyecto").addEventListener("submit", async function (e) {
-        e.preventDefault();
+        async function completarSolicitud(id) {
+            await fetch(API_URL + "/api/jobrequest/complete/" + id, {
+                method: "PUT"
+            });
 
-        const proyecto = {
-            title: document.getElementById("projTitle").value,
-            description: document.getElementById("projDescription").value,
-            category: document.getElementById("projCategory").value,
-            imageUrl: document.getElementById("projImage").value,
-            freelancer: {
-                id: user.id
+            cargarSolicitudesFreelancer();
+        }
+
+
+        document.getElementById("formServicio").addEventListener("submit", async function (e) {
+            e.preventDefault();
+
+            const servicio = {
+                title: document.getElementById("serviceTitle").value,
+                description: document.getElementById("serviceDescription").value,
+                category: document.getElementById("serviceCategory").value,
+                price: Number(document.getElementById("servicePrice").value),
+                imageUrl: document.getElementById("serviceImage").value,
+                freelancer: {
+                    id: user.id
+                }
+            };
+
+            const url = editingServiceId
+                ? API_URL + "/api/services/edit/" + editingServiceId
+                : API_URL + "/api/services/save";
+
+            const method = editingServiceId ? "PUT" : "POST";
+
+            const response = await fetch(url, {
+                method: method,
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(servicio)
+            });
+
+            const text = await response.text();
+
+            if (response.ok) {
+                cerrarModal("modalServicio");
+                document.getElementById("formServicio").reset();
+
+                editingServiceId = null;
+
+                cargarMisServicios();
+
+                alert(method === "POST" ? "Servicio publicado" : "Servicio actualizado");
+            } else {
+                alert(text || "Error al guardar servicio");
             }
-        };
-
-        const response = await fetch(API_URL + "/projects", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(proyecto)
         });
 
-        if (response.ok) {
-            cerrarModal("modalProyecto");
-            document.getElementById("formProyecto").reset();
-            cargarMisProyectos();
-            alert("Proyecto publicado");
-        } else {
-            alert("Error al publicar proyecto");
-        }
-    });
+        document.getElementById("formProyecto").addEventListener("submit", async function (e) {
+            e.preventDefault();
 
-    document.getElementById("formServicio").addEventListener("submit", async function (e) {
-        e.preventDefault();
+            const proyecto = {
+                title: document.getElementById("projTitle").value,
+                description: document.getElementById("projDescription").value,
+                category: document.getElementById("projCategory").value,
+                imageUrl: document.getElementById("projImage").value,
+                freelancer: {
+                    id: user.id
+                }
+            };
 
-        const servicio = {
-            title: document.getElementById("serviceTitle").value,
-            description: document.getElementById("serviceDescription").value,
-            category: document.getElementById("serviceCategory").value,
-            price: Number(document.getElementById("servicePrice").value),
-            imageUrl: document.getElementById("serviceImage").value,
-            freelancer: {
-                id: user.id
+            const response = await fetch(API_URL + "/projects", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(proyecto)
+            });
+
+            if (response.ok) {
+                cerrarModal("modalProyecto");
+                document.getElementById("formProyecto").reset();
+                cargarMisProyectos();
+                alert("Proyecto publicado");
+            } else {
+                alert("Error al publicar proyecto");
             }
-        };
-
-        const response = await fetch(API_URL + "/api/services/save", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(servicio)
         });
 
-        const text = await response.text();
+        document.getElementById("formServicio").addEventListener("submit", async function (e) {
+            e.preventDefault();
 
-        if (response.ok) {
-            cerrarModal("modalServicio");
-            document.getElementById("formServicio").reset();
-            cargarMisServicios();
-            alert("Servicio publicado");
-        } else {
-            alert(text || "Error al publicar servicio");
-        }
-    });
-</script>
+            const servicio = {
+                title: document.getElementById("serviceTitle").value,
+                description: document.getElementById("serviceDescription").value,
+                category: document.getElementById("serviceCategory").value,
+                price: Number(document.getElementById("servicePrice").value),
+                imageUrl: document.getElementById("serviceImage").value,
+                freelancer: {
+                    id: user.id
+                }
+            };
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+            const response = await fetch(API_URL + "/api/services/save", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(servicio)
+            });
+
+            if (response.ok) {
+                cerrarModal("modalServicio");
+                document.getElementById("formServicio").reset();
+                cargarMisServicios();
+                alert("Servicio publicado");
+            } else {
+                const text = await response.text();
+                alert(text || "Error al publicar servicio");
+            }
+        });
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

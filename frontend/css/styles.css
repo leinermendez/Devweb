@@ -26,33 +26,33 @@ body {
 }
 
 .login-card p {
-    color: rgba(255,255,255,0.5);
+    color: rgba(255, 255, 255, 0.5);
     margin-bottom: 30px;
 }
 
 /* ===== FORMS ===== */
 .form-label {
-    color: rgba(255,255,255,0.7);
+    color: rgba(255, 255, 255, 0.7);
     font-size: 0.9rem;
 }
 
 .form-control {
-    background: rgba(255,255,255,0.07);
-    border: 1px solid rgba(255,255,255,0.15);
+    background: rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(255, 255, 255, 0.15);
     border-radius: 10px;
     color: #fff;
     padding: 12px 15px;
 }
 
 .form-control:focus {
-    background: rgba(255,255,255,0.1);
+    background: rgba(255, 255, 255, 0.1);
     border-color: #6c63ff;
     color: #fff;
     box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.25);
 }
 
 .form-control::placeholder {
-    color: rgba(255,255,255,0.3);
+    color: rgba(255, 255, 255, 0.3);
 }
 
 /* ===== BUTTONS ===== */
@@ -73,7 +73,7 @@ body {
 
 /* ===== LINKS ===== */
 .register-link {
-    color: rgba(255,255,255,0.5);
+    color: rgba(255, 255, 255, 0.5);
     font-size: 0.9rem;
 }
 
@@ -108,7 +108,7 @@ body {
     align-items: center;
     justify-content: center;
     padding: 40px;
-    border-right: 1px solid rgba(255,255,255,0.08);
+    border-right: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .login-right {
@@ -128,7 +128,7 @@ body {
 }
 
 .info-content p {
-    color: rgba(255,255,255,0.6);
+    color: rgba(255, 255, 255, 0.6);
     font-size: 1.1rem;
     margin-bottom: 40px;
 }
@@ -139,10 +139,10 @@ body {
 }
 
 .feature-list li {
-    color: rgba(255,255,255,0.8);
+    color: rgba(255, 255, 255, 0.8);
     font-size: 1.1rem;
     padding: 12px 0;
-    border-bottom: 1px solid rgba(255,255,255,0.08);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .feature-list li:last-child {
@@ -208,8 +208,8 @@ body.feed-page {
     align-items: center;
     justify-content: space-between;
     padding: 15px 40px;
-    background: rgba(255,255,255,0.04);
-    border-bottom: 1px solid rgba(255,255,255,0.08);
+    background: rgba(255, 255, 255, 0.04);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     position: sticky;
     top: 0;
     z-index: 100;
@@ -228,25 +228,25 @@ body.feed-page {
     margin: 0 30px;
     padding: 10px 15px;
     border-radius: 8px;
-    border: 1px solid rgba(255,255,255,0.15);
-    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.07);
     color: #fff;
 }
 
 .search-input::placeholder {
-    color: rgba(255,255,255,0.3);
+    color: rgba(255, 255, 255, 0.3);
 }
 
 .user-menu {
     display: flex;
     align-items: center;
     gap: 15px;
-    color: rgba(255,255,255,0.8);
+    color: rgba(255, 255, 255, 0.8);
 }
 
 .user-menu button {
-    background: rgba(255,255,255,0.08);
-    border: 1px solid rgba(255,255,255,0.15);
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
     color: #fff;
     padding: 8px 16px;
     border-radius: 8px;
@@ -273,8 +273,8 @@ body.feed-page {
 
 .project-card {
     width: 100%;
-    background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(255,255,255,0.1);
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 15px;
     padding: 20px;
     color: #fff;
@@ -287,7 +287,7 @@ body.feed-page {
 }
 
 .project-card p {
-    color: rgba(255,255,255,0.5);
+    color: rgba(255, 255, 255, 0.5);
     margin: 0;
 }
 
@@ -299,10 +299,10 @@ body.feed-page {
     max-width: 700px;
     margin: 30px auto 0;
     padding: 20px 25px;
-    background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(255,255,255,0.1);
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 15px;
-    color: rgba(255,255,255,0.7);
+    color: rgba(255, 255, 255, 0.7);
 }
 
 .post-banner button {
@@ -322,8 +322,11 @@ body.feed-page {
 /* ===== MODAL ===== */
 .modal-overlay {
     position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(0,0,0,0.6);
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
     align-items: center;
     justify-content: center;
     z-index: 1000;
@@ -331,7 +334,7 @@ body.feed-page {
 
 .modal-box {
     background: #1e1b3a;
-    border: 1px solid rgba(255,255,255,0.1);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 15px;
     padding: 30px;
     width: 100%;
@@ -350,8 +353,8 @@ body.feed-page {
     padding: 10px 15px;
     margin-bottom: 12px;
     border-radius: 8px;
-    border: 1px solid rgba(255,255,255,0.15);
-    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.07);
     color: #fff;
 }
 
@@ -382,7 +385,7 @@ body.feed-page {
 }
 
 .modal-buttons button:first-child {
-    background: rgba(255,255,255,0.1);
+    background: rgba(255, 255, 255, 0.1);
     color: #fff;
 }
 
@@ -403,7 +406,7 @@ body.feed-page {
 }
 
 .user-link {
-    color: rgba(255,255,255,0.8);
+    color: rgba(255, 255, 255, 0.8);
     text-decoration: none;
 }
 
@@ -411,7 +414,9 @@ body.feed-page {
     color: #fff;
 }
 
-css/* ===== PROFILE PAGE ===== */
+css
+
+/* ===== PROFILE PAGE ===== */
 .profile-container {
     max-width: 700px;
     margin: 30px auto;
@@ -419,8 +424,8 @@ css/* ===== PROFILE PAGE ===== */
 }
 
 .profile-header {
-    background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(255,255,255,0.1);
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 15px;
     padding: 30px;
     color: #fff;
@@ -436,7 +441,7 @@ css/* ===== PROFILE PAGE ===== */
 }
 
 .profile-header p {
-    color: rgba(255,255,255,0.6);
+    color: rgba(255, 255, 255, 0.6);
     margin: 4px 0;
 }
 
@@ -449,7 +454,7 @@ css/* ===== PROFILE PAGE ===== */
     border-radius: 8px;
     font-weight: 600;
     cursor: pointer;
-    
+
 }
 
 .profile-container {
@@ -464,7 +469,7 @@ css/* ===== PROFILE PAGE ===== */
 
 #servicesContainer p,
 #solicitudesContainer p {
-    color: rgba(255,255,255,0.6);
+    color: rgba(255, 255, 255, 0.6);
 }
 
 #projectsSection h3,
@@ -494,7 +499,7 @@ css/* ===== PROFILE PAGE ===== */
     justify-content: first baseline;
     gap: 15px;
     align-items: center;
-    
+
 }
 
 .section-header button {
@@ -701,8 +706,8 @@ css/* ===== PROFILE PAGE ===== */
     border: none;
     border-radius: 999px;
     padding: 12px 20px;
-    background: #38bdf8;
-    color: #111;
+    background: #1f96c9;
+    color: rgb(255, 255, 255);
     font-weight: 900;
     cursor: pointer;
 }
@@ -797,6 +802,7 @@ css/* ===== PROFILE PAGE ===== */
         font-size: 1.2rem;
     }
 }
+
 .public-freelancer-page .service-image {
     width: 100%;
     height: 240px;
@@ -823,23 +829,7 @@ css/* ===== PROFILE PAGE ===== */
     transition: 0.2s;
 }
 
-/* Editar */
-.btn-edit {
-    background: linear-gradient(135deg, #6c63ff, #3b5bdb);
-}
 
-.btn-edit:hover {
-    transform: translateY(-2px);
-}
-
-/* Eliminar */
-.btn-delete {
-    background: linear-gradient(135deg, #dc3545, #b02a37);
-}
-
-.btn-delete:hover {
-    transform: translateY(-2px);
-}
 
 /* Aceptar */
 .btn-accept {
@@ -866,4 +856,26 @@ css/* ===== PROFILE PAGE ===== */
 
 .btn-complete:hover {
     transform: translateY(-2px);
+}
+
+.profile-container .freelancer-tabs {
+    justify-content: space-around;
+    display: flex;
+    gap: 40px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    margin-bottom: 25px;
+}
+
+.profile-container .freelancer-tabs button {
+    background: transparent;
+    border: none;
+    color: rgba(255, 255, 255, 0.55);
+    font-size: 1.6rem;
+    font-weight: 800;
+    padding-bottom: 12px;
+}
+
+.profile-container .freelancer-tabs button.tab-active {
+    color: #fff;
+    border-bottom: 2px solid #fff;
 }
