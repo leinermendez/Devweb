@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import ucr.ac.cr.Devweb.enums.ReportStatus;
-import ucr.ac.cr.Devweb.enums.ReportTargetType;
 import ucr.ac.cr.Devweb.enums.ReportType;
 
 import java.time.LocalDateTime;
@@ -28,37 +27,37 @@ public class Report {
 
     @ManyToOne
     @JoinColumn(name = "client_to_report",nullable = false)
-    private User client;
+    private User reportedBy;
 
-    @NotNull
+
     @Enumerated(EnumType.STRING)
     private ReportStatus status;
 
     @Column(name = "created_at")
-    private LocalDateTime date;
+    private LocalDateTime createdAt;
 
-    @Column(name = "contend_id",nullable = false)
-    private Long contentId;
+    @Column(name = "reported_project_id")
+    private Long reportedProjectId;
 
-    @NotNull
-    @Enumerated(EnumType.STRING)
-    private ReportTargetType targetType;
+    @ManyToOne
+    @JoinColumn(name = "reported_user")
+    private User reportedUser;
 
     public Report() {
     }
 
     @PrePersist//Fecha automatica
     public void prePersist() {
-        this.date = LocalDateTime.now();
+        this.createdAt = LocalDateTime.now();
         this.status= ReportStatus.PENDING;
     }
 
-    public Report(ReportType type, String description, User client, Long contentId, ReportTargetType targetType) {
+    public Report(ReportType type, String description, User reportedBy, Long reportedProjectId, User reportedUser) {
         this.type = type;
         this.description = description;
-        this.client = client;
-        this.contentId = contentId;
-        this.targetType = targetType;
+        this.reportedBy = reportedBy;
+        this.reportedProjectId = reportedProjectId;
+        this.reportedUser = reportedUser;
     }
 
     public Long getId() {
@@ -85,12 +84,12 @@ public class Report {
         this.description = description;
     }
 
-    public User getClient() {
-        return client;
+    public User getReportedBy() {
+        return reportedBy;
     }
 
-    public void setClient(User client) {
-        this.client = client;
+    public void setReportedBy(User reportedBy) {
+        this.reportedBy = reportedBy;
     }
 
     public ReportStatus getStatus() {
@@ -101,27 +100,27 @@ public class Report {
         this.status = status;
     }
 
-    public LocalDateTime getDate() {
-        return date;
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
     }
 
-    public void setDate(LocalDateTime date) {
-        this.date = date;
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
     }
 
-    public Long getContentId() {
-        return contentId;
+    public Long getReportedProjectId() {
+        return reportedProjectId;
     }
 
-    public void setContentId(Long contentId) {
-        this.contentId = contentId;
+    public void setReportedProjectId(Long reportedProjectId) {
+        this.reportedProjectId = reportedProjectId;
     }
 
-    public ReportTargetType getTargetType() {
-        return targetType;
+    public User getReportedUser() {
+        return reportedUser;
     }
 
-    public void setTargetType(ReportTargetType targetType) {
-        this.targetType = targetType;
+    public void setReportedUser(User reportedUser) {
+        this.reportedUser = reportedUser;
     }
 }

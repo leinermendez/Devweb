@@ -1,7 +1,9 @@
 package ucr.ac.cr.Devweb.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 import ucr.ac.cr.Devweb.enums.ReportStatus;
 import ucr.ac.cr.Devweb.model.DTO.ReportDTO;
 import ucr.ac.cr.Devweb.model.Report;
@@ -19,15 +21,32 @@ public class ReportService {
     private UserService userService;
 
     public ReportDTO saveReport(Report report){
-    //conprobacion si el reporte ha sido hecho anteriormente por el mismo cliente, hacia el mismo contenido
-    // hacia el mismo tipo de contenido y que el reporte todavia este pendiente o en revicio
+        //validamos hacia que lado esta hecho el reporte
+        boolean reportUser = report.getReportedUser() != null;
+        boolean reportProject = report.getReportedProjectId() != null;
 
-    Boolean reportV= this.reportRepository.existsByClientAndTypeAndContentIdAndTargetTypeAndStatusIn(report.getClient(),report.getType(),report.getContentId(),report.getTargetType(),List.of(ReportStatus.PENDING,ReportStatus.UNDER_REVIEW));
 
-    if (reportV){
-        return null;
-    }
-    return this.converToDTO(this.reportRepository.save(report));
+        //Validamos que el reporte no reporte un/ningun usuario y proyecto al mismo tiempo
+        if (reportProject==reportUser){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "You have to report either a user or a project, not both or neither.");
+        }
+
+        boolean reportDuplicate;
+        if (reportUser){
+            //validamos si se reporta a si mismo
+            if (report.getReportedBy().getId().equals(report.getReportedUser().getId())){
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Hmm, you can't report yourself.");
+            }
+            reportDuplicate=this.reportRepository.existsByReportedByAndTypeAndReportedUserAndStatusIn(report.getReportedBy(),report.getType(),report.getReportedUser(),List.of(ReportStatus.PENDING,ReportStatus.UNDER_REVIEW));
+        }else{
+            reportDuplicate=this.reportRepository.existsByReportedByAndTypeAndReportedProjectIdAndStatusIn(report.getReportedBy(),report.getType(),report.getReportedProjectId(),List.of(ReportStatus.PENDING,ReportStatus.UNDER_REVIEW));
+        }
+
+        if (reportDuplicate){
+            return null;
+        }
+
+        return this.converToDTO(this.reportRepository.save(report));
     }
 
     public List<ReportDTO> findAllReportsUnder_Review(){    //retorna los reportes en revicion
@@ -36,15 +55,15 @@ public class ReportService {
     public List<ReportDTO> findAllReportsResolved(){        //retorna los reportes resueltos
         return converListDTO(this.reportRepository.findByStatus(ReportStatus.RESOLVED));
     }
-    public List<ReportDTO> findAllReportsRejected(){        //retorna los reportes rechazados
-        return converListDTO(this.reportRepository.findByStatus(ReportStatus.REJECTED));
+    public List<ReportDTO> findAllReportsDismissed(){        //retorna los reportes rechazados
+        return converListDTO(this.reportRepository.findByStatus(ReportStatus.DISMISSED));
     }
     public List<ReportDTO> findAllReportsPending(){         //retorna los reportes pendientes
         return converListDTO(this.reportRepository.findByStatus(ReportStatus.PENDING));
     }
 
     public ReportDTO changeStatus(Long id, ReportStatus status){
-        Report report = this.reportRepository.findById(id).orElseThrow();
+        Report report = this.reportRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Report no found"));
         report.setStatus(status);
         return converToDTO(this.reportRepository.save(report));
     }
@@ -52,13 +71,15 @@ public class ReportService {
 
     //converciones a DTO
     public ReportDTO converToDTO(Report report){
-        return new ReportDTO(   report.getId(),
+        ReportDTO dto= new ReportDTO(report.getId(),
+                report.getType(),
                 report.getDescription(),
-                userService.convertirUserDTO(report.getClient()),
+                this.userService.convertirUserDTO(report.getReportedBy()),
                 report.getStatus(),
-                report.getDate(),
-                report.getContentId(),
-                report.getTargetType());
+                report.getCreatedAt(),
+                report.getReportedProjectId(),
+                report.getReportedUser() != null ? this.userService.convertirUserDTO(report.getReportedUser()) : null);// un if en una sola linea de codigo "condición ? valorSiEsTrue : valorSiEsFalse"
+        return dto;
     }
 
     public List<ReportDTO> converListDTO(List<Report> reportList){
