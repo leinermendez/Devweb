@@ -1,5 +1,4 @@
-Aquí está el login.html completo:
-html<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -9,31 +8,49 @@ html<!DOCTYPE html>
     <link rel="stylesheet" href="../css/styles.css">
 </head>
 <body>
-    <div class="container mt-5">
-        <div class="row justify-content-center">
-            <div class="col-md-4">
-                <h2 class="text-center mb-4">Iniciar Sesión</h2>
+    <div class="login-wrapper">
+        <!-- Lado izquierdo - Formulario -->
+        <div class="login-left">
+            <div class="login-card">
+                <div class="logo">DevWeb</div>
+                <h2>Bienvenido</h2>
+                <p>Iniciá sesión para continuar</p>
                 <form id="loginForm">
                     <div class="mb-3">
                         <label class="form-label">Email</label>
-                        <input type="email" class="form-control" id="email" required>
+                        <input type="email" class="form-control" id="email" placeholder="tu@email.com" required>
                     </div>
-                    <div class="mb-3">
+                    <div class="mb-4">
                         <label class="form-label">Contraseña</label>
-                        <input type="password" class="form-control" id="password" required>
+                        <input type="password" class="form-control" id="password" placeholder="••••••••" required>
                     </div>
-                    <button type="submit" class="btn btn-primary w-100">Entrar</button>
+                    <button type="submit" class="btn btn-primary w-100">Iniciar Sesión</button>
                 </form>
-                <p class="text-center mt-3">¿No tenés cuenta? <a href="register.html">Registráte</a></p>
+                <p class="register-link text-center mt-4">¿No tenés cuenta? <a href="register.html">Registráte</a></p>
+            </div>
+        </div>
+
+        <!-- Lado derecho - Info -->
+        <div class="login-right">
+            <div class="info-content">
+                <h1>Conectá tu talento<br>con el mundo.</h1>
+                <p>La plataforma para freelancers de tecnología en Costa Rica.</p>
+                <ul class="feature-list">
+                    <li>🚀 Publicá tu portafolio y servicios</li>
+                    <li>🤝 Conectá con clientes reales</li>
+                    <li>⭐ Recibí reseñas y calificaciones</li>
+                    <li>✅ Obtené tu insignia de verificado</li>
+                    <li>💼 Gestioná tus solicitudes de trabajo</li>
+                </ul>
             </div>
         </div>
     </div>
+
     <script src="../js/api.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             document.getElementById("loginForm").addEventListener("submit", async function(e) {
                 e.preventDefault();
-                
                 const email = document.getElementById("email").value;
                 const password = document.getElementById("password").value;
 
