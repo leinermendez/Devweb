@@ -1,8 +1,10 @@
 const API_URL = "https://devweb-3lsj.onrender.com";
 
 function logout() {
-    localStorage.removeItem("user");
-    window.location.href = "users/login.html";
+    if (confirm("¿Seguro que querés cerrar sesión?")) {
+        localStorage.removeItem("user");
+        window.location.href = "users/login.html";
+    }
 }
 
 function abrirModal(id) {

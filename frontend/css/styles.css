@@ -401,3 +401,64 @@ body.feed-page {
 .project-info {
     padding: 15px 20px;
 }
+
+.user-link {
+    color: rgba(255,255,255,0.8);
+    text-decoration: none;
+}
+
+.user-link:hover {
+    color: #fff;
+}
+
+css/* ===== PROFILE PAGE ===== */
+.profile-container {
+    max-width: 700px;
+    margin: 30px auto;
+    padding: 0 20px;
+}
+
+.profile-header {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 15px;
+    padding: 30px;
+    color: #fff;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.profile-header h2 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: #fff;
+}
+
+.profile-header p {
+    color: rgba(255,255,255,0.6);
+    margin: 4px 0;
+}
+
+.profile-header button {
+    margin-top: 15px;
+    background: linear-gradient(135deg, #6c63ff, #3b5bdb);
+    border: none;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+#projectsSection h3,
+#clientSection h3 {
+    color: #fff;
+    margin-bottom: 15px;
+}
+
+#projectsContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
