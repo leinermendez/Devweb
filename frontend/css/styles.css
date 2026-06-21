@@ -449,6 +449,22 @@ css/* ===== PROFILE PAGE ===== */
     border-radius: 8px;
     font-weight: 600;
     cursor: pointer;
+    
+}
+
+.profile-container {
+    color: #fff;
+}
+
+#servicesSection h3,
+#clientSection h3,
+#projectsSection h3 {
+    color: #fff;
+}
+
+#servicesContainer p,
+#solicitudesContainer p {
+    color: rgba(255,255,255,0.6);
 }
 
 #projectsSection h3,
@@ -461,4 +477,323 @@ css/* ===== PROFILE PAGE ===== */
     display: flex;
     flex-direction: column;
     gap: 15px;
+}
+
+.modal-box select {
+    height: auto;
+    appearance: auto;
+}
+
+.modal-box select option {
+    background: #1e1b3a;
+    color: #fff;
+}
+
+.section-header {
+    display: flex;
+    justify-content: first baseline;
+    gap: 15px;
+    align-items: center;
+    
+}
+
+.section-header button {
+    margin-top: 0 px;
+    background: linear-gradient(135deg, #6c63ff, #3b5bdb);
+    border: none;
+    color: #fff;
+    padding: 6px 14px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+/* ===== SOLO PERFIL PUBLICO FREELANCER ===== */
+
+.public-freelancer-page .freelancer-page {
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    min-height: calc(100vh - 70px);
+    color: #fff;
+}
+
+.public-freelancer-page .freelancer-profile-card {
+    padding: 36px;
+    background: rgba(0, 0, 0, 0.22);
+    border-right: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.public-freelancer-page .freelancer-avatar {
+    width: 145px;
+    height: 145px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #6c63ff, #38bdf8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 4rem;
+    font-weight: 900;
+    color: #fff;
+    margin-bottom: 22px;
+}
+
+.public-freelancer-page .freelancer-profile-card h1 {
+    font-size: 2rem;
+    font-weight: 900;
+    margin-bottom: 6px;
+}
+
+.public-freelancer-page .profile-muted {
+    color: rgba(255, 255, 255, 0.62);
+}
+
+.public-freelancer-page .profile-badges {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin: 20px 0;
+}
+
+.public-freelancer-page .profile-badges span {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.13);
+    border-radius: 999px;
+    padding: 8px 13px;
+    font-size: 0.9rem;
+    font-weight: 800;
+}
+
+.public-freelancer-page .secondary-profile-button,
+.public-freelancer-page .small-button {
+    border: none;
+    border-radius: 999px;
+    padding: 11px 18px;
+    background: rgba(255, 255, 255, 0.10);
+    color: #fff;
+    font-weight: 800;
+    cursor: pointer;
+}
+
+.public-freelancer-page .secondary-profile-button {
+    width: 100%;
+}
+
+.public-freelancer-page .secondary-profile-button:hover,
+.public-freelancer-page .small-button:hover {
+    background: rgba(255, 255, 255, 0.18);
+}
+
+.public-freelancer-page .report-box {
+    margin-top: 18px;
+    padding: 16px;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.10);
+}
+
+.public-freelancer-page .report-box h4 {
+    font-size: 1rem;
+    font-weight: 800;
+    margin-bottom: 10px;
+}
+
+.public-freelancer-page .report-box textarea,
+.public-freelancer-page #modalSolicitud textarea,
+.public-freelancer-page #modalReview textarea {
+    width: 100%;
+    min-height: 105px;
+    padding: 12px;
+    border-radius: 12px;
+    background: rgba(0, 0, 0, 0.28);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #fff;
+    resize: vertical;
+}
+
+.public-freelancer-page .report-box button {
+    width: 100%;
+    margin-top: 10px;
+    border: none;
+    border-radius: 12px;
+    background: #ef4444;
+    color: #fff;
+    padding: 10px;
+    font-weight: 800;
+}
+
+.public-freelancer-page .freelancer-main-content {
+    padding: 42px 58px;
+}
+
+.public-freelancer-page .freelancer-tabs {
+    display: flex;
+    gap: 34px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    margin-bottom: 32px;
+}
+
+.public-freelancer-page .freelancer-tabs button {
+    background: transparent;
+    border: none;
+    color: rgba(255, 255, 255, 0.45);
+    font-size: 1.55rem;
+    font-weight: 900;
+    padding-bottom: 12px;
+    cursor: pointer;
+}
+
+.public-freelancer-page .freelancer-tabs button.tab-active {
+    color: #fff;
+    border-bottom: 2px solid #fff;
+}
+
+.public-freelancer-page .freelancer-section h2 {
+    font-size: 1.8rem;
+    font-weight: 900;
+    margin-bottom: 22px;
+}
+
+.public-freelancer-page .service-slot-card {
+    display: grid;
+    grid-template-columns: 34% 1fr;
+    background: rgba(255, 255, 255, 0.055);
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    border-radius: 24px;
+    overflow: hidden;
+    margin-bottom: 22px;
+}
+
+.public-freelancer-page .service-slot-category {
+    background: linear-gradient(135deg, #6c63ff, #38bdf8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    text-align: center;
+    color: #fff;
+    font-size: 1.25rem;
+    font-weight: 900;
+}
+
+.public-freelancer-page .service-slot-info {
+    padding: 26px;
+}
+
+.public-freelancer-page .service-slot-info h3 {
+    font-size: 1.45rem;
+    font-weight: 900;
+    margin-bottom: 10px;
+}
+
+.public-freelancer-page .service-slot-info p {
+    color: rgba(255, 255, 255, 0.65);
+    margin-bottom: 8px;
+}
+
+.public-freelancer-page .service-slot-price {
+    font-size: 1.45rem;
+    font-weight: 900;
+    color: #fff !important;
+    margin: 15px 0;
+}
+
+.public-freelancer-page .service-slot-info button {
+    border: none;
+    border-radius: 999px;
+    padding: 12px 20px;
+    background: #38bdf8;
+    color: #111;
+    font-weight: 900;
+    cursor: pointer;
+}
+
+.public-freelancer-page .service-slot-info button:hover {
+    background: #7dd3fc;
+}
+
+.public-freelancer-page .projects-public-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+    gap: 20px;
+}
+
+.public-freelancer-page .project-public-card,
+.public-freelancer-page .review-slot-card {
+    background: rgba(255, 255, 255, 0.055);
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    border-radius: 18px;
+    color: #fff;
+}
+
+.public-freelancer-page .project-public-card {
+    overflow: hidden;
+}
+
+.public-freelancer-page .project-public-card img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+}
+
+.public-freelancer-page .project-public-card div,
+.public-freelancer-page .review-slot-card {
+    padding: 16px;
+}
+
+.public-freelancer-page .project-public-card h3,
+.public-freelancer-page .review-slot-card strong {
+    font-weight: 900;
+}
+
+.public-freelancer-page .project-public-card p,
+.public-freelancer-page .review-slot-card p,
+.public-freelancer-page .review-slot-card small {
+    color: rgba(255, 255, 255, 0.62);
+}
+
+.public-freelancer-page .section-title-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+}
+
+.public-freelancer-page .review-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.public-freelancer-page #modalReview select {
+    width: 100%;
+    margin-bottom: 12px;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+@media (max-width: 900px) {
+    .public-freelancer-page .freelancer-page {
+        grid-template-columns: 1fr;
+    }
+
+    .public-freelancer-page .freelancer-profile-card {
+        border-right: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .public-freelancer-page .freelancer-main-content {
+        padding: 28px 20px;
+    }
+
+    .public-freelancer-page .service-slot-card {
+        grid-template-columns: 1fr;
+    }
+
+    .public-freelancer-page .freelancer-tabs {
+        gap: 18px;
+    }
+
+    .public-freelancer-page .freelancer-tabs button {
+        font-size: 1.2rem;
+    }
 }
