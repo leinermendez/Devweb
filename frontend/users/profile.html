@@ -1,0 +1,130 @@
+html<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevWeb - Mi Perfil</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body class="feed-page">
+    <nav class="navbar">
+        <a href="../index.html" class="logo">DevWeb</a>
+        <input type="text" class="search-input" placeholder="Buscar freelancers...">
+        <div class="user-menu">
+            <a href="profile.html" id="userName" class="user-link"></a>
+            <button onclick="logout()">Cerrar sesión</button>
+        </div>
+    </nav>
+
+    <div class="profile-container">
+        <div class="profile-header">
+            <h2 id="profileName"></h2>
+            <p id="profileRole"></p>
+            <p id="profileEmail"></p>
+            <p id="profileRating"></p>
+            <button onclick="abrirModal('modalEditar')">Editar perfil</button>
+        </div>
+
+        <!-- Sección condicional para FREELANCER -->
+        <div id="projectsSection" style="display:none;">
+            <h3>Mis proyectos</h3>
+            <div id="projectsContainer"></div>
+        </div>
+
+        <!-- Sección condicional para CLIENT -->
+        <div id="clientSection" style="display:none;">
+            <h3>Mis solicitudes</h3>
+            <div id="solicitudesContainer">
+                <!-- Brandon agrega aquí la lista de solicitudes -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Editar perfil -->
+    <div class="modal-overlay" id="modalEditar" style="display:none;">
+        <div class="modal-box">
+            <h3>Editar perfil</h3>
+           <form id="formEditar">
+            <input type="text" id="editName" placeholder="Nombre" required>
+                <div class="modal-buttons">
+                    <button type="button" onclick="cerrarModal('modalEditar')">Cancelar</button>
+                    <button type="submit">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="../js/api.js"></script>
+    <script>
+        const user = JSON.parse(localStorage.getItem("user"));
+
+        if (!user) {
+            window.location.href = "login.html";
+        }
+
+        document.getElementById("userName").textContent = "Hola, " + user.name;
+        document.getElementById("profileName").textContent = user.name;
+        document.getElementById("profileRole").textContent = "Rol: " + user.role;
+        document.getElementById("profileEmail").textContent = "Email: " + user.email;
+        document.getElementById("profileRating").textContent = "Calificación: " + user.rating;
+
+        if (user.role === "FREELANCER") {
+            document.getElementById("projectsSection").style.display = "block";
+            cargarMisProyectos();
+        } else if (user.role === "CLIENT") {
+            document.getElementById("clientSection").style.display = "block";
+        }
+
+        async function cargarMisProyectos() {
+            const response = await fetch(API_URL + "/projects/freelancer/" + user.id);
+            const proyectos = await response.json();
+
+            const contenedor = document.getElementById("projectsContainer");
+            contenedor.innerHTML = "";
+
+            proyectos.forEach(proyecto => {
+                contenedor.innerHTML += `
+                    <div class="project-card">
+                        <img src="${proyecto.imageUrl}" class="project-image" alt="${proyecto.title}">
+                        <div class="project-info">
+                            <h3>${proyecto.title}</h3>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        document.getElementById("editName").value = user.name;
+
+        document.getElementById("formEditar").addEventListener("submit", async function(e) {
+            e.preventDefault();
+
+            const datosActualizados = {
+                name: document.getElementById("editName").value,
+                email: user.email,
+                password: user.password,
+                role: user.role,
+                verified: user.verified,
+                rating: user.rating
+            };
+
+            const response = await fetch(API_URL + "/users/" + user.id, {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(datosActualizados)
+            });
+
+            if (response.ok) {
+                const updatedUser = await response.json();
+                localStorage.setItem("user", JSON.stringify(updatedUser));
+                alert("Perfil actualizado");
+                window.location.reload();
+            } else {
+                alert("Error al actualizar el perfil");
+            }
+        });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

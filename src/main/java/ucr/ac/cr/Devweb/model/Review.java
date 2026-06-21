@@ -1,19 +1,29 @@
  package ucr.ac.cr.Devweb.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 
 import java.time.LocalDateTime;
 
 @Entity
+@Table(name = "reviews")
 public class Review {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)//genera automaticamente el id
     private Long id;
 
-    @NotBlank(message = "El comentario es obligatorio")
+    @NotBlank(message = "El comentario es obligatorio")//NoNull comment
     private String comment;
+
+    //Definiendo el minimo y maximo del rating
+    @Min(value = 1, message = "El rating es de minimo 1")
+    @Max(value = 5, message = "El rating es de maximo 5")
     private Integer rating;
+
+
+    @Column(name = "created_at")
     private LocalDateTime date;
 
     @ManyToOne
@@ -21,13 +31,13 @@ public class Review {
     private User client;
 
     @ManyToOne
-    @JoinColumn(name = "frelancer_id",nullable = false)
+    @JoinColumn(name = "freelancer_id",nullable = false)
     private User freelancer;
 
     public Review() {
     }
 
-    @PrePersist
+    @PrePersist//Fecha automatica
     public void prePersist() {
         this.date = LocalDateTime.now();
     }

@@ -2,6 +2,7 @@ package ucr.ac.cr.Devweb.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ucr.ac.cr.Devweb.enums.Role;
 import ucr.ac.cr.Devweb.model.DTO.UserDTO;
 import ucr.ac.cr.Devweb.model.User;
 import ucr.ac.cr.Devweb.repository.UserRepository;
@@ -29,9 +30,14 @@ public class UserService {
 
     //CREAR UN NUEVO USUARIO
     public UserDTO createUser(User user) {
-        User saved = userRepository.save(user);
-        return convertirUserDTO(saved);
-    }
+
+            if (userRepository.existsByEmail(user.getEmail())) {
+                throw new RuntimeException("Ya existe un usuario registrado con ese email");
+            }
+
+            User saved = userRepository.save(user);
+            return convertirUserDTO(saved);
+        }
 
     //ENCONTRAR USUARIOS POR ID
     public UserDTO findByIdUser(Long id){
@@ -94,6 +100,21 @@ public class UserService {
             }
         }
         return null;
+    }
+
+    public UserDTO becomeFreelancer(Long id){
+
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+        if(user.getRole() != Role.CLIENT){
+            throw new RuntimeException(
+                    "Solo los usuarios CLIENT pueden convertirse en FREELANCER");
+        }
+
+        user.setRole(Role.FREELANCER);
+
+        return convertirUserDTO(userRepository.save(user));
     }
 
 

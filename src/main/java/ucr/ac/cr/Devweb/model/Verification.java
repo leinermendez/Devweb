@@ -6,6 +6,7 @@ import ucr.ac.cr.Devweb.enums.VerificationStatus;
 import java.time.LocalDateTime;
 
 @Entity
+@Table(name = "verifications")
 public class Verification {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -14,9 +15,12 @@ public class Verification {
     @Enumerated(EnumType.STRING)
     private VerificationStatus status;
 
+    @Column(name = "evidence_url")
     private String evidenceUrl;
 
+    @Column(name = "request_date")
     private LocalDateTime requestDate;
+
     @ManyToOne(cascade = CascadeType.MERGE)// De esta forma actualizamos el boolean del usuario
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
