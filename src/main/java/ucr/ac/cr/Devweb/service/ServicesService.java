@@ -107,6 +107,7 @@ public class ServicesService {
         dto.setFreelancerName(services.getFreelancer().getName());
         dto.setFreelancerId(services.getFreelancer().getId());
         dto.setPrice(services.getPrice());
+        dto.setImageUrl(services.getImageUrl());
 
 
         return dto;
