@@ -16,4 +16,10 @@ async function cargarProyectos() {
         `;
     });
 }
+
+function logout() {
+    localStorage.removeItem("user");
+    window.location.href = "users/login.html";
+}
+
 cargarProyectos();
