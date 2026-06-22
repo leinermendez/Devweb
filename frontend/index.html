@@ -194,8 +194,13 @@
     });
 
     function openRequestModal(serviceId, freelancerId, serviceTitle) {
-    if (user.role !== "CLIENT") {
-        alert("Solo los clientes pueden solicitar servicios");
+    if (!user) {
+        alert("Debes iniciar sesión");
+        return;
+    }
+
+    if (user.id === freelancerId) {
+        alert("No puedes solicitar tus propios servicios");
         return;
     }
 

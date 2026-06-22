@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <title>DevWeb - Perfil Freelancer</title>
@@ -11,186 +12,186 @@
 
 <body class="feed-page public-freelancer-page">
 
-<nav class="navbar">
-    <a href="index.html" class="logo">DevWeb</a>
-    <input type="text" class="search-input" placeholder="Buscar freelancers...">
+    <nav class="navbar">
+        <a href="index.html" class="logo">DevWeb</a>
+        <input type="text" class="search-input" placeholder="Buscar freelancers...">
 
-    <div class="user-menu">
-        <a href="users/profile.html" id="userName" class="user-link"></a>
-        <button onclick="logout()">Cerrar sesión</button>
-    </div>
-</nav>
-
-<main class="freelancer-page">
-
-    <aside class="freelancer-profile-card">
-        <div class="freelancer-avatar" id="avatarLetter">F</div>
-
-        <h1 id="freelancerName">Cargando...</h1>
-        <p id="freelancerEmail" class="profile-muted"></p>
-
-        <div class="profile-badges">
-            <span id="ratingBadge">⭐ 0</span>
-            <span id="verifiedBadge">Sin verificar</span>
+        <div class="user-menu">
+            <a href="users/profile.html" id="userName" class="user-link"></a>
+            <button onclick="logout()">Cerrar sesión</button>
         </div>
+    </nav>
 
-        <button class="secondary-profile-button" onclick="toggleReport()">
-            Reportar usuario
-        </button>
+    <main class="freelancer-page">
 
-        <div id="reportBox" class="report-box" style="display:none;">
-            <h4>Reportar usuario</h4>
-            <textarea id="reportText" placeholder="Motivo del reporte"></textarea>
-            <button onclick="sendReport()">Enviar reporte</button>
-        </div>
-    </aside>
+        <aside class="freelancer-profile-card">
+            <div class="freelancer-avatar" id="avatarLetter">F</div>
 
-    <section class="freelancer-main-content">
+            <h1 id="freelancerName">Cargando...</h1>
+            <p id="freelancerEmail" class="profile-muted"></p>
 
-        <div class="freelancer-tabs">
-            <button id="servicesTabBtn" class="tab-active" onclick="showSection('services')">Servicios</button>
-            <button id="projectsTabBtn" onclick="showSection('projects')">Proyectos</button>
-            <button id="reviewsTabBtn" onclick="showSection('reviews')">Reviews</button>
-        </div>
-
-        <section id="servicesSection" class="freelancer-section">
-            <h2>Servicios</h2>
-            <div id="servicesContainer"></div>
-        </section>
-
-        <section id="projectsSection" class="freelancer-section" style="display:none;">
-            <h2>Proyectos</h2>
-            <div id="projectsContainer" class="projects-public-grid"></div>
-        </section>
-
-        <section id="reviewsSection" class="freelancer-section" style="display:none;">
-            <div class="section-title-row">
-                <div>
-                    <h2>Reviews</h2>
-                    <p id="reviewsAverage" class="profile-muted"></p>
-                </div>
-
-                <button id="reviewButton" class="small-button" onclick="openReviewModal()" style="display:none;">
-                    Agregar review
-                </button>
+            <div class="profile-badges">
+                <span id="ratingBadge">⭐ 0</span>
+                <span id="verifiedBadge">Sin verificar</span>
             </div>
 
-            <div id="reviewsContainer"></div>
+            <button class="secondary-profile-button" onclick="toggleReport()">
+                Reportar usuario
+            </button>
+
+            <div id="reportBox" class="report-box" style="display:none;">
+                <h4>Reportar usuario</h4>
+                <textarea id="reportText" placeholder="Motivo del reporte"></textarea>
+                <button onclick="sendReport()">Enviar reporte</button>
+            </div>
+        </aside>
+
+        <section class="freelancer-main-content">
+
+            <div class="freelancer-tabs">
+                <button id="servicesTabBtn" class="tab-active" onclick="showSection('services')">Servicios</button>
+                <button id="projectsTabBtn" onclick="showSection('projects')">Proyectos</button>
+                <button id="reviewsTabBtn" onclick="showSection('reviews')">Reviews</button>
+            </div>
+
+            <section id="servicesSection" class="freelancer-section">
+                <h2>Servicios</h2>
+                <div id="servicesContainer"></div>
+            </section>
+
+            <section id="projectsSection" class="freelancer-section" style="display:none;">
+                <h2>Proyectos</h2>
+                <div id="projectsContainer" class="projects-public-grid"></div>
+            </section>
+
+            <section id="reviewsSection" class="freelancer-section" style="display:none;">
+                <div class="section-title-row">
+                    <div>
+                        <h2>Reviews</h2>
+                        <p id="reviewsAverage" class="profile-muted"></p>
+                    </div>
+
+                    <button id="reviewButton" class="small-button" onclick="openReviewModal()" style="display:none;">
+                        Agregar review
+                    </button>
+                </div>
+
+                <div id="reviewsContainer"></div>
+            </section>
+
         </section>
 
-    </section>
+    </main>
 
-</main>
+    <div class="modal-overlay" id="modalSolicitud" style="display:none;">
+        <div class="modal-box">
+            <h3>Solicitar servicio</h3>
 
-<div class="modal-overlay" id="modalSolicitud" style="display:none;">
-    <div class="modal-box">
-        <h3>Solicitar servicio</h3>
+            <p id="requestServiceTitle" class="profile-muted"></p>
 
-        <p id="requestServiceTitle" class="profile-muted"></p>
+            <input type="hidden" id="requestServiceId">
 
-        <input type="hidden" id="requestServiceId">
+            <textarea id="requestDescription" placeholder="Describe el trabajo que necesitás"></textarea>
 
-        <textarea id="requestDescription" placeholder="Describe el trabajo que necesitás"></textarea>
-
-        <div class="modal-buttons">
-            <button type="button" onclick="cerrarModal('modalSolicitud')">Cancelar</button>
-            <button type="button" onclick="sendJobRequest()">Enviar solicitud</button>
+            <div class="modal-buttons">
+                <button type="button" onclick="cerrarModal('modalSolicitud')">Cancelar</button>
+                <button type="button" onclick="sendJobRequest()">Enviar solicitud</button>
+            </div>
         </div>
     </div>
-</div>
 
-<div class="modal-overlay" id="modalReview" style="display:none;">
-    <div class="modal-box">
-        <h3>Agregar review</h3>
+    <div class="modal-overlay" id="modalReview" style="display:none;">
+        <div class="modal-box">
+            <h3>Agregar review</h3>
 
-        <select id="reviewRating">
-            <option value="5">5 estrellas</option>
-            <option value="4">4 estrellas</option>
-            <option value="3">3 estrellas</option>
-            <option value="2">2 estrellas</option>
-            <option value="1">1 estrella</option>
-        </select>
+            <select id="reviewRating">
+                <option value="5">5 estrellas</option>
+                <option value="4">4 estrellas</option>
+                <option value="3">3 estrellas</option>
+                <option value="2">2 estrellas</option>
+                <option value="1">1 estrella</option>
+            </select>
 
-        <textarea id="reviewComment" placeholder="Comentario"></textarea>
+            <textarea id="reviewComment" placeholder="Comentario"></textarea>
 
-        <div class="modal-buttons">
-            <button type="button" onclick="cerrarModal('modalReview')">Cancelar</button>
-            <button type="button" onclick="sendReview()">Publicar review</button>
+            <div class="modal-buttons">
+                <button type="button" onclick="cerrarModal('modalReview')">Cancelar</button>
+                <button type="button" onclick="sendReview()">Publicar review</button>
+            </div>
         </div>
     </div>
-</div>
 
-<script src="js/api.js"></script>
+    <script src="js/api.js"></script>
 
-<script>
-    const loggedUser = JSON.parse(localStorage.getItem("user"));
-    const params = new URLSearchParams(window.location.search);
-    const freelancerId = params.get("id");
+    <script>
+        const loggedUser = JSON.parse(localStorage.getItem("user"));
+        const params = new URLSearchParams(window.location.search);
+        const freelancerId = params.get("id");
 
-    if (!freelancerId) {
-        alert("No se indicó el freelancer.");
-        window.location.href = "index.html";
-    }
-
-    if (loggedUser) {
-        document.getElementById("userName").textContent = "Hola, " + loggedUser.name;
-
-        if (loggedUser.role === "CLIENT") {
-            document.getElementById("reviewButton").style.display = "inline-block";
+        if (!freelancerId) {
+            alert("No se indicó el freelancer.");
+            window.location.href = "index.html";
         }
 
-    } else {
-        document.getElementById("userName").textContent = "Iniciar sesión";
-        document.getElementById("userName").href = "users/login.html";
-    }
+        if (loggedUser) {
+            document.getElementById("userName").textContent = "Hola, " + loggedUser.name;
 
-    window.addEventListener("DOMContentLoaded", function () {
-        loadFreelancer();
-        loadServices();
-        loadProjects();
-        loadReviews();
-    });
+            if (loggedUser.role === "CLIENT") {
+                document.getElementById("reviewButton").style.display = "inline-block";
+            }
 
-    async function loadFreelancer() {
-        const response = await fetch(API_URL + "/users/" + freelancerId);
-
-        if (!response.ok) {
-            alert("No se pudo cargar el freelancer.");
-            return;
+        } else {
+            document.getElementById("userName").textContent = "Iniciar sesión";
+            document.getElementById("userName").href = "users/login.html";
         }
 
-        const freelancer = await response.json();
+        window.addEventListener("DOMContentLoaded", function () {
+            loadFreelancer();
+            loadServices();
+            loadProjects();
+            loadReviews();
+        });
 
-        document.getElementById("freelancerName").textContent = freelancer.name;
-        document.getElementById("freelancerEmail").textContent = freelancer.email;
-        document.getElementById("ratingBadge").textContent = "⭐ " + (freelancer.rating ?? 0);
-        document.getElementById("verifiedBadge").textContent = freelancer.verified ? "✔ Verificado" : "Sin verificar";
+        async function loadFreelancer() {
+            const response = await fetch(API_URL + "/users/" + freelancerId);
 
-        if (freelancer.name) {
-            document.getElementById("avatarLetter").textContent = freelancer.name.charAt(0).toUpperCase();
+            if (!response.ok) {
+                alert("No se pudo cargar el freelancer.");
+                return;
+            }
+
+            const freelancer = await response.json();
+
+            document.getElementById("freelancerName").textContent = freelancer.name;
+            document.getElementById("freelancerEmail").textContent = freelancer.email;
+            document.getElementById("ratingBadge").textContent = "⭐ " + (freelancer.rating ?? 0);
+            document.getElementById("verifiedBadge").textContent = freelancer.verified ? "✔ Verificado" : "Sin verificar";
+
+            if (freelancer.name) {
+                document.getElementById("avatarLetter").textContent = freelancer.name.charAt(0).toUpperCase();
+            }
         }
-    }
 
-    async function loadServices() {
-        const container = document.getElementById("servicesContainer");
-        container.innerHTML = "<p class='profile-muted'>Cargando servicios...</p>";
+        async function loadServices() {
+            const container = document.getElementById("servicesContainer");
+            container.innerHTML = "<p class='profile-muted'>Cargando servicios...</p>";
 
-        const response = await fetch(API_URL + "/api/services/findByFreelancer/" + freelancerId);
+            const response = await fetch(API_URL + "/api/services/findByFreelancer/" + freelancerId);
 
-        if (!response.ok) {
-            container.innerHTML = "<p class='profile-muted'>Este freelancer no tiene servicios publicados.</p>";
-            return;
-        }
+            if (!response.ok) {
+                container.innerHTML = "<p class='profile-muted'>Este freelancer no tiene servicios publicados.</p>";
+                return;
+            }
 
-        const services = await response.json();
-        container.innerHTML = "";
+            const services = await response.json();
+            container.innerHTML = "";
 
-        services.forEach(function (service) {
-            const serviceImage = service.imageUrl
-                ? `<img src="${service.imageUrl}" class="service-image" alt="${service.title}">`
-                : `<div class="service-slot-category">${service.category}</div>`;
+            services.forEach(function (service) {
+                const serviceImage = service.imageUrl
+                    ? `<img src="${service.imageUrl}" class="service-image" alt="${service.title}">`
+                    : `<div class="service-slot-category">${service.category}</div>`;
 
-            container.innerHTML += `
+                container.innerHTML += `
                 <article class="service-slot-card">
                     ${serviceImage}
 
@@ -206,25 +207,25 @@
                     </div>
                 </article>
             `;
-        });
-    }
-
-    async function loadProjects() {
-        const container = document.getElementById("projectsContainer");
-        container.innerHTML = "<p class='profile-muted'>Cargando proyectos...</p>";
-
-        const response = await fetch(API_URL + "/projects/freelancer/" + freelancerId);
-
-        if (!response.ok) {
-            container.innerHTML = "<p class='profile-muted'>Este freelancer no tiene proyectos publicados.</p>";
-            return;
+            });
         }
 
-        const projects = await response.json();
-        container.innerHTML = "";
+        async function loadProjects() {
+            const container = document.getElementById("projectsContainer");
+            container.innerHTML = "<p class='profile-muted'>Cargando proyectos...</p>";
 
-        projects.forEach(function (project) {
-            container.innerHTML += `
+            const response = await fetch(API_URL + "/projects/freelancer/" + freelancerId);
+
+            if (!response.ok) {
+                container.innerHTML = "<p class='profile-muted'>Este freelancer no tiene proyectos publicados.</p>";
+                return;
+            }
+
+            const projects = await response.json();
+            container.innerHTML = "";
+
+            projects.forEach(function (project) {
+                container.innerHTML += `
                 <article class="project-public-card">
                     <img src="${project.imageUrl}" alt="${project.title}">
                     <div>
@@ -233,29 +234,29 @@
                     </div>
                 </article>
             `;
-        });
-    }
-
-    async function loadReviews() {
-        const container = document.getElementById("reviewsContainer");
-        const average = document.getElementById("reviewsAverage");
-
-        container.innerHTML = "<p class='profile-muted'>Cargando reviews...</p>";
-
-        const response = await fetch(API_URL + "/review/freelancer/" + freelancerId);
-        const data = await response.json();
-
-        if (typeof data === "string") {
-            average.textContent = "Promedio: sin reviews";
-            container.innerHTML = "<p class='profile-muted'>Este freelancer todavía no tiene reviews.</p>";
-            return;
+            });
         }
 
-        average.textContent = "Promedio: ⭐ " + data.Average;
-        container.innerHTML = "";
+        async function loadReviews() {
+            const container = document.getElementById("reviewsContainer");
+            const average = document.getElementById("reviewsAverage");
 
-        data.Reviews.forEach(function (review) {
-            container.innerHTML += `
+            container.innerHTML = "<p class='profile-muted'>Cargando reviews...</p>";
+
+            const response = await fetch(API_URL + "/review/freelancer/" + freelancerId);
+            const data = await response.json();
+
+            if (typeof data === "string") {
+                average.textContent = "Promedio: sin reviews";
+                container.innerHTML = "<p class='profile-muted'>Este freelancer todavía no tiene reviews.</p>";
+                return;
+            }
+
+            average.textContent = "Promedio: ⭐ " + data.Average;
+            container.innerHTML = "";
+
+            data.Reviews.forEach(function (review) {
+                container.innerHTML += `
                 <article class="review-slot-card">
                     <div class="review-row">
                         <strong>${review.clientName}</strong>
@@ -266,169 +267,174 @@
                     <small>${formatDate(review.date)}</small>
                 </article>
             `;
-        });
-    }
-
-    function openRequestModal(serviceId, serviceTitle) {
-        if (!loggedUser) {
-            alert("Debe iniciar sesión para solicitar un servicio.");
-            window.location.href = "users/login.html";
-            return;
+            });
         }
 
-        if (loggedUser.role !== "CLIENT") {
-            alert("Solo los clientes pueden solicitar servicios.");
-            return;
-        }
-
-        document.getElementById("requestServiceId").value = serviceId;
-        document.getElementById("requestServiceTitle").textContent = serviceTitle;
-        document.getElementById("requestDescription").value = "";
-
-        abrirModal("modalSolicitud");
-    }
-
-    async function sendJobRequest() {
-        const serviceId = document.getElementById("requestServiceId").value;
-        const description = document.getElementById("requestDescription").value;
-
-        if (description.trim() === "") {
-            alert("Debe escribir una descripción.");
-            return;
-        }
-
-        const request = {
-            description: description,
-            client: {
-                id: loggedUser.id
-            },
-            freelancer: {
-                id: Number(freelancerId)
-            },
-            service: {
-                id: Number(serviceId)
+        function openRequestModal(serviceId, serviceTitle) {
+            if (!loggedUser) {
+                alert("Debes iniciar sesión.");
+                return;
             }
-        };
 
-        const response = await fetch(API_URL + "/api/jobrequest/save", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(request)
-        });
-
-        const text = await response.text();
-
-        if (response.ok) {
-            cerrarModal("modalSolicitud");
-            alert("Solicitud enviada correctamente.");
-        } else {
-            alert(text);
-        }
-    }
-
-    function openReviewModal() {
-        if (!loggedUser || loggedUser.role !== "CLIENT") {
-            alert("Solo los clientes pueden agregar reviews.");
-            return;
-        }
-
-        document.getElementById("reviewRating").value = "5";
-        document.getElementById("reviewComment").value = "";
-        abrirModal("modalReview");
-    }
-
-    async function sendReview() {
-        const rating = Number(document.getElementById("reviewRating").value);
-        const comment = document.getElementById("reviewComment").value;
-
-        if (comment.trim() === "") {
-            alert("Debe escribir un comentario.");
-            return;
-        }
-
-        const review = {
-            comment: comment,
-            rating: rating,
-            client: {
-                id: loggedUser.id
-            },
-            freelancer: {
-                id: Number(freelancerId)
+            if (loggedUser.id === freelancerId) {
+                alert("No puedes solicitar tus propios servicios.");
+                return;
             }
-        };
 
-        const response = await fetch(API_URL + "/review", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(review)
-        });
+            document.getElementById("requestServiceId").value = serviceId;
+            document.getElementById("requestServiceTitle").textContent = serviceTitle;
+            document.getElementById("requestDescription").value = "";
 
-        const text = await response.text();
-
-        if (response.ok) {
-            cerrarModal("modalReview");
-            alert("Review publicada.");
-            loadReviews();
-        } else {
-            alert(text);
-        }
-    }
-
-    function showSection(section) {
-        document.getElementById("servicesSection").style.display = "none";
-        document.getElementById("projectsSection").style.display = "none";
-        document.getElementById("reviewsSection").style.display = "none";
-
-        document.getElementById("servicesTabBtn").classList.remove("tab-active");
-        document.getElementById("projectsTabBtn").classList.remove("tab-active");
-        document.getElementById("reviewsTabBtn").classList.remove("tab-active");
-
-        if (section === "services") {
-            document.getElementById("servicesSection").style.display = "block";
-            document.getElementById("servicesTabBtn").classList.add("tab-active");
+            abrirModal("modalSolicitud");
         }
 
-        if (section === "projects") {
-            document.getElementById("projectsSection").style.display = "block";
-            document.getElementById("projectsTabBtn").classList.add("tab-active");
+        async function sendJobRequest() {
+            const serviceId = document.getElementById("requestServiceId").value;
+            const description = document.getElementById("requestDescription").value;
+
+            if (description.trim() === "") {
+                alert("Debe escribir una descripción.");
+                return;
+            }
+
+            const request = {
+                description: description,
+                client: {
+                    id: loggedUser.id
+                },
+                freelancer: {
+                    id: Number(freelancerId)
+                },
+                service: {
+                    id: Number(serviceId)
+                }
+            };
+
+            const response = await fetch(API_URL + "/api/jobrequest/save", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(request)
+            });
+
+            const text = await response.text();
+
+            if (response.ok) {
+                cerrarModal("modalSolicitud");
+                alert("Solicitud enviada correctamente.");
+            } else {
+                alert(text);
+            }
         }
 
-        if (section === "reviews") {
-            document.getElementById("reviewsSection").style.display = "block";
-            document.getElementById("reviewsTabBtn").classList.add("tab-active");
-        }
-    }
+        function openReviewModal() {
+            if (!loggedUser) {
+                alert("Debes iniciar sesión.");
+                return;
+            }
 
-    function toggleReport() {
-        const box = document.getElementById("reportBox");
-        box.style.display = box.style.display === "none" ? "block" : "none";
-    }
+            if (loggedUser.id === freelancerId) {
+                alert("No puedes dejar una review en tu propio perfil.");
+                return;
+            }
 
-    function sendReport() {
-        const text = document.getElementById("reportText").value;
-
-        if (text.trim() === "") {
-            alert("Escriba el motivo del reporte.");
-            return;
+            document.getElementById("reviewRating").value = "5";
+            document.getElementById("reviewComment").value = "";
+            abrirModal("modalReview");
         }
 
-        alert("Reporte registrado como placeholder. Falta backend de reportes.");
-        document.getElementById("reportText").value = "";
-        toggleReport();
-    }
+        async function sendReview() {
+            const rating = Number(document.getElementById("reviewRating").value);
+            const comment = document.getElementById("reviewComment").value;
 
-    function formatDate(dateText) {
-        if (!dateText) {
-            return "";
+            if (comment.trim() === "") {
+                alert("Debe escribir un comentario.");
+                return;
+            }
+
+            const review = {
+                comment: comment,
+                rating: rating,
+                client: {
+                    id: loggedUser.id
+                },
+                freelancer: {
+                    id: Number(freelancerId)
+                }
+            };
+
+            const response = await fetch(API_URL + "/review", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(review)
+            });
+
+            const text = await response.text();
+
+            if (response.ok) {
+                cerrarModal("modalReview");
+                alert("Review publicada.");
+                loadReviews();
+            } else {
+                alert(text);
+            }
         }
 
-        return new Date(dateText).toLocaleDateString("es-CR");
-    }
-</script>
+        function showSection(section) {
+            document.getElementById("servicesSection").style.display = "none";
+            document.getElementById("projectsSection").style.display = "none";
+            document.getElementById("reviewsSection").style.display = "none";
+
+            document.getElementById("servicesTabBtn").classList.remove("tab-active");
+            document.getElementById("projectsTabBtn").classList.remove("tab-active");
+            document.getElementById("reviewsTabBtn").classList.remove("tab-active");
+
+            if (section === "services") {
+                document.getElementById("servicesSection").style.display = "block";
+                document.getElementById("servicesTabBtn").classList.add("tab-active");
+            }
+
+            if (section === "projects") {
+                document.getElementById("projectsSection").style.display = "block";
+                document.getElementById("projectsTabBtn").classList.add("tab-active");
+            }
+
+            if (section === "reviews") {
+                document.getElementById("reviewsSection").style.display = "block";
+                document.getElementById("reviewsTabBtn").classList.add("tab-active");
+            }
+        }
+
+        function toggleReport() {
+            const box = document.getElementById("reportBox");
+            box.style.display = box.style.display === "none" ? "block" : "none";
+        }
+
+        function sendReport() {
+            const text = document.getElementById("reportText").value;
+
+            if (text.trim() === "") {
+                alert("Escriba el motivo del reporte.");
+                return;
+            }
+
+            alert("Reporte registrado como placeholder. Falta backend de reportes.");
+            document.getElementById("reportText").value = "";
+            toggleReport();
+        }
+
+        function formatDate(dateText) {
+            if (!dateText) {
+                return "";
+            }
+
+            return new Date(dateText).toLocaleDateString("es-CR");
+        }
+    </script>
 
 </body>
+
 </html>
