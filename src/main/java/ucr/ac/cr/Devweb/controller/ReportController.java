@@ -16,7 +16,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/report")
+@RequestMapping("/api/reports")
 public class ReportController {
 
     @Autowired
@@ -42,18 +42,19 @@ public class ReportController {
         return ResponseEntity.status(HttpStatus.CREATED).body(repoDTO);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<?> changeStatus(@PathVariable long id, @RequestBody Map<String, String>body){
-        ReportStatus newStatus=ReportStatus.valueOf(body.get("status"));
-        return ResponseEntity.ok(this.reportService.changeStatus(id, newStatus));
+    @PutMapping("/{id}/resolve")
+    public ResponseEntity<?> changeStatusResolved(@PathVariable long id){
+        return ResponseEntity.ok(this.reportService.changeStatus(id, ReportStatus.RESOLVED));
+    }
+    @PutMapping("/{id}/dismiss")
+    public ResponseEntity<?> changeStatusDismiss(@PathVariable long id){
+        return ResponseEntity.ok(this.reportService.changeStatus(id, ReportStatus.DISMISSED));
     }
 
-    // endPoints de pueba y filtracion de reports por estado de cada uno
+    // endPoints depuracion
 
-    @GetMapping("/Under")           // filtra los reportes en revicion
-    public ResponseEntity<?> listVerificationsUnder(){return ResponseEntity.ok(this.reportService.findAllReportsUnder_Review());}
-    @GetMapping("/Rejected")        //filtra los reportes rechazados
-    public ResponseEntity<?> listVerificationsRejected(){return ResponseEntity.ok(this.reportService.findAllReportsRejected());}
+    @GetMapping("/Dismissed")        //filtra los reportes rechazados
+    public ResponseEntity<?> listVerificationsRejected(){return ResponseEntity.ok(this.reportService.findAllReportsDismissed());}
     @GetMapping("/Resolved")        // filtra los reportes resueltos
     public ResponseEntity<?> listVerificationsResolved(){return ResponseEntity.ok(this.reportService.findAllReportsResolved());}
 }
