@@ -53,8 +53,6 @@ public class ReportController {
 
     // endPoints depuracion
 
-    @GetMapping("/Under")           // filtra los reportes en revicion
-    public ResponseEntity<?> listVerificationsUnder(){return ResponseEntity.ok(this.reportService.findAllReportsUnder_Review());}
     @GetMapping("/Dismissed")        //filtra los reportes rechazados
     public ResponseEntity<?> listVerificationsRejected(){return ResponseEntity.ok(this.reportService.findAllReportsDismissed());}
     @GetMapping("/Resolved")        // filtra los reportes resueltos

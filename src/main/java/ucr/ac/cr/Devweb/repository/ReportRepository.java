@@ -14,6 +14,6 @@ import java.util.Optional;
 public interface ReportRepository extends JpaRepository<Report, Long> {
     List<Report> findByStatus(ReportStatus status);
     Optional<Report> findById(Long id);
-    boolean existsByReportedByAndTypeAndReportedUserAndStatusIn(User reportedBy, ReportType type, User reportedUser, List<ReportStatus> status);
-    boolean existsByReportedByAndTypeAndReportedProjectIdAndStatusIn(User reportedBy, ReportType type, Long reportedProjectId, List<ReportStatus> status);
+    boolean existsByReportedByAndTypeAndReportedUserAndStatus(User reportedBy, ReportType type, User reportedUser, ReportStatus status);
+    boolean existsByReportedByAndTypeAndReportedProjectIdAndStatus(User reportedBy, ReportType type, Long reportedProjectId, ReportStatus status);
 }

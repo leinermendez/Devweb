@@ -37,9 +37,9 @@ public class ReportService {
             if (report.getReportedBy().getId().equals(report.getReportedUser().getId())){
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Hmm, you can't report yourself.");
             }
-            reportDuplicate=this.reportRepository.existsByReportedByAndTypeAndReportedUserAndStatusIn(report.getReportedBy(),report.getType(),report.getReportedUser(),List.of(ReportStatus.PENDING,ReportStatus.UNDER_REVIEW));
+            reportDuplicate=this.reportRepository.existsByReportedByAndTypeAndReportedUserAndStatus(report.getReportedBy(),report.getType(),report.getReportedUser(),ReportStatus.PENDING);
         }else{
-            reportDuplicate=this.reportRepository.existsByReportedByAndTypeAndReportedProjectIdAndStatusIn(report.getReportedBy(),report.getType(),report.getReportedProjectId(),List.of(ReportStatus.PENDING,ReportStatus.UNDER_REVIEW));
+            reportDuplicate=this.reportRepository.existsByReportedByAndTypeAndReportedProjectIdAndStatus(report.getReportedBy(),report.getType(),report.getReportedProjectId(),ReportStatus.PENDING);
         }
 
         if (reportDuplicate){
@@ -49,9 +49,6 @@ public class ReportService {
         return this.converToDTO(this.reportRepository.save(report));
     }
 
-    public List<ReportDTO> findAllReportsUnder_Review(){    //retorna los reportes en revicion
-        return converListDTO(this.reportRepository.findByStatus(ReportStatus.UNDER_REVIEW));
-    }
     public List<ReportDTO> findAllReportsResolved(){        //retorna los reportes resueltos
         return converListDTO(this.reportRepository.findByStatus(ReportStatus.RESOLVED));
     }
