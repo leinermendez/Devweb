@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,86 +8,106 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css">
 </head>
+
 <body class="feed-page">
     <nav class="navbar">
-    <div class="logo">DevWeb</div>
-    <input type="text" class="search-input" placeholder="Buscar freelancers...">
-    <div class="user-menu">
-        <a href="users/profile.html" id="userName" class="user-link"></a>
-       <button onclick="logout()">Cerrar sesión</button>
+        <div class="logo">DevWeb</div>
+        <input type="text" class="search-input" placeholder="Buscar freelancers...">
+        <div class="user-menu">
+            <a href="users/profile.html" id="userName" class="user-link"></a>
+            <button onclick="logout()">Cerrar sesión</button>
+        </div>
+    </nav>
+
+    <!-- Banner para FREELANCER -->
+    <div class="post-banner" id="freelancerBanner" style="display:none;">
+        <p>¿Qué estás trabajando?</p>
+        <button onclick="abrirModal('modalProyecto')">Subir proyecto</button>
     </div>
-</nav>
 
-<!-- Banner para FREELANCER -->
-<div class="post-banner" id="freelancerBanner" style="display:none;">
-    <p>¿Qué estás trabajando?</p>
-    <button onclick="abrirModal('modalProyecto')">Subir proyecto</button>
-</div>
-
-<!-- Banner para CLIENT -->
-<div class="post-banner" id="clientBanner" style="display:none;">
-    <p>¿Eres freelancer? Únite a DevWeb</p>
-    <button onclick="abrirModal('modalFreelancer')">Convertirme en freelancer</button>
-</div>
-
-<!-- Modal: Crear proyecto -->
-<div class="modal-overlay" id="modalProyecto" style="display:none;">
-    <div class="modal-box">
-        <h3>Subir nuevo proyecto</h3>
-        <form id="formProyecto">
-            <input type="text" id="projTitle" placeholder="Título" required>
-            <textarea id="projDescription" placeholder="Descripción" required></textarea>
-            <select id="projCategory" required>
-                <option value="">Categoría</option>
-                <option value="WEB_DEVELOPMENT">Desarrollo Web</option>
-                <option value="MOBILE_DEVELOPMENT">Desarrollo Móvil</option>
-                <option value="GRAPHIC_DESIGN">Diseño Gráfico</option>
-                <option value="UI_UX_DESIGN">UI/UX</option>
-            </select>
-            <input type="url" id="projImage" placeholder="URL de imagen" required>
-            <div class="modal-buttons">
-                <button type="button" onclick="cerrarModal('modalProyecto')">Cancelar</button>
-                <button type="submit">Publicar</button>
-            </div>
-        </form>
+    <!-- Banner para CLIENT -->
+    <div class="post-banner" id="clientBanner" style="display:none;">
+        <p>¿Eres freelancer? Únite a DevWeb</p>
+        <button onclick="abrirModal('modalFreelancer')">Convertirme en freelancer</button>
     </div>
-</div>
 
-<!-- Modal: Convertirse en freelancer -->
-<div class="modal-overlay" id="modalFreelancer" style="display:none;">
-    <div class="modal-box">
-        <h3>Convertirte en freelancer</h3>
-        <p>Al confirmar, tu cuenta podrá publicar servicios y proyectos.</p>
-        <div class="modal-buttons">
-            <button type="button" onclick="cerrarModal('modalFreelancer')">Cancelar</button>
-            <button onclick="confirmarFreelancer()">Confirmar</button>
+    <!-- Modal: Crear proyecto -->
+    <div class="modal-overlay" id="modalProyecto" style="display:none;">
+        <div class="modal-box">
+            <h3>Subir nuevo proyecto</h3>
+            <form id="formProyecto">
+                <input type="text" id="projTitle" placeholder="Título" required>
+                <textarea id="projDescription" placeholder="Descripción" required></textarea>
+                <select id="projCategory" required>
+                    <option value="">Categoría</option>
+                    <option value="WEB_DEVELOPMENT">Desarrollo Web</option>
+                    <option value="MOBILE_DEVELOPMENT">Desarrollo Móvil</option>
+                    <option value="GRAPHIC_DESIGN">Diseño Gráfico</option>
+                    <option value="UI_UX_DESIGN">UI/UX</option>
+                </select>
+                <input type="url" id="projImage" placeholder="URL de imagen" required>
+                <div class="modal-buttons">
+                    <button type="button" onclick="cerrarModal('modalProyecto')">Cancelar</button>
+                    <button type="submit">Publicar</button>
+                </div>
+            </form>
         </div>
     </div>
-</div>
 
-<div class="feed-container" id="feedContainer">
-    <!-- Aquí se cargan los proyectos dinámicamente -->
-</div>
+    <!-- Modal: Convertirse en freelancer -->
+    <div class="modal-overlay" id="modalFreelancer" style="display:none;">
+        <div class="modal-box">
+            <h3>Convertirte en freelancer</h3>
+            <p>Al confirmar, tu cuenta podrá publicar servicios y proyectos.</p>
+            <div class="modal-buttons">
+                <button type="button" onclick="cerrarModal('modalFreelancer')">Cancelar</button>
+                <button onclick="confirmarFreelancer()">Confirmar</button>
+            </div>
+        </div>
+    </div>
 
-<script src="js/api.js"></script>
-<script>
-    const user = JSON.parse(localStorage.getItem("user"));
 
-    if (!user) {
-        window.location.href = "users/login.html";
-    }
+    <div class="modal-overlay" id="modalSolicitud" style="display:none;">
+        <div class="modal-box">
+            <h3>Solicitar servicio</h3>
 
-    document.getElementById("userName").textContent = "Hola, " + user.name;
+            <p id="requestServiceTitle"></p>
 
-    async function cargarProyectos() {
-        const response = await fetch(API_URL + "/projects");
-        const proyectos = await response.json();
-        
-        const contenedor = document.getElementById("feedContainer");
-        contenedor.innerHTML = "";
+            <input type="hidden" id="requestServiceId">
+            <input type="hidden" id="requestFreelancerId">
 
-        proyectos.forEach(proyecto => {
-            contenedor.innerHTML += `
+            <textarea id="requestDescription" placeholder="Describe el trabajo que necesitás"></textarea>
+
+            <div class="modal-buttons">
+                <button type="button" onclick="cerrarModal('modalSolicitud')">Cancelar</button>
+                <button type="button" onclick="sendJobRequest()">Enviar solicitud</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="feed-container" id="feedContainer">
+        <!-- Aquí se cargan los proyectos dinámicamente -->
+    </div>
+
+    <script src="js/api.js"></script>
+    <script>
+        const user = JSON.parse(localStorage.getItem("user"));
+
+        if (!user) {
+            window.location.href = "users/login.html";
+        }
+
+        document.getElementById("userName").textContent = "Hola, " + user.name;
+
+        async function cargarProyectos() {
+            const response = await fetch(API_URL + "/projects");
+            const proyectos = await response.json();
+
+            const contenedor = document.getElementById("feedContainer");
+            contenedor.innerHTML = "";
+
+            proyectos.forEach(proyecto => {
+                contenedor.innerHTML += `
                 <div class="project-card">
                     <img src="${proyecto.imageUrl}" class="project-image" alt="${proyecto.title}">
                     <div class="project-info">
@@ -95,8 +116,51 @@
                     </div>
                 </div>
             `;
-        });
-    }
+            });
+        }
+
+        async function cargarServicios() {
+            const response = await fetch(API_URL + "/api/services/findAll");
+
+            if (!response.ok) {
+                return;
+            }
+
+            const servicios = await response.json();
+            const contenedor = document.getElementById("feedContainer");
+
+            servicios.forEach(service => {
+                contenedor.innerHTML +=`
+                    <div class="project-card">
+                        <img src="${service.imageUrl}" class="project-image" alt="${service.title}">
+
+                            <div class="project-info">
+                                <h3>${service.title}</h3>
+
+                                <p>Categoría: ${service.category}</p>
+                                <p>Precio: ₡${Number(service.price).toLocaleString()}</p>
+
+                                <div class="service-footer">
+
+                                    <div class="service-owner">
+                                        Por:
+                                        <a href="freelancer.html?id=${service.freelancerId}">
+                                            ${service.freelancerName}
+                                        </a>
+                                    </div>
+
+                                    <button
+                                        class="btn-service"
+                                        onclick="openRequestModal(${service.id}, ${service.freelancerId}, '${service.title.replace(/'/g, "\\'")}')">
+                                    Solicitar servicio
+                                </button>
+
+                            </div>
+                    </div>
+            </div >
+        `;
+    });
+}
 
     if (user.role === "FREELANCER") {
         document.getElementById("freelancerBanner").style.display = "flex";
@@ -129,6 +193,59 @@
         }
     });
 
+    function openRequestModal(serviceId, freelancerId, serviceTitle) {
+    if (user.role !== "CLIENT") {
+        alert("Solo los clientes pueden solicitar servicios");
+        return;
+    }
+
+    document.getElementById("requestServiceId").value = serviceId;
+    document.getElementById("requestFreelancerId").value = freelancerId;
+    document.getElementById("requestServiceTitle").textContent = serviceTitle;
+    document.getElementById("requestDescription").value = "";
+
+    abrirModal("modalSolicitud");
+}
+
+async function sendJobRequest() {
+    const description = document.getElementById("requestDescription").value;
+
+    if (description.trim() === "") {
+        alert("Debe escribir una descripción");
+        return;
+    }
+
+    const request = {
+        description: description,
+        client: {
+            id: user.id
+        },
+        freelancer: {
+            id: Number(document.getElementById("requestFreelancerId").value)
+        },
+        service: {
+            id: Number(document.getElementById("requestServiceId").value)
+        }
+    };
+
+    const response = await fetch(API_URL + "/api/jobrequest/save", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(request)
+    });
+
+    const text = await response.text();
+
+    if (response.ok) {
+        cerrarModal("modalSolicitud");
+        alert("Solicitud enviada correctamente");
+    } else {
+        alert(text || "Error al enviar solicitud");
+    }
+}
+
     async function confirmarFreelancer() {
         const response = await fetch(API_URL + "/users/" + user.id + "/become-freelancer", {
             method: "PUT"
@@ -144,7 +261,8 @@
         }
     }
 
-    cargarProyectos();
-</script>
+    cargarProyectos().then(() => cargarServicios());
+    </script>
 </body>
+
 </html>
