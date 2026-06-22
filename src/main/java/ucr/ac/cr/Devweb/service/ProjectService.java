@@ -91,11 +91,11 @@ public class ProjectService {
     }
 
     public ProjectDTO convertirProjectDTO(Project project){
-        System.out.println("Freelancer: " + project.getFreelancer());
-        ProjectDTO dto= new ProjectDTO();
+        ProjectDTO dto = new ProjectDTO();
         dto.setId(project.getId());
         dto.setTitle(project.getTitle());
         dto.setFreelancerName(project.getFreelancer().getName());
+        dto.setImageUrl(project.getImageUrl());
         return dto;
     }
 
