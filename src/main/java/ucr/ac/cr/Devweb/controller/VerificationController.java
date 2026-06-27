@@ -7,6 +7,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import ucr.ac.cr.Devweb.enums.ReportStatus;
 import ucr.ac.cr.Devweb.enums.VerificationStatus;
 import ucr.ac.cr.Devweb.model.DTO.VerificationDTO;
 import ucr.ac.cr.Devweb.model.Verification;
@@ -50,6 +51,16 @@ public class VerificationController {
             return ResponseEntity.status(HttpStatus.CONFLICT).body("You already have a pending request to review.");
         }
         return ResponseEntity.status(HttpStatus.CREATED).body(veriDTO);
+    }
+
+    @PutMapping("/{id}/approve")
+    public ResponseEntity<?> changeStatusApprove(@PathVariable long id){
+        return ResponseEntity.ok(this.verificationService.changeStatus(id, VerificationStatus.APPROVED));
+    }
+
+    @PutMapping("/{id}/reject")
+    public ResponseEntity<?> changeStatusReject(@PathVariable long id){
+        return ResponseEntity.ok(this.verificationService.changeStatus(id, VerificationStatus.REJECTED));
     }
 
     @PutMapping("/{id}")
