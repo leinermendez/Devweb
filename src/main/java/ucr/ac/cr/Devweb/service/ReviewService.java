@@ -49,6 +49,10 @@ public class ReviewService {
         review.setDate(LocalDateTime.now());
         reviewRepository.save(review);
 
+        Double average = average(review.getFreelancer().getId());
+        User freelancer1 = review.getFreelancer();
+        freelancer1.setRating(average);
+        userRepository.save(freelancer1);
 
         return converDTO(review);
     }
