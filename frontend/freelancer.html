@@ -41,6 +41,19 @@
 
             <div id="reportBox" class="report-box" style="display:none;">
                 <h4>Reportar usuario</h4>
+                <select id="reportType">
+                    <option value="">Selecciona el motivo</option>
+                    <option value="SPAM">Spam</option>
+                    <option value="INAPPROPRIATE_CONTENT">Contenido inapropiado</option>
+                    <option value="MISLEADING_INFORMATION">Publicidad engañosa</option>
+                    <option value="HARASSMENT">Insultos / Acoso</option>
+                    <option value="HATE_SPEECH">Discurso de odio</option>
+                    <option value="SCAM_OR_FRAUD">Intento de estafa</option>
+                    <option value="COPYRIGHT_VIOLATION">Violación de derechos de autor</option>
+                    <option value="IMPERSONATION">Credenciales falsas</option>
+                    <option value="ILLEGAL_CONTENT">Contenido ilegal</option>
+                    <option value="OTHER">Otro</option>
+                </select>
                 <textarea id="reportText" placeholder="Motivo del reporte"></textarea>
                 <button onclick="sendReport()">Enviar reporte</button>
             </div>
@@ -413,17 +426,42 @@
             box.style.display = box.style.display === "none" ? "block" : "none";
         }
 
-        function sendReport() {
+        async function sendReport() {
+            const type = document.getElementById("reportType").value;
             const text = document.getElementById("reportText").value;
 
-            if (text.trim() === "") {
-                alert("Escriba el motivo del reporte.");
+            if (type === "") {
+                alert("Seleccioná el tipo de reporte.");
                 return;
             }
 
-            alert("Reporte registrado como placeholder. Falta backend de reportes.");
-            document.getElementById("reportText").value = "";
-            toggleReport();
+            if (text.trim() === "") {
+                alert("Escribá una descripción.");
+                return;
+            }
+
+            const report = {
+                type: type,
+                description: text,
+                reportedBy: { id: loggedUser.id },
+                reportedUser: { id: Number(freelancerId) }
+            };
+
+            const response = await fetch(API_URL + "/api/reports", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(report)
+            });
+
+            if (response.ok) {
+                alert("Reporte enviado correctamente.");
+                document.getElementById("reportText").value = "";
+                document.getElementById("reportType").value = "";
+                toggleReport();
+            } else {
+                const text = await response.text();
+                alert(text || "Error al enviar el reporte.");
+            }
         }
 
         function formatDate(dateText) {

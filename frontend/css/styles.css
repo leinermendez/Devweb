@@ -272,6 +272,7 @@ body.feed-page {
 }
 
 .project-card {
+    margin-bottom: 15px;
     width: 100%;
     background: rgba(255, 255, 255, 0.05);
     border: 1px solid rgba(255, 255, 255, 0.1);
@@ -600,6 +601,21 @@ css
     border-radius: 16px;
     background: rgba(255, 255, 255, 0.06);
     border: 1px solid rgba(255, 255, 255, 0.10);
+}
+
+.public-freelancer-page .report-box select{
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 10px 12px;
+    border-radius: 12px;
+    background: rgba(0, 0, 0, 0.26);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #fff;
+    appearance: none;
+}
+.public-freelancer-page .report-box select option {
+    background: #1e1b3a;
+    color: #fff;
 }
 
 .public-freelancer-page .report-box h4 {

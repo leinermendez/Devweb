@@ -48,7 +48,7 @@
 
         <div id="projectsSection" style="display:none;">
             <div class="section-header">
-                <h3>Mis proyectos</h3>
+                <h3 style="margin: 15px;" >Mis proyectos</h3>
                 <button id="btnAgregarProyecto" style="display:none;" onclick="abrirModal('modalProyecto')">
                     Añadir proyecto
                 </button>
@@ -58,7 +58,7 @@
 
         <div id="servicesSection" style="display:none;">
             <div class="section-header">
-                <h3>Mis servicios</h3>
+                <h3 style="margin: 15px;" >Mis servicios</h3>
                 <button id="btnAgregarServicio" style="display:none;" onclick="abrirModal('modalServicio')">
                     Añadir servicio
                 </button>
@@ -67,8 +67,13 @@
         </div>
 
         <div id="clientSection" style="display:none;">
-            <h3 id="solicitudesTitulo">Mis solicitudes</h3>
+            <h3 style="margin: 15px;" id="solicitudesTitulo">Mis solicitudes</h3>
             <div id="solicitudesContainer"></div>
+        </div>
+
+        <div id="adminSection" style="display:none;">
+            <h3 style="margin: 15px;" id="reportes">Reportes recientes</h3>
+            <div id="reportContainer"></div>
         </div>
     </div>
 
@@ -197,12 +202,15 @@
         } else if (user.role ==="ADMIN"){
             document.getElementById("btnAdmin").style.display="block";
             document.getElementById("btnAdmin").href="../admin.html";
+
+            document.getElementById("reportes").textContent = "Mis solicitudes";
         }
 
         function showProfileSection(section) {
             document.getElementById("servicesSection").style.display = "none";
             document.getElementById("projectsSection").style.display = "none";
             document.getElementById("clientSection").style.display = "none";
+            document.getElementById("adminSection").style.display = "none";
 
             document.getElementById("tabServices").classList.remove("tab-active");
             document.getElementById("tabProjects").classList.remove("tab-active");
