@@ -422,6 +422,12 @@ css
     margin: 30px auto;
     padding: 0 20px;
 }
+.profile-btn{
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 15px;
+}
 
 .profile-header {
     background: rgba(255, 255, 255, 0.05);
@@ -630,7 +636,7 @@ css
     padding: 42px 58px;
 }
 
-.public-freelancer-page .freelancer-tabs {
+.public-freelancer-page .freelancer-tabs .admin-tabs{
     display: flex;
     gap: 34px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.12);
@@ -728,6 +734,7 @@ css
     border: 1px solid rgba(255, 255, 255, 0.10);
     border-radius: 18px;
     color: #fff;
+    margin-top: 15px;
 }
 
 .public-freelancer-page .project-public-card {

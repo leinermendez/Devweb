@@ -27,11 +27,17 @@
             <p id="profileEmail"></p>
             <p id="profileRating"></p>
 
-            <button onclick="abrirModal('modalEditar')">Editar perfil</button>
+            <div class="profile-btn">
+                <button onclick="abrirModal('modalEditar')">Editar perfil</button>
 
-            <a id="btnPerfilPublico" style="display:none;">
-                <button type="button">Ver perfil público</button>
-            </a>
+                <a id="btnPerfilPublico" style="display:none;">
+                    <button type="button">Ver perfil público</button>
+                </a>
+                <a id="btnAdmin" style="display:none;">
+                    <button type="button">Gestión</button>
+                </a>    
+            </div>
+            
         </div>
 
         <div id="profileTabs" class="freelancer-tabs" style="display:none;">
@@ -188,6 +194,9 @@
             document.getElementById("solicitudesTitulo").textContent = "Mis solicitudes enviadas";
 
             cargarSolicitudesCliente();
+        } else if (user.role ==="ADMIN"){
+            document.getElementById("btnAdmin").style.display="block";
+            document.getElementById("btnAdmin").href="../admin.html";
         }
 
         function showProfileSection(section) {
