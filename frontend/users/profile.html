@@ -73,7 +73,7 @@
 
         <div id="adminSection" style="display:none;">
             <h3 style="margin: 15px;" id="reportes">Reportes recientes</h3>
-            <div id="reportContainer"></div>
+            <div id="reportsContainer"></div>
         </div>
     </div>
 
@@ -203,7 +203,11 @@
             document.getElementById("btnAdmin").style.display="block";
             document.getElementById("btnAdmin").href="../admin.html";
 
-            document.getElementById("reportes").textContent = "Mis solicitudes";
+            document.getElementById("adminSection").style.display = "block";
+
+            document.getElementById("reportes").textContent = "Reportes Pendientes";
+
+            loadReports();
         }
 
         function showProfileSection(section) {
@@ -254,6 +258,43 @@
                 </div>
             `;
             });
+        }
+
+        async function loadReports() {
+            const container = document.getElementById("reportsContainer");
+            container.innerHTML = "<p class='profile-muted'>Cargando reportes...</p>";
+
+
+            const response = await fetch(API_URL + "/api/reports");
+
+            const reports = await response.json();
+            container.innerHTML = "";
+
+            if (reports.length === 0) {
+                container.innerHTML = "<p class='profile-muted'>No hay reportes pendientes.</p>";
+                return;
+            }
+
+            reports.forEach(function (report) {
+                container.innerHTML += `
+                    <article class="project-card">
+                        <div class="project-info">
+                            <strong>Reportado por: ${report.reportedBy.name}</strong>
+                            <small>${new Date(report.createdAt).toLocaleDateString("es-CR")}</small>
+                        </div>
+                        <div class="project-info">
+                            <p><strong>Reportado:</strong> 
+                                ${report.reportedUser ? report.reportedUser.name : "Proyecto ID: " + report.reportedProjectId}
+                            </p>
+
+                            <p><strong>Motivo:</strong> ${report.type}</p>
+                            <p>${report.description}</p>
+                        </div>
+                        
+                    </article>
+                `;
+            });
+
         }
 
         async function cargarMisServicios() {

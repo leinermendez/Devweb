@@ -85,6 +85,36 @@
         </div>
     </div>
 
+    <div id="reportModal" class="modal-overlay" style="display:none;">
+        <div class="modal-box">
+                <h4>Reportar Proyecto</h4>
+
+                <select id="reportType">
+                    <option value="">Selecciona el motivo</option>
+                    <option value="SPAM">Spam</option>
+                    <option value="INAPPROPRIATE_CONTENT">Contenido inapropiado</option>
+                    <option value="MISLEADING_INFORMATION">Publicidad engañosa</option>
+                    <option value="HARASSMENT">Insultos / Acoso</option>
+                    <option value="HATE_SPEECH">Discurso de odio</option>
+                    <option value="SCAM_OR_FRAUD">Intento de estafa</option>
+                    <option value="COPYRIGHT_VIOLATION">Violación de derechos de autor</option>
+                    <option value="IMPERSONATION">Credenciales falsas</option>
+                    <option value="ILLEGAL_CONTENT">Contenido ilegal</option>
+                    <option value="OTHER">Otro</option>
+                </select>
+
+                <input type="hidden" id="reportProjectId">
+
+                <textarea id="reportText" placeholder="Motivo del reporte"></textarea>
+
+                <div class="modal-buttons">
+                    <button type="button" onclick="cerrarModal('reportModal')">Cancelar</button>
+                    <button onclick="sendReport()">Enviar reporte</button>
+                </div>
+                
+                </div>
+            </div>
+
     <div class="feed-container" id="feedContainer">
         <!-- Aquí se cargan los proyectos dinámicamente -->
     </div>
@@ -113,6 +143,9 @@
                     <div class="project-info">
                         <h3>${proyecto.title}</h3>
                         <p>Por: ${proyecto.freelancerName}</p>
+                        <button class="btn-report" onclick="openReportModal(${proyecto.id})" >
+                            Reportar Proyecto
+                        </button>
                     </div>
                 </div>
             `;
@@ -193,6 +226,12 @@
         }
     });
 
+    function openReportModal(projectId){
+        document.getElementById("reportProjectId").value = projectId;
+
+        abrirModal("reportModal");
+    }
+
     function openRequestModal(serviceId, freelancerId, serviceTitle) {
     if (!user) {
         alert("Debes iniciar sesión");
@@ -210,6 +249,44 @@
     document.getElementById("requestDescription").value = "";
 
     abrirModal("modalSolicitud");
+}
+
+async function sendReport() {
+            const type = document.getElementById("reportType").value;
+            const text = document.getElementById("reportText").value;
+
+            if (type === "") {
+                alert("Seleccioná el tipo de reporte.");
+                return;
+            }
+
+            if (text.trim() === "") {
+                alert("Escribá una descripción.");
+                return;
+            }
+
+            const report = {
+                type: type,
+                description: text,
+                reportedBy: { id: user.id },
+                reportedProjectId: Number(document.getElementById("reportProjectId").value)
+            };
+
+            const response = await fetch(API_URL + "/api/reports", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(report)
+            });
+
+            if (response.ok) {
+                alert("Reporte enviado correctamente.");
+                document.getElementById("reportText").value = "";
+                document.getElementById("reportType").value = "";
+                cerrarModal("reportModal");
+            } else {
+                const text = await response.text();
+                alert(text || "Error al enviar el reporte.");
+            }
 }
 
 async function sendJobRequest() {
