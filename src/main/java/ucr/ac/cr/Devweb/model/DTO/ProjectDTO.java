@@ -10,16 +10,18 @@ public class ProjectDTO {
     private String imageUrl;
     private String description;
     private String category;
+    private Long freelancerId;
 
     public ProjectDTO() {
     }
-    public ProjectDTO(Long id, String title, String description, String category, String freelancerName, String imageUrl) {
+    public ProjectDTO(Long id, String title, String description, String category, String freelancerName, String imageUrl, Long freelancerId) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.category = category;
         this.freelancerName = freelancerName;
         this.imageUrl = imageUrl;
+        this.freelancerId = freelancerId;
     }
 
     public String getImageUrl() { return imageUrl; }
@@ -63,5 +65,13 @@ public class ProjectDTO {
 
     public void setCategory(String category) {
         this.category = category;
+    }
+
+    public Long getFreelancerId() {
+        return freelancerId;
+    }
+
+    public void setFreelancerId(Long freelancerId) {
+        this.freelancerId = freelancerId;
     }
 }
