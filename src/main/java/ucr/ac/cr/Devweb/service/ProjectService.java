@@ -96,6 +96,9 @@ public class ProjectService {
         dto.setTitle(project.getTitle());
         dto.setFreelancerName(project.getFreelancer().getName());
         dto.setImageUrl(project.getImageUrl());
+        dto.setDescription(project.getDescription());
+        dto.setCategory(project.getCategory());
+
         return dto;
     }
 

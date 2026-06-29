@@ -1,17 +1,23 @@
 package ucr.ac.cr.Devweb.model.DTO;
 
+import ucr.ac.cr.Devweb.enums.Category;
+
 public class ProjectDTO {
 
     private String title;
     private Long id;
     private String freelancerName;
     private String imageUrl;
+    private String description;
+    private String category;
 
     public ProjectDTO() {
     }
-    public ProjectDTO(Long id, String title, String freelancerName, String imageUrl) {
+    public ProjectDTO(Long id, String title, String description, String category, String freelancerName, String imageUrl) {
         this.id = id;
         this.title = title;
+        this.description = description;
+        this.category = category;
         this.freelancerName = freelancerName;
         this.imageUrl = imageUrl;
     }
@@ -43,4 +49,19 @@ public class ProjectDTO {
         this.freelancerName = freelancerName;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
 }
