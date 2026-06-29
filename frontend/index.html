@@ -12,7 +12,7 @@
 <body class="feed-page">
     <nav class="navbar">
         <div class="logo">DevWeb</div>
-        <input type="text" class="search-input" placeholder="Buscar freelancers...">
+        <input type="text" id="searchInput" class="search-input" placeholder="Buscar proyectos o servicios...">
         <div class="user-menu">
             <a href="users/profile.html" id="userName" class="user-link"></a>
             <button onclick="logout()">Cerrar sesión</button>
@@ -122,6 +122,9 @@
     <script src="js/api.js"></script>
     <script>
         const user = JSON.parse(localStorage.getItem("user"));
+
+        let allProyectos = [];
+        let allServicios = [];
         let reportMode = "PROJECT";
 
         if (!user) {
@@ -133,6 +136,8 @@
         async function cargarProyectos() {
             const response = await fetch(API_URL + "/projects");
             const proyectos = await response.json();
+
+            allProyectos = proyectos;
 
             const contenedor = document.getElementById("feedContainer");
             contenedor.innerHTML = "";
@@ -169,6 +174,9 @@
             }
 
             const servicios = await response.json();
+
+            allServicios = servicios;
+
             const contenedor = document.getElementById("feedContainer");
 
             servicios.forEach(service => {
@@ -324,11 +332,11 @@
                 document.getElementById("reportProjectId").value = "";
                 reportMode = "PROJECT";
                 cerrarModal("reportModal");
-} else {
-    const text = await response.text();
-    console.error("Error backend:", text);
-    alert(text || "Error al enviar el reporte.");
-}
+            } else {
+                const text = await response.text();
+                console.error("Error backend:", text);
+                alert(text || "Error al enviar el reporte.");
+            }
         }
 
         async function sendJobRequest() {
@@ -385,7 +393,23 @@
             }
         }
 
+
+
         cargarProyectos().then(() => cargarServicios());
+
+
+
+        function filtrarFeed() {
+            const texto = document.getElementById("searchInput").value.toLowerCase();
+            const cards = document.querySelectorAll("#feedContainer .project-card");
+
+            cards.forEach(card => {
+                const contenido = card.textContent.toLowerCase();
+                card.style.display = contenido.includes(texto) ? "block" : "none";
+            });
+        }
+
+        document.getElementById("searchInput").addEventListener("input", filtrarFeed);
     </script>
 </body>
 

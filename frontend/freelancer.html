@@ -14,7 +14,7 @@
 
     <nav class="navbar">
         <a href="index.html" class="logo">DevWeb</a>
-        <input type="text" class="search-input" placeholder="Buscar freelancers...">
+        
 
         <div class="user-menu">
             <a href="users/profile.html" id="userName" class="user-link"></a>
@@ -41,6 +41,16 @@
 
             <div id="reportBox" class="report-box" style="display:none;">
                 <h4>Reportar usuario</h4>
+
+                <select id="userReportType">
+                    <option value="">Seleccione un motivo</option>
+                    <option value="SPAM">Spam</option>
+                    <option value="SCAM_OR_FRAUD">Estafa</option>
+                    <option value="INAPPROPRIATE_CONTENT">Contenido inapropiado</option>
+                    <option value="MISLEADING_INFORMATION">Información engañosa</option>
+                    <option value="OTHER">Otro</option>
+                </select>
+
                 <textarea id="reportText" placeholder="Motivo del reporte"></textarea>
                 <button onclick="sendReport()">Enviar reporte</button>
             </div>
@@ -502,17 +512,56 @@
             box.style.display = box.style.display === "none" ? "block" : "none";
         }
 
-        function sendReport() {
+        async function sendReport() {
+
+            const type = document.getElementById("userReportType").value;
             const text = document.getElementById("reportText").value;
 
-            if (text.trim() === "") {
-                alert("Escriba el motivo del reporte.");
+            if (type === "") {
+                alert("Seleccione un motivo.");
                 return;
             }
 
-            alert("Reporte registrado como placeholder. Falta backend de reportes.");
-            document.getElementById("reportText").value = "";
-            toggleReport();
+            if (text.trim() === "") {
+                alert("Escriba una descripción.");
+                return;
+            }
+
+            const report = {
+                type: type,
+                description: text,
+                reportedBy: {
+                    id: loggedUser.id
+                },
+                reportedUser: {
+                    id: Number(freelancerId)
+                }
+            };
+
+            const response = await fetch(API_URL + "/api/reports", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(report)
+            });
+
+            const responseText = await response.text();
+
+            if (response.ok) {
+
+                document.getElementById("reportText").value = "";
+                document.getElementById("userReportType").value = "";
+
+                toggleReport();
+
+                alert("Reporte enviado correctamente.");
+
+            } else {
+
+                alert(responseText);
+
+            }
         }
 
         async function sendServiceReport() {
