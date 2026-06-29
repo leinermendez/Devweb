@@ -20,32 +20,50 @@ public class ReportService {
     @Autowired
     private UserService userService;
 
-    public ReportDTO saveReport(Report report){
+    public ReportDTO saveReport(Report report) {
         //validamos hacia que lado esta hecho el reporte
         boolean reportUser = report.getReportedUser() != null;
         boolean reportProject = report.getReportedProjectId() != null;
+        boolean reportService = report.getReportedServiceId() != null;
 
-
-        //Validamos que el reporte no reporte un/ningun usuario y proyecto al mismo tiempo
-        if (reportProject==reportUser){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "You have to report either a user or a project, not both or neither.");
+        //Validamos que el reporte sea solo a un usuario, proyecto o servicio
+        if ((reportUser && reportProject) || (reportUser && reportService) || (reportProject && reportService)
+                || (!reportUser && !reportProject && !reportService)) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "You have to report either a user, project or service, not both or neither.");
         }
 
         boolean reportDuplicate;
-        if (reportUser){
+
+        if (reportUser) {
             //validamos si se reporta a si mismo
-            if (report.getReportedBy().getId().equals(report.getReportedUser().getId())){
+            if (report.getReportedBy().getId().equals(report.getReportedUser().getId())) {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Hmm, you can't report yourself.");
             }
-            reportDuplicate=this.reportRepository.existsByReportedByAndTypeAndReportedUserAndStatus(report.getReportedBy(),report.getType(),report.getReportedUser(),ReportStatus.PENDING);
-        }else{
-            reportDuplicate=this.reportRepository.existsByReportedByAndTypeAndReportedProjectIdAndStatus(report.getReportedBy(),report.getType(),report.getReportedProjectId(),ReportStatus.PENDING);
-        }
+            reportDuplicate = this.reportRepository.existsByReportedByAndTypeAndReportedUserAndStatus(
+                    report.getReportedBy(),
+                    report.getType(),
+                    report.getReportedUser(),
+                    ReportStatus.PENDING
+            );
 
-        if (reportDuplicate){
+        } else if (reportProject) {
+            reportDuplicate = this.reportRepository.existsByReportedByAndTypeAndReportedProjectIdAndStatus(
+                    report.getReportedBy(),
+                    report.getType(),
+                    report.getReportedProjectId(),
+                    ReportStatus.PENDING
+            );
+        } else {
+            reportDuplicate = this.reportRepository.existsByReportedByAndTypeAndReportedServiceIdAndStatus(
+                    report.getReportedBy(),
+                    report.getType(),
+                    report.getReportedServiceId(),
+                    ReportStatus.PENDING
+            );
+        }
+        if (reportDuplicate) {
             return null;
         }
-
         return this.converToDTO(this.reportRepository.save(report));
     }
 

@@ -16,4 +16,10 @@ public interface ReportRepository extends JpaRepository<Report, Long> {
     Optional<Report> findById(Long id);
     boolean existsByReportedByAndTypeAndReportedUserAndStatus(User reportedBy, ReportType type, User reportedUser, ReportStatus status);
     boolean existsByReportedByAndTypeAndReportedProjectIdAndStatus(User reportedBy, ReportType type, Long reportedProjectId, ReportStatus status);
+    boolean existsByReportedByAndTypeAndReportedServiceIdAndStatus(
+            User reportedBy,
+            ReportType type,
+            Long reportedServiceId,
+            ReportStatus status
+    );
 }
