@@ -98,6 +98,7 @@ public class ProjectService {
         dto.setImageUrl(project.getImageUrl());
         dto.setDescription(project.getDescription());
         dto.setCategory(project.getCategory());
+        dto.setFreelancerId(project.getFreelancer().getId());
 
         return dto;
     }
