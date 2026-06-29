@@ -11,14 +11,16 @@ public class ServicesDTO {
     private Long freelancerId;
     private Double price;
     private String imageUrl;
+    private String description;
 
     public ServicesDTO() {
     }
 
-    public ServicesDTO(String title, Long id, Category category, String freelancerName, Long freelancerId, Double price, String imageUrl) {
+    public ServicesDTO(String title, Long id, Category category, String description,  String freelancerName, Long freelancerId, Double price, String imageUrl) {
         this.title = title;
         this.id = id;
         this.category = category;
+        this.description = description;
         this.freelancerName = freelancerName;
         this.freelancerId = freelancerId;
         this.price = price;
@@ -79,5 +81,13 @@ public class ServicesDTO {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }
