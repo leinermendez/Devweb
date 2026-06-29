@@ -87,33 +87,33 @@
 
     <div id="reportModal" class="modal-overlay" style="display:none;">
         <div class="modal-box">
-                <h4>Reportar Proyecto</h4>
+            <h4 id="reportTitle">Reportar Proyecto</h4>
 
-                <select id="reportType">
-                    <option value="">Selecciona el motivo</option>
-                    <option value="SPAM">Spam</option>
-                    <option value="INAPPROPRIATE_CONTENT">Contenido inapropiado</option>
-                    <option value="MISLEADING_INFORMATION">Publicidad engañosa</option>
-                    <option value="HARASSMENT">Insultos / Acoso</option>
-                    <option value="HATE_SPEECH">Discurso de odio</option>
-                    <option value="SCAM_OR_FRAUD">Intento de estafa</option>
-                    <option value="COPYRIGHT_VIOLATION">Violación de derechos de autor</option>
-                    <option value="IMPERSONATION">Credenciales falsas</option>
-                    <option value="ILLEGAL_CONTENT">Contenido ilegal</option>
-                    <option value="OTHER">Otro</option>
-                </select>
+            <select id="reportType">
+                <option value="">Selecciona el motivo</option>
+                <option value="SPAM">Spam</option>
+                <option value="INAPPROPRIATE_CONTENT">Contenido inapropiado</option>
+                <option value="MISLEADING_INFORMATION">Publicidad engañosa</option>
+                <option value="HARASSMENT">Insultos / Acoso</option>
+                <option value="HATE_SPEECH">Discurso de odio</option>
+                <option value="SCAM_OR_FRAUD">Intento de estafa</option>
+                <option value="COPYRIGHT_VIOLATION">Violación de derechos de autor</option>
+                <option value="IMPERSONATION">Credenciales falsas</option>
+                <option value="ILLEGAL_CONTENT">Contenido ilegal</option>
+                <option value="OTHER">Otro</option>
+            </select>
 
-                <input type="hidden" id="reportProjectId">
+            <input type="hidden" id="reportProjectId">
 
-                <textarea id="reportText" placeholder="Motivo del reporte"></textarea>
+            <textarea id="reportText" placeholder="Motivo del reporte"></textarea>
 
-                <div class="modal-buttons">
-                    <button type="button" onclick="cerrarModal('reportModal')">Cancelar</button>
-                    <button onclick="sendReport()">Enviar reporte</button>
-                </div>
-                
-                </div>
+            <div class="modal-buttons">
+                <button type="button" onclick="cerrarModal('reportModal')">Cancelar</button>
+                <button onclick="sendReport()">Enviar reporte</button>
             </div>
+
+        </div>
+    </div>
 
     <div class="feed-container" id="feedContainer">
         <!-- Aquí se cargan los proyectos dinámicamente -->
@@ -122,6 +122,7 @@
     <script src="js/api.js"></script>
     <script>
         const user = JSON.parse(localStorage.getItem("user"));
+        let reportMode = "PROJECT";
 
         if (!user) {
             window.location.href = "users/login.html";
@@ -138,17 +139,25 @@
 
             proyectos.forEach(proyecto => {
                 contenedor.innerHTML += `
-                <div class="project-card">
-                    <img src="${proyecto.imageUrl}" class="project-image" alt="${proyecto.title}">
-                    <div class="project-info">
-                        <h3>${proyecto.title}</h3>
-                        <p>Por: ${proyecto.freelancerName}</p>
-                        <button class="btn-report" onclick="openReportModal(${proyecto.id})" >
-                            Reportar Proyecto
-                        </button>
+                    <div class="project-card">
+                        <img src="${proyecto.imageUrl}" class="project-image" alt="${proyecto.title}">
+                            <div class="project-info">
+                                <h3>${proyecto.title}</h3>
+                                <p class="service-owner">
+                                    Por:
+                                    <a href="freelancer.html?id=${proyecto.freelancerId}">
+                                      ${proyecto.freelancerName}
+                                    </a>
+                                </p>
+
+                                <p>${proyecto.description || ""}</p>
+                                <p>Categoría: ${proyecto.category || ""}</p>
+                                <button class="btn-report" onclick="openReportModal(${proyecto.id})" >
+                                    Reportar Proyecto
+                                </button>
+                            </div>
                     </div>
-                </div>
-            `;
+                `;
             });
         }
 
@@ -163,14 +172,15 @@
             const contenedor = document.getElementById("feedContainer");
 
             servicios.forEach(service => {
-                contenedor.innerHTML +=`
-                    <div class="project-card">
+                contenedor.innerHTML += `
+                    <div class="project-card" >
                         <img src="${service.imageUrl}" class="project-image" alt="${service.title}">
 
                             <div class="project-info">
                                 <h3>${service.title}</h3>
 
                                 <p>Categoría: ${service.category}</p>
+                                <p>${service.description || ""}</p>
                                 <p>Precio: ₡${Number(service.price).toLocaleString()}</p>
 
                                 <div class="service-footer">
@@ -182,78 +192,100 @@
                                         </a>
                                     </div>
 
-                                    <button
-                                        class="btn-service"
-                                        onclick="openRequestModal(${service.id}, ${service.freelancerId}, '${service.title.replace(/'/g, "\\'")}')">
-                                    Solicitar servicio
-                                </button>
+                                    <div class="card-actions">
+                                        <button
+                                            class="btn-service"
+                                            onclick="openRequestModal(${service.id}, ${service.freelancerId}, '${service.title.replace(/'/g, "\\'")}')">
+                                            Solicitar servicio
+                                        </button>
+
+                                        <button
+                                            class="btn-report"
+                                            onclick="openReportServiceModal(${service.id})">
+                                            Reportar servicio
+                                        </button>
+                                    </div>
 
                             </div>
-                    </div>
+                        </div>
             </div >
         `;
-    });
-}
+            });
+        }
 
-    if (user.role === "FREELANCER") {
-        document.getElementById("freelancerBanner").style.display = "flex";
-    } else if (user.role === "CLIENT") {
-        document.getElementById("clientBanner").style.display = "flex";
-    }
+        if (user.role === "FREELANCER") {
+            document.getElementById("freelancerBanner").style.display = "flex";
+        } else if (user.role === "CLIENT") {
+            document.getElementById("clientBanner").style.display = "flex";
+        }
 
-    document.getElementById("formProyecto").addEventListener("submit", async function(e) {
-        e.preventDefault();
+        document.getElementById("formProyecto").addEventListener("submit", async function (e) {
+            e.preventDefault();
 
-        const proyecto = {
-            title: document.getElementById("projTitle").value,
-            description: document.getElementById("projDescription").value,
-            category: document.getElementById("projCategory").value,
-            imageUrl: document.getElementById("projImage").value,
-            freelancer: { id: user.id }
-        };
+            const proyecto = {
+                title: document.getElementById("projTitle").value,
+                description: document.getElementById("projDescription").value,
+                category: document.getElementById("projCategory").value,
+                imageUrl: document.getElementById("projImage").value,
+                freelancer: { id: user.id }
+            };
 
-        const response = await fetch(API_URL + "/projects", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(proyecto)
+            const response = await fetch(API_URL + "/projects", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(proyecto)
+            });
+
+            if (response.ok) {
+                cerrarModal("modalProyecto");
+                cargarProyectos();
+            } else {
+                alert("Error al publicar el proyecto");
+            }
         });
 
-        if (response.ok) {
-            cerrarModal("modalProyecto");
-            cargarProyectos();
-        } else {
-            alert("Error al publicar el proyecto");
+        function openReportModal(projectId) {
+            reportMode = "PROJECT";
+
+            document.getElementById("reportTitle").textContent = "Reportar Proyecto";
+            document.getElementById("reportProjectId").value = projectId;
+
+            abrirModal("reportModal");
         }
-    });
 
-    function openReportModal(projectId){
-        document.getElementById("reportProjectId").value = projectId;
+        function openReportServiceModal(serviceId) {
+            reportMode = "SERVICE";
 
-        abrirModal("reportModal");
-    }
+            document.getElementById("reportTitle").textContent = "Reportar Servicio";
+            document.getElementById("reportProjectId").value = serviceId;
 
-    function openRequestModal(serviceId, freelancerId, serviceTitle) {
-    if (!user) {
-        alert("Debes iniciar sesión");
-        return;
-    }
+            abrirModal("reportModal");
+        }
 
-    if (user.id === freelancerId) {
-        alert("No puedes solicitar tus propios servicios");
-        return;
-    }
 
-    document.getElementById("requestServiceId").value = serviceId;
-    document.getElementById("requestFreelancerId").value = freelancerId;
-    document.getElementById("requestServiceTitle").textContent = serviceTitle;
-    document.getElementById("requestDescription").value = "";
+        function openRequestModal(serviceId, freelancerId, serviceTitle) {
+            if (!user) {
+                alert("Debes iniciar sesión");
+                return;
+            }
 
-    abrirModal("modalSolicitud");
-}
+            if (user.id === freelancerId) {
+                alert("No puedes solicitar tus propios servicios");
+                return;
+            }
 
-async function sendReport() {
+            document.getElementById("requestServiceId").value = serviceId;
+            document.getElementById("requestFreelancerId").value = freelancerId;
+            document.getElementById("requestServiceTitle").textContent = serviceTitle;
+            document.getElementById("requestDescription").value = "";
+
+            abrirModal("modalSolicitud");
+        }
+
+        async function sendReport() {
             const type = document.getElementById("reportType").value;
             const text = document.getElementById("reportText").value;
+            const reportedId = Number(document.getElementById("reportProjectId").value);
 
             if (type === "") {
                 alert("Seleccioná el tipo de reporte.");
@@ -268,9 +300,16 @@ async function sendReport() {
             const report = {
                 type: type,
                 description: text,
-                reportedBy: { id: user.id },
-                reportedProjectId: Number(document.getElementById("reportProjectId").value)
+                reportedBy: { id: user.id }
             };
+
+            if (reportMode === "PROJECT") {
+                report.reportedProjectId = reportedId;
+            }
+
+            if (reportMode === "SERVICE") {
+                report.reportedServiceId = reportedId;
+            }
 
             const response = await fetch(API_URL + "/api/reports", {
                 method: "POST",
@@ -282,68 +321,71 @@ async function sendReport() {
                 alert("Reporte enviado correctamente.");
                 document.getElementById("reportText").value = "";
                 document.getElementById("reportType").value = "";
+                document.getElementById("reportProjectId").value = "";
+                reportMode = "PROJECT";
                 cerrarModal("reportModal");
-            } else {
-                const text = await response.text();
-                alert(text || "Error al enviar el reporte.");
-            }
-}
-
-async function sendJobRequest() {
-    const description = document.getElementById("requestDescription").value;
-
-    if (description.trim() === "") {
-        alert("Debe escribir una descripción");
-        return;
-    }
-
-    const request = {
-        description: description,
-        client: {
-            id: user.id
-        },
-        freelancer: {
-            id: Number(document.getElementById("requestFreelancerId").value)
-        },
-        service: {
-            id: Number(document.getElementById("requestServiceId").value)
-        }
-    };
-
-    const response = await fetch(API_URL + "/api/jobrequest/save", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(request)
-    });
-
+} else {
     const text = await response.text();
-
-    if (response.ok) {
-        cerrarModal("modalSolicitud");
-        alert("Solicitud enviada correctamente");
-    } else {
-        alert(text || "Error al enviar solicitud");
-    }
+    console.error("Error backend:", text);
+    alert(text || "Error al enviar el reporte.");
 }
-
-    async function confirmarFreelancer() {
-        const response = await fetch(API_URL + "/users/" + user.id + "/become-freelancer", {
-            method: "PUT"
-        });
-
-        if (response.ok) {
-            const updatedUser = await response.json();
-            localStorage.setItem("user", JSON.stringify(updatedUser));
-            alert("¡Ahora eres freelancer!");
-            window.location.reload();
-        } else {
-            alert("Error al cambiar de rol");
         }
-    }
 
-    cargarProyectos().then(() => cargarServicios());
+        async function sendJobRequest() {
+            const description = document.getElementById("requestDescription").value;
+
+            if (description.trim() === "") {
+                alert("Debe escribir una descripción");
+                return;
+            }
+
+            const request = {
+                description: description,
+                client: {
+                    id: user.id
+                },
+                freelancer: {
+                    id: Number(document.getElementById("requestFreelancerId").value)
+                },
+                service: {
+                    id: Number(document.getElementById("requestServiceId").value)
+                }
+            };
+
+            const response = await fetch(API_URL + "/api/jobrequest/save", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(request)
+            });
+
+            const text = await response.text();
+
+            if (response.ok) {
+                cerrarModal("modalSolicitud");
+                alert("Solicitud enviada correctamente");
+            } else {
+                alert(text || "Error al enviar solicitud");
+            }
+        }
+
+        async function confirmarFreelancer() {
+            const response = await fetch(API_URL + "/users/" + user.id + "/become-freelancer", {
+                method: "PUT"
+            });
+
+            if (response.ok) {
+                const updatedUser = await response.json();
+                localStorage.setItem("user", JSON.stringify(updatedUser));
+                alert("¡Ahora eres freelancer!");
+                window.location.reload();
+            } else {
+                alert("Error al cambiar de rol");
+            }
+        }
+
+        cargarProyectos().then(() => cargarServicios());
     </script>
 </body>
 

@@ -35,9 +35,9 @@
                 </a>
                 <a id="btnAdmin" style="display:none;">
                     <button type="button">Gestión</button>
-                </a>    
+                </a>
             </div>
-            
+
         </div>
 
         <div id="profileTabs" class="freelancer-tabs" style="display:none;">
@@ -48,7 +48,7 @@
 
         <div id="projectsSection" style="display:none;">
             <div class="section-header">
-                <h3 style="margin: 15px;" >Mis proyectos</h3>
+                <h3 style="margin: 15px;">Mis proyectos</h3>
                 <button id="btnAgregarProyecto" style="display:none;" onclick="abrirModal('modalProyecto')">
                     Añadir proyecto
                 </button>
@@ -58,8 +58,8 @@
 
         <div id="servicesSection" style="display:none;">
             <div class="section-header">
-                <h3 style="margin: 15px;" >Mis servicios</h3>
-                <button id="btnAgregarServicio" style="display:none;" onclick="abrirModal('modalServicio')">
+                <h3 style="margin: 15px;">Mis servicios</h3>
+                <button id="btnAgregarServicio" style="display:none;" onclick="abrirCrearServicio()">
                     Añadir servicio
                 </button>
             </div>
@@ -125,6 +125,41 @@
         </div>
     </div>
 
+    <div class="modal-overlay" id="modalEditarProyecto" style="display:none;">
+        <div class="modal-box">
+            <h3>Editar proyecto</h3>
+
+            <form id="formEditarProyecto">
+                <input type="hidden" id="editProjectId">
+
+                <input type="text" id="editProjectTitle" placeholder="Título" required>
+                <textarea id="editProjectDescription" placeholder="Descripción" required></textarea>
+
+                <select id="editProjectCategory" required>
+                    <option value="">Categoría</option>
+                    <option value="PROGRAMMING">PROGRAMMING</option>
+                    <option value="WEB_DEVELOPMENT">WEB_DEVELOPMENT</option>
+                    <option value="MOBILE_DEVELOPMENT">MOBILE_DEVELOPMENT</option>
+                    <option value="GAME_DEVELOPMENT">GAME_DEVELOPMENT</option>
+                    <option value="GRAPHIC_DESIGN">GRAPHIC_DESIGN</option>
+                    <option value="UI_UX_DESIGN">UI_UX_DESIGN</option>
+                    <option value="ILLUSTRATION">ILLUSTRATION</option>
+                    <option value="ANIMATION">ANIMATION</option>
+                    <option value="VIDEO_EDITING">VIDEO_EDITING</option>
+                    <option value="PHOTOGRAPHY">PHOTOGRAPHY</option>
+                    <option value="MUSIC_PRODUCTION">MUSIC_PRODUCTION</option>
+                </select>
+
+                <input type="url" id="editProjectImage" placeholder="URL de imagen" required>
+
+                <div class="modal-buttons">
+                    <button type="button" onclick="cerrarModal('modalEditarProyecto')">Cancelar</button>
+                    <button type="submit">Guardar cambios</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <div class="modal-overlay" id="modalServicio" style="display:none;">
         <div class="modal-box">
             <h3>Publicar servicio</h3>
@@ -163,6 +198,7 @@
 
     <script>
         const user = JSON.parse(localStorage.getItem("user"));
+        let editingServiceId = null;
 
         if (!user) {
             window.location.href = "login.html";
@@ -199,9 +235,9 @@
             document.getElementById("solicitudesTitulo").textContent = "Mis solicitudes enviadas";
 
             cargarSolicitudesCliente();
-        } else if (user.role ==="ADMIN"){
-            document.getElementById("btnAdmin").style.display="block";
-            document.getElementById("btnAdmin").href="../admin.html";
+        } else if (user.role === "ADMIN") {
+            document.getElementById("btnAdmin").style.display = "block";
+            document.getElementById("btnAdmin").href = "../admin.html";
 
             document.getElementById("adminSection").style.display = "block";
 
@@ -250,14 +286,90 @@
 
             proyectos.forEach(proyecto => {
                 contenedor.innerHTML += `
-                <div class="project-card">
-                    <img src="${proyecto.imageUrl}" class="project-image" alt="${proyecto.title}">
-                    <div class="project-info">
-                        <h3>${proyecto.title}</h3>
+                    <div class="project-card">
+                        <img src="${proyecto.imageUrl}" class="project-image" alt="${proyecto.title}">
+                            <div class="project-info">
+                                <h3>${proyecto.title}</h3>
+                                <p>${proyecto.description || ""}</p>
+                                <p>Categoría: ${proyecto.category || ""}</p>
+
+                                <div class="card-actions">
+                                    <button type="button" class="btn-complete" onclick='abrirEditarProyecto(${JSON.stringify(proyecto)})'>
+                                        Editar
+                                    </button>
+
+                                    <button type="button" class="btn-reject" onclick="eliminarProyecto(${proyecto.id})">
+                                        Eliminar
+                                    </button>
+                                </div>
+                            </div>
                     </div>
-                </div>
-            `;
+                `;
             });
+        }
+
+        function abrirEditarProyecto(proyecto) {
+            document.getElementById("editProjectId").value = proyecto.id;
+            document.getElementById("editProjectTitle").value = proyecto.title || "";
+            document.getElementById("editProjectDescription").value = proyecto.description || "";
+            document.getElementById("editProjectCategory").value = proyecto.category || "";
+            document.getElementById("editProjectImage").value = proyecto.imageUrl || "";
+
+            abrirModal("modalEditarProyecto");
+        }
+
+        document.getElementById("formEditarProyecto").addEventListener("submit", async function (e) {
+            e.preventDefault();
+
+            const id = document.getElementById("editProjectId").value;
+
+            const proyecto = {
+                title: document.getElementById("editProjectTitle").value,
+                description: document.getElementById("editProjectDescription").value,
+                category: document.getElementById("editProjectCategory").value,
+                imageUrl: document.getElementById("editProjectImage").value,
+                freelancer: {
+                    id: user.id
+                }
+            };
+
+            const response = await fetch(API_URL + "/projects/" + id, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(proyecto)
+            });
+
+            const text = await response.text();
+
+            if (response.ok) {
+                cerrarModal("modalEditarProyecto");
+                document.getElementById("formEditarProyecto").reset();
+                cargarMisProyectos();
+                alert("Proyecto actualizado correctamente");
+            } else {
+                alert(text || "Error al actualizar proyecto");
+            }
+        });
+
+        async function eliminarProyecto(id) {
+            if (!confirm("¿Seguro que querés eliminar este proyecto?")) {
+                return;
+            }
+
+            const response = await fetch(API_URL + "/projects/" + id, {
+                method: "DELETE"
+            });
+
+            const text = await response.text();
+
+            if (response.ok) {
+                cargarMisProyectos();
+                alert("Proyecto eliminado correctamente");
+            } else {
+                alert(text || "Error al eliminar proyecto");
+            }
         }
 
         async function loadReports() {
@@ -277,7 +389,7 @@
 
             reports.forEach(function (report) {
                 container.innerHTML += `
-                    <article class="project-card">
+                    <article class="project-card" >
                         <div class="project-info">
                             <strong>Reportado por: ${report.reportedBy.name}</strong>
                             <small>${new Date(report.createdAt).toLocaleDateString("es-CR")}</small>
@@ -291,8 +403,8 @@
                             <p>${report.description}</p>
                         </div>
                         
-                    </article>
-                `;
+                    </article >
+                    `;
             });
 
         }
@@ -311,18 +423,68 @@
 
             servicios.forEach(service => {
                 contenedor.innerHTML += `
-                <div class="project-card">
-                    <img src="${service.imageUrl}" class="project-image" alt="${service.title}">
+        <div class="project-card">
+            <img src="${service.imageUrl}" class="project-image" alt="${service.title}">
 
-                    <div class="project-info">
-                        <h3>${service.title}</h3>
-                        <p>Categoría: ${service.category}</p>
-                        <p>Precio: ₡${Number(service.price).toLocaleString()}</p>
-                    </div>
+            <div class="project-info">
+                <h3>${service.title}</h3>
+                <p>${service.description || ""}</p>
+                <p>Categoría: ${service.category}</p>
+                <p>Precio: ₡${Number(service.price).toLocaleString()}</p>
+
+                <div class="card-actions">
+                    <button type="button" class="btn-accept" onclick='abrirEditarServicio(${JSON.stringify(service)})'>
+                        Editar
+                    </button>
+
+                    <button type="button" class="btn-reject" onclick="eliminarServicio(${service.id})">
+                        Eliminar
+                    </button>
                 </div>
-            `;
+            </div>
+        </div>
+    `;
             });
         }
+
+        function abrirCrearServicio() {
+            editingServiceId = null;
+            document.getElementById("formServicio").reset();
+            abrirModal("modalServicio");
+        }
+
+        function abrirEditarServicio(service) {
+            editingServiceId = service.id;
+
+            document.getElementById("serviceTitle").value = service.title || "";
+            document.getElementById("serviceDescription").value = service.description || "";
+            document.getElementById("serviceCategory").value = service.category || "";
+            document.getElementById("servicePrice").value = service.price || "";
+            document.getElementById("serviceImage").value = service.imageUrl || "";
+
+            abrirModal("modalServicio");
+        }
+
+        async function eliminarServicio(id) {
+            if (!confirm("¿Seguro que querés eliminar este servicio?")) {
+                return;
+            }
+
+            const response = await fetch(API_URL + "/api/services/delete/" + id, {
+                method: "DELETE"
+            });
+
+            const text = await response.text();
+
+            if (response.ok) {
+                cargarMisServicios();
+                alert("Servicio eliminado correctamente");
+            } else {
+                alert(text || "Error al eliminar servicio");
+            }
+        }
+
+
 
         async function cargarSolicitudesCliente() {
             const response = await fetch(API_URL + "/api/jobrequest/findByClient/" + user.id);
@@ -338,15 +500,15 @@
 
             solicitudes.forEach(solicitud => {
                 contenedor.innerHTML += `
-                <div class="project-card">
-                    <div class="project-info">
-                        <h3>Solicitud #${solicitud.id}</h3>
-                        <p>${solicitud.description}</p>
-                        <p>Estado: ${solicitud.status}</p>
-                        <p>Servicio ID: ${solicitud.serviceId}</p>
-                    </div>
-                </div>
-            `;
+                    <div class="project-card" >
+                        <div class="project-info">
+                            <h3>Solicitud #${solicitud.id}</h3>
+                            <p>${solicitud.description}</p>
+                            <p>Estado: ${solicitud.status}</p>
+                            <p>Servicio ID: ${solicitud.serviceId}</p>
+                        </div>
+                </div >
+                    `;
             });
         }
 
@@ -367,7 +529,7 @@
 
                 if (solicitud.status === "PENDING") {
                     botones = `
-                    <div class="card-actions">
+                    <div class="card-actions" >
                         <button class="btn-accept" onclick="aceptarSolicitud(${solicitud.id})">
                             Aceptar
                         </button>
@@ -375,31 +537,31 @@
                         <button class="btn-reject" onclick="rechazarSolicitud(${solicitud.id})">
                             Rechazar
                         </button>
-                    </div>
-                `;
+                    </div >
+                    `;
                 }
 
                 if (solicitud.status === "ACCEPTED") {
                     botones = `
-                    <div class="card-actions">
+                    <div class="card-actions" >
                         <button class="btn-complete" onclick="completarSolicitud(${solicitud.id})">
                             Completar
                         </button>
-                    </div>
-                `;
+                    </div >
+                    `;
                 }
 
                 contenedor.innerHTML += `
-                <div class="project-card">
-                    <div class="project-info">
-                        <h3>Solicitud #${solicitud.id}</h3>
-                        <p>${solicitud.description}</p>
-                        <p>Estado: ${solicitud.status}</p>
-                        <p>Cliente ID: ${solicitud.clientId}</p>
-                        <p>Servicio ID: ${solicitud.serviceId}</p>
-                        ${botones}
-                    </div>
-                </div>
+                    <div class="project-card" >
+                        <div class="project-info">
+                            <h3>Solicitud #${solicitud.id}</h3>
+                            <p>${solicitud.description}</p>
+                            <p>Estado: ${solicitud.status}</p>
+                            <p>Cliente ID: ${solicitud.clientId}</p>
+                            <p>Servicio ID: ${solicitud.serviceId}</p>
+                            ${botones}
+                        </div>
+                </div >
             `;
             });
         }
@@ -504,38 +666,6 @@
             }
         });
 
-        document.getElementById("formServicio").addEventListener("submit", async function (e) {
-            e.preventDefault();
-
-            const servicio = {
-                title: document.getElementById("serviceTitle").value,
-                description: document.getElementById("serviceDescription").value,
-                category: document.getElementById("serviceCategory").value,
-                price: Number(document.getElementById("servicePrice").value),
-                imageUrl: document.getElementById("serviceImage").value,
-                freelancer: {
-                    id: user.id
-                }
-            };
-
-            const response = await fetch(API_URL + "/api/services/save", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(servicio)
-            });
-
-            if (response.ok) {
-                cerrarModal("modalServicio");
-                document.getElementById("formServicio").reset();
-                cargarMisServicios();
-                alert("Servicio publicado");
-            } else {
-                const text = await response.text();
-                alert(text || "Error al publicar servicio");
-            }
-        });
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

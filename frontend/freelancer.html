@@ -41,19 +41,6 @@
 
             <div id="reportBox" class="report-box" style="display:none;">
                 <h4>Reportar usuario</h4>
-                <select id="reportType">
-                    <option value="">Selecciona el motivo</option>
-                    <option value="SPAM">Spam</option>
-                    <option value="INAPPROPRIATE_CONTENT">Contenido inapropiado</option>
-                    <option value="MISLEADING_INFORMATION">Publicidad engañosa</option>
-                    <option value="HARASSMENT">Insultos / Acoso</option>
-                    <option value="HATE_SPEECH">Discurso de odio</option>
-                    <option value="SCAM_OR_FRAUD">Intento de estafa</option>
-                    <option value="COPYRIGHT_VIOLATION">Violación de derechos de autor</option>
-                    <option value="IMPERSONATION">Credenciales falsas</option>
-                    <option value="ILLEGAL_CONTENT">Contenido ilegal</option>
-                    <option value="OTHER">Otro</option>
-                </select>
                 <textarea id="reportText" placeholder="Motivo del reporte"></textarea>
                 <button onclick="sendReport()">Enviar reporte</button>
             </div>
@@ -130,6 +117,60 @@
             <div class="modal-buttons">
                 <button type="button" onclick="cerrarModal('modalReview')">Cancelar</button>
                 <button type="button" onclick="sendReview()">Publicar review</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modalServiceReport" style="display:none;">
+        <div class="modal-box">
+            <h3>Reportar servicio</h3>
+
+            <input type="hidden" id="reportedServiceId">
+
+            <select id="serviceReportType">
+                <option value="">Seleccione un motivo</option>
+                <option value="SPAM">Spam</option>
+                <option value="SCAM_OR_FRAUD">Estafa</option>
+                <option value="INAPPROPRIATE_CONTENT">Contenido inapropiado</option>
+                <option value="MISLEADING_INFORMATION">Información engañosa</option>
+                <option value="OTHER">Otro</option>
+            </select>
+
+            <textarea id="serviceReportText" placeholder="Descripción"></textarea>
+
+            <div class="modal-buttons">
+                <button type="button" onclick="cerrarModal('modalServiceReport')">Cancelar</button>
+                <button type="button" onclick="sendServiceReport()">Enviar</button>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal-overlay" id="modalProjectReport" style="display:none;">
+        <div class="modal-box">
+            <h3>Reportar proyecto</h3>
+
+            <input type="hidden" id="reportProjectId">
+
+            <select id="projectReportType">
+                <option value="">Seleccione un motivo</option>
+                <option value="SPAM">Spam</option>
+                <option value="SCAM_OR_FRAUD">Estafa</option>
+                <option value="INAPPROPRIATE_CONTENT">Contenido inapropiado</option>
+                <option value="MISLEADING_INFORMATION">Información engañosa</option>
+                <option value="OTHER">Otro</option>
+            </select>
+
+            <textarea id="projectReportText"></textarea>
+
+            <div class="modal-buttons">
+                <button onclick="cerrarModal('modalProjectReport')">
+                    Cancelar
+                </button>
+
+                <button onclick="sendProjectReport()">
+                    Reportar
+                </button>
             </div>
         </div>
     </div>
@@ -211,12 +252,18 @@
                     <div class="service-slot-info">
                         <h3>${service.title}</h3>
                         <p>Categoría: ${service.category}</p>
+                        <p>${service.description || ""}</p>
                         <p>Freelancer: ${service.freelancerName}</p>
                         <p class="service-slot-price">₡${Number(service.price).toLocaleString()}</p>
 
-                        <button onclick="openRequestModal(${service.id}, '${service.title.replace(/'/g, "\\'")}')">
-                            Solicitar servicio
+                        <button class="btn-service" onclick="openRequestModal(${service.id}, '${service.title.replace(/'/g, "\\'")}')">
+                             Solicitar servicio
                         </button>
+
+                        <button class="btn-report" onclick="openServiceReportModal(${service.id})">
+                           Reportar servicio
+                        </button>
+
                     </div>
                 </article>
             `;
@@ -241,10 +288,22 @@
                 container.innerHTML += `
                 <article class="project-public-card">
                     <img src="${project.imageUrl}" alt="${project.title}">
-                    <div>
-                        <h3>${project.title}</h3>
-                        <p>Por ${project.freelancerName}</p>
-                    </div>
+<div>
+    <h3>${project.title}</h3>
+
+    <p>${project.description || ""}</p>
+
+    <p>Categoría: ${project.category || ""}</p>
+
+    <p>Por ${project.freelancerName}</p>
+
+    <div class="card-actions">
+        <button class="btn-report"
+            onclick="openProjectReportModal(${project.id})">
+            Reportar proyecto
+        </button>
+    </div>
+</div>
                 </article>
             `;
             });
@@ -421,48 +480,99 @@
             }
         }
 
+        function openServiceReportModal(serviceId) {
+
+            document.getElementById("reportedServiceId").value = serviceId;
+            document.getElementById("serviceReportType").value = "";
+            document.getElementById("serviceReportText").value = "";
+
+            abrirModal("modalServiceReport");
+        }
+
+        function openProjectReportModal(projectId) {
+            document.getElementById("reportProjectId").value = projectId;
+            document.getElementById("projectReportType").value = "";
+            document.getElementById("projectReportText").value = "";
+
+            abrirModal("modalProjectReport");
+        }
+
         function toggleReport() {
             const box = document.getElementById("reportBox");
             box.style.display = box.style.display === "none" ? "block" : "none";
         }
 
-        async function sendReport() {
-            const type = document.getElementById("reportType").value;
+        function sendReport() {
             const text = document.getElementById("reportText").value;
 
-            if (type === "") {
-                alert("Seleccioná el tipo de reporte.");
+            if (text.trim() === "") {
+                alert("Escriba el motivo del reporte.");
                 return;
             }
 
-            if (text.trim() === "") {
-                alert("Escribá una descripción.");
-                return;
-            }
+            alert("Reporte registrado como placeholder. Falta backend de reportes.");
+            document.getElementById("reportText").value = "";
+            toggleReport();
+        }
+
+        async function sendServiceReport() {
 
             const report = {
-                type: type,
-                description: text,
-                reportedBy: { id: loggedUser.id },
-                reportedUser: { id: Number(freelancerId) }
+                type: document.getElementById("serviceReportType").value,
+                description: document.getElementById("serviceReportText").value,
+                reportedBy: {
+                    id: loggedUser.id
+                },
+                reportedServiceId: Number(document.getElementById("reportedServiceId").value)
             };
 
             const response = await fetch(API_URL + "/api/reports", {
                 method: "POST",
-                headers: { "Content-Type": "application/json" },
+                headers: {
+                    "Content-Type": "application/json"
+                },
                 body: JSON.stringify(report)
             });
 
+            const text = await response.text();
+
             if (response.ok) {
+                cerrarModal("modalServiceReport");
                 alert("Reporte enviado correctamente.");
-                document.getElementById("reportText").value = "";
-                document.getElementById("reportType").value = "";
-                toggleReport();
             } else {
-                const text = await response.text();
-                alert(text || "Error al enviar el reporte.");
+                alert(text);
             }
         }
+
+        async function sendProjectReport() {
+
+            const report = {
+                type: document.getElementById("projectReportType").value,
+                description: document.getElementById("projectReportText").value,
+                reportedBy: {
+                    id: loggedUser.id
+                },
+                reportedProjectId: Number(document.getElementById("reportProjectId").value)
+            };
+
+            const response = await fetch(API_URL + "/api/reports", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(report)
+            });
+
+            const text = await response.text();
+
+            if (response.ok) {
+                cerrarModal("modalProjectReport");
+                alert("Reporte enviado correctamente.");
+            } else {
+                alert(text);
+            }
+        }
+
 
         function formatDate(dateText) {
             if (!dateText) {

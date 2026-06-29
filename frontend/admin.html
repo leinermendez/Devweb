@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css">
 </head>
+
 <body class="feed-page public-freelancer-page">
 
     <nav class="navbar">
@@ -19,17 +21,18 @@
 
     <main class="container mt-4 ">
         <div class="freelancer-tabs">
-            <button id="tabVerificaciones" class="tab-active" onclick="showSection('verificaciones')">Verificaciones</button>
+            <button id="tabVerificaciones" class="tab-active"
+                onclick="showSection('verificaciones')">Verificaciones</button>
             <button id="tabReportes" onclick="showSection('reportes')">Reportes</button>
         </div>
 
-        
-        <section id="sectionVerifications" >
+
+        <section id="sectionVerifications">
             <h2 style="color: #fff;">Solicitudes de verificación</h2>
             <div id="verificationsContainer"></div>
         </section>
 
-        
+
         <section id="sectionReports" style="display:none;">
             <h2 style="color: #fff;">Reportes pendientes</h2>
             <div id="reportsContainer"></div>
@@ -40,13 +43,13 @@
     <script src="js/api.js"></script>
     <script>
         const loggedUser = JSON.parse(localStorage.getItem("user"));
-        
+
 
         if (!loggedUser || loggedUser.role !== "ADMIN") {
             window.location.href = "index.html";
         }
         document.getElementById("userName").textContent = "Hola, " + loggedUser.name;
-        
+
         async function loadVerification() {
             const container = document.getElementById("verificationsContainer");
             container.innerHTML = "<p class='profile-muted'>Cargando verificaciones...</p>";
@@ -95,7 +98,12 @@
                         </div>
 
                         <p><strong>Reportado:</strong> 
-                            ${report.reportedUser ? report.reportedUser.name : "Proyecto ID: " + report.reportedProjectId}
+                            ${report.reportedUser
+                        ? report.reportedUser.name
+                        : report.reportedProjectId
+                            ? "Proyecto ID: " + report.reportedProjectId
+                            : "Servicio ID: " + report.reportedServiceId
+                    }
                         </p>
 
                         <p><strong>Motivo:</strong> ${report.type}</p>
@@ -123,7 +131,7 @@
             } else {
                 alert("Error al aprobar.");
             }
-        }  
+        }
         async function approvedVerification(id) {
             const response = await fetch(API_URL + "/verification/" + id, {
                 method: "PUT",
@@ -136,12 +144,12 @@
             } else {
                 alert("Error al aprobar.");
             }
-        }      
+        }
 
 
 
         async function approvedReport(id) {
-                const response = await fetch(API_URL + "/api/reports/" + id + "/resolve", {
+            const response = await fetch(API_URL + "/api/reports/" + id + "/resolve", {
                 method: "PUT"
             });
 
@@ -149,12 +157,12 @@
                 alert("reporte resuelto.");
                 loadReports();
             } else {
-            alert("Error al asignarle el estado.");
+                alert("Error al asignarle el estado.");
             }
         }
 
         async function rejectedReport(id) {
-                const response = await fetch(API_URL + "/api/reports/" + id + "/dismiss", {
+            const response = await fetch(API_URL + "/api/reports/" + id + "/dismiss", {
                 method: "PUT"
             });
 
@@ -162,7 +170,7 @@
                 alert("reporte denegado.");
                 loadReports();
             } else {
-            alert("Error al asignarle el estado.");
+                alert("Error al asignarle el estado.");
             }
         }
 
@@ -181,9 +189,10 @@
             }
         }
 
-        
+
         loadVerification();
         loadReports()
     </script>
 </body>
+
 </html>
