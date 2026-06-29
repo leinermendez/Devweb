@@ -66,16 +66,19 @@ public class ReportService {
     }
 
 
-    //converciones a DTO
-    public ReportDTO converToDTO(Report report){
-        ReportDTO dto= new ReportDTO(report.getId(),
+    //conversiones a DTO
+    public ReportDTO converToDTO(Report report) {
+        ReportDTO dto = new ReportDTO(
+                report.getId(),
                 report.getType(),
                 report.getDescription(),
                 this.userService.convertirUserDTO(report.getReportedBy()),
                 report.getStatus(),
                 report.getCreatedAt(),
                 report.getReportedProjectId(),
-                report.getReportedUser() != null ? this.userService.convertirUserDTO(report.getReportedUser()) : null);// un if en una sola linea de codigo "condición ? valorSiEsTrue : valorSiEsFalse"
+                report.getReportedServiceId(),
+                report.getReportedUser() != null ? this.userService.convertirUserDTO(report.getReportedUser()) : null
+        );
         return dto;
     }
 

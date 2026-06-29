@@ -14,8 +14,9 @@ public class ReportDTO {
     private LocalDateTime createdAt;
     private Long reportedProjectId;
     private UserDTO reportedUser;
+    private Long reportedServiceId;
 
-    public ReportDTO(Long id, ReportType type, String description, UserDTO reportedBy, ReportStatus status, LocalDateTime createdAt, Long reportedProjectId, UserDTO reportedUser) {
+    public ReportDTO(Long id, ReportType type, String description, UserDTO reportedBy, ReportStatus status, LocalDateTime createdAt, Long reportedProjectId, Long reportedServiceId, UserDTO reportedUser) {
         this.id = id;
         this.type = type;
         this.description = description;
@@ -23,11 +24,20 @@ public class ReportDTO {
         this.status = status;
         this.createdAt = createdAt;
         this.reportedProjectId = reportedProjectId;
+        this.reportedServiceId = reportedServiceId;
         this.reportedUser = reportedUser;
     }
 
     public Long getId() {
         return id;
+    }
+
+    public Long getReportedServiceId() {
+        return reportedServiceId;
+    }
+
+    public void setReportedServiceId(Long reportedServiceId) {
+        this.reportedServiceId = reportedServiceId;
     }
 
     public void setId(Long id) {

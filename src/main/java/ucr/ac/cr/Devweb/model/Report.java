@@ -39,6 +39,9 @@ public class Report {
     @Column(name = "reported_project_id")
     private Long reportedProjectId;
 
+    @Column(name = "reported_service_id")
+    private Long reportedServiceId;
+
     @ManyToOne
     @JoinColumn(name = "reported_user")
     private User reportedUser;
@@ -52,12 +55,21 @@ public class Report {
         this.status= ReportStatus.PENDING;
     }
 
-    public Report(ReportType type, String description, User reportedBy, Long reportedProjectId, User reportedUser) {
+    public Report(ReportType type, String description, User reportedBy, Long reportedProjectId, Long reportedServiceId, User reportedUser) {
         this.type = type;
         this.description = description;
         this.reportedBy = reportedBy;
         this.reportedProjectId = reportedProjectId;
+        this.reportedServiceId = reportedServiceId;
         this.reportedUser = reportedUser;
+    }
+
+    public Long getReportedServiceId() {
+        return reportedServiceId;
+    }
+
+    public void setReportedServiceId(Long reportedServiceId) {
+        this.reportedServiceId = reportedServiceId;
     }
 
     public Long getId() {
